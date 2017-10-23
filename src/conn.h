@@ -1,6 +1,14 @@
 #ifndef	__CONN_H__
 #define	__CONN_H__
 
+struct proto_conn;
+
+typedef	int conn_read_cb_t(struct proto_conn *c, void *arg, char *buf,
+	    int len, int xerrno);
+typedef	int conn_write_cb_t(struct proto_conn *c, void *arg, int xerrno);
+typedef	int conn_connect_cb_t(struct proto_conn *c, void *arg, int xerrno);
+typedef	int conn_close_cb_t(struct proto_conn, void *arg, int xerrno);
+
 struct proto_conn {
 	struct event_base *eb;
 	struct sockaddr_storage lcl, peer;
@@ -10,6 +18,14 @@ struct proto_conn {
 	int is_setup;
 	int is_connecting;
 	int is_connected;
+
+	struct {
+		conn_read_cb_t *read_cb;
+		conn_write_cb_t *write_cb;
+		conn_connect_cb_t *connect_cb;
+		conn_close_cb_t *close_cb;
+		void *cbdata;
+	} cb;
 };
 
 extern	struct proto_conn * conn_create(struct event_base *eb);
