@@ -15,6 +15,8 @@ struct proto_conn {
 extern	struct proto_conn * conn_create(struct event_base *eb);
 extern	int conn_close(struct proto_conn *k);
 extern	int conn_setup(struct proto_conn *k);
+extern	int conn_set_lcl(struct proto_conn *k, const struct sockaddr_storage *);
+extern	int conn_set_peer(struct proto_conn *k, const struct sockaddr_storage *);
 extern	int conn_connect(struct proto_conn *k);
 extern	void conn_free(struct proto_conn *k);
 

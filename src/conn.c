@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
+#include <string.h>
 
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
 #include <event2/event.h>
 
+#include "util.h"
 #include "conn.h"
 
 struct proto_conn *
@@ -156,9 +158,24 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 }
 
 int
+conn_set_lcl(struct proto_conn *k, const struct sockaddr_storage *s)
+{
+
+	memcpy(&k->lcl, s, sizeof(struct sockaddr_storage));
+	return (0);
+}
+
+int
+conn_set_peer(struct proto_conn *k, const struct sockaddr_storage *s)
+{
+
+	memcpy(&k->peer, s, sizeof(struct sockaddr_storage));
+	return (0);
+}
+
+int
 conn_setup(struct proto_conn *k)
 {
-	struct sockaddr_in *sin;
 	int fd;
 
 	fprintf(stderr, "%s: called!\n", __func__);
@@ -166,18 +183,6 @@ conn_setup(struct proto_conn *k)
 	if (k->fd != -1) {
 		conn_close(k);
 	}
-
-	/* For now, assume localhost:8001 */
-	sin = (void *) &k->peer;
-	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-	sin->sin_port = htons(8001);
-
-	/* For now, assume ipv4 */
-	sin = (void *) &k->lcl;
-	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = htonl(INADDR_ANY);
-	sin->sin_port = htons(0);
 
 	fd = socket(PF_INET, SOCK_STREAM, 0);
 	if (fd < 0) {
@@ -209,8 +214,7 @@ conn_connect(struct proto_conn *k)
 		return (-1);
 	}
 
-	/* XXX v4 */
-	ret = bind(k->fd, (void *) &k->lcl, sizeof(struct sockaddr_in));
+	ret = bind(k->fd, (void *) &k->lcl, sockaddr_len(&k->lcl));
 	if (ret != 0) {
 		warn("%s: bind", __func__);
 		return (-1);
@@ -218,7 +222,7 @@ conn_connect(struct proto_conn *k)
 
 	/* Begin the connect; handle the case where it completes immediately */
 	/* XXX v4 */
-	ret = connect(k->fd, (void *) &k->peer, sizeof(struct sockaddr_in));
+	ret = connect(k->fd, (void *) &k->peer, sockaddr_len(&k->peer));
 	if (ret == 0) {
 		/* Finished */
 		conn_connect_complete(k);
