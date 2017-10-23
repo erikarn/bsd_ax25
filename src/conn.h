@@ -36,6 +36,6 @@ extern	int conn_set_peer(struct conn *k, const struct sockaddr_storage *);
 extern	int conn_connect(struct conn *k);
 extern	void conn_free(struct conn *k);
 
-extern	int conn_write(struct conn *k, buf_t *b);
+extern	int conn_write(struct conn *k, struct buf *b);
 
 #endif	/* __CONN_H__ */
