@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <err.h>
 #include <string.h>
+#include <sys/queue.h>
 
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -10,6 +11,7 @@
 #include <event2/event.h>
 
 #include "util.h"
+#include "buf.h"
 #include "conn.h"
 
 struct conn *
