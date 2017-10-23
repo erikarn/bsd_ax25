@@ -3,19 +3,19 @@
 
 #include <event2/event.h>
 
-#include "kiss.h"
+#include "conn.h"
 
 int
 main(int argc, const char *argv[])
 {
 	struct event_base *eb;
-	struct proto_kiss *k;
+	struct proto_conn *k;
 
 	eb = event_base_new();
 
-	k = kiss_create(eb);
-	kiss_setup(k);
-	kiss_connect(k);
+	k = conn_create(eb);
+	conn_setup(k);
+	conn_connect(k);
 
 	event_base_loop(eb, EVLOOP_NO_EXIT_ON_EMPTY);
 

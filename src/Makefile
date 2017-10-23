@@ -1,6 +1,6 @@
 PROG=   bsd_packet
 SRCS=   main.c
-SRCS+=  kiss.c
+SRCS+=  conn.c
 
 CFLAGS=         -I/usr/local/include -Wall -Werror
 LDADD=-lutil -L/usr/local/lib -levent_core

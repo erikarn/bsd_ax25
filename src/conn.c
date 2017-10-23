@@ -8,18 +8,12 @@
 
 #include <event2/event.h>
 
-#include "kiss.h"
+#include "conn.h"
 
-/*
- * XXX TODO: This should just become a generic wrapper for doing
- * libevent stream socket connecting, as it abstracts out the
- * bits that unfortunately aren't done for us by libevent2.. :(
- */
-
-struct proto_kiss *
-kiss_create(struct event_base *eb)
+struct proto_conn *
+conn_create(struct event_base *eb)
 {
-	struct proto_kiss *k;
+	struct proto_conn *k;
 
 	k = calloc(1, sizeof(*k));
 	if (k == NULL) {
@@ -34,7 +28,7 @@ kiss_create(struct event_base *eb)
 }
 
 int
-kiss_close(struct proto_kiss *k)
+conn_close(struct proto_conn *k)
 {
 
 	if (k->fd == -1)
@@ -53,7 +47,7 @@ kiss_close(struct proto_kiss *k)
 }
 
 static void
-kiss_conn_close(struct proto_kiss *k)
+conn_conn_close(struct proto_conn *k)
 {
 	fprintf(stderr, "%s: called; closing\n", __func__);
 	k->is_connected = 0;
@@ -63,7 +57,7 @@ kiss_conn_close(struct proto_kiss *k)
 }
 
 static void
-kiss_connect_complete(struct proto_kiss *k)
+conn_connect_complete(struct proto_conn *k)
 {
 	k->is_connecting = 0;
 	k->is_connected = 1;
@@ -72,7 +66,7 @@ kiss_connect_complete(struct proto_kiss *k)
 }
 
 static void
-kiss_connect_error(struct proto_kiss *k)
+conn_connect_error(struct proto_conn *k)
 {
 	k->is_connecting = 0;
 	k->is_connected = 0;
@@ -80,9 +74,9 @@ kiss_connect_error(struct proto_kiss *k)
 }
 
 static void
-kiss_read_cb(evutil_socket_t fd, short what, void *arg)
+conn_read_cb(evutil_socket_t fd, short what, void *arg)
 {
-	struct proto_kiss *k = arg;
+	struct proto_conn *k = arg;
 	char buf[1024];
 	int i;
 	int ret;
@@ -97,11 +91,11 @@ kiss_read_cb(evutil_socket_t fd, short what, void *arg)
 		if (ret == EINTR)
 			return;
 		fprintf(stderr, "%s: read failed; errno=%d\n", __func__, errno);
-		kiss_conn_close(k);
+		conn_conn_close(k);
 		return;
 	}
 	if (ret == 0) {
-		kiss_conn_close(k);
+		conn_conn_close(k);
 		return;
 	}
 
@@ -118,9 +112,9 @@ kiss_read_cb(evutil_socket_t fd, short what, void *arg)
 }
 
 static void
-kiss_write_cb(evutil_socket_t fd, short what, void *arg)
+conn_write_cb(evutil_socket_t fd, short what, void *arg)
 {
-	struct proto_kiss *k = arg;
+	struct proto_conn *k = arg;
 	int optarg, ret;
 	socklen_t len;
 
@@ -140,7 +134,7 @@ kiss_write_cb(evutil_socket_t fd, short what, void *arg)
 		if (ret != 0) {
 			/* Error out if we can't fetch the socket state */
 			warn("%s: getsockopt", __func__);
-			kiss_connect_error(k);
+			conn_connect_error(k);
 			return;
 		}
 		if (ret == 0 && optarg == EINTR) {
@@ -149,12 +143,12 @@ kiss_write_cb(evutil_socket_t fd, short what, void *arg)
 			return;
 		}
 		if (ret == 0 && optarg == 0) {
-			kiss_connect_complete(k);
+			conn_connect_complete(k);
 			return;
 		}
 		/* issue? */
 		fprintf(stderr, "%s: connect; failed; errno=%d\n", __func__, optarg);
-		kiss_connect_error(k);
+		conn_connect_error(k);
 		return;
 	}
 
@@ -162,7 +156,7 @@ kiss_write_cb(evutil_socket_t fd, short what, void *arg)
 }
 
 int
-kiss_setup(struct proto_kiss *k)
+conn_setup(struct proto_conn *k)
 {
 	struct sockaddr_in *sin;
 	int fd;
@@ -170,7 +164,7 @@ kiss_setup(struct proto_kiss *k)
 	fprintf(stderr, "%s: called!\n", __func__);
 
 	if (k->fd != -1) {
-		kiss_close(k);
+		conn_close(k);
 	}
 
 	/* For now, assume localhost:8001 */
@@ -197,21 +191,21 @@ kiss_setup(struct proto_kiss *k)
 	k->is_connecting = 0;
 	k->is_connected = 0;
 
-	k->read_ev = event_new(k->eb, k->fd, EV_READ | EV_PERSIST, kiss_read_cb, k);
-	k->write_ev = event_new(k->eb, k->fd, EV_WRITE, kiss_write_cb, k);
+	k->read_ev = event_new(k->eb, k->fd, EV_READ | EV_PERSIST, conn_read_cb, k);
+	k->write_ev = event_new(k->eb, k->fd, EV_WRITE, conn_write_cb, k);
 
 	return (0);
 }
 
 int
-kiss_connect(struct proto_kiss *k)
+conn_connect(struct proto_conn *k)
 {
 	int ret;
 
 	fprintf(stderr, "%s: called!\n", __func__);
 
 	if (k->fd == -1) {
-		fprintf(stderr, "%s: kiss_connect() called before kiss_setup()!\n", __func__);
+		fprintf(stderr, "%s: conn_connect() called before conn_setup()!\n", __func__);
 		return (-1);
 	}
 
@@ -227,7 +221,7 @@ kiss_connect(struct proto_kiss *k)
 	ret = connect(k->fd, (void *) &k->peer, sizeof(struct sockaddr_in));
 	if (ret == 0) {
 		/* Finished */
-		kiss_connect_complete(k);
+		conn_connect_complete(k);
 		return (0);
 	}
 
@@ -243,9 +237,9 @@ kiss_connect(struct proto_kiss *k)
 }
 
 void
-kiss_free(struct proto_kiss *k)
+conn_free(struct proto_conn *k)
 {
 
-	kiss_close(k);
+	conn_close(k);
 
 }
