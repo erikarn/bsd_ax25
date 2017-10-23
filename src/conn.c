@@ -12,10 +12,10 @@
 #include "util.h"
 #include "conn.h"
 
-struct proto_conn *
+struct conn *
 conn_create(struct event_base *eb)
 {
-	struct proto_conn *k;
+	struct conn *k;
 
 	k = calloc(1, sizeof(*k));
 	if (k == NULL) {
@@ -30,7 +30,7 @@ conn_create(struct event_base *eb)
 }
 
 int
-conn_close(struct proto_conn *k)
+conn_close(struct conn *k)
 {
 
 	if (k->fd == -1)
@@ -49,7 +49,7 @@ conn_close(struct proto_conn *k)
 }
 
 static void
-conn_conn_close(struct proto_conn *k)
+conn_conn_close(struct conn *k)
 {
 	fprintf(stderr, "%s: called; closing\n", __func__);
 	k->is_connected = 0;
@@ -59,7 +59,7 @@ conn_conn_close(struct proto_conn *k)
 }
 
 static void
-conn_connect_complete(struct proto_conn *k)
+conn_connect_complete(struct conn *k)
 {
 	k->is_connecting = 0;
 	k->is_connected = 1;
@@ -68,7 +68,7 @@ conn_connect_complete(struct proto_conn *k)
 }
 
 static void
-conn_connect_error(struct proto_conn *k)
+conn_connect_error(struct conn *k)
 {
 	k->is_connecting = 0;
 	k->is_connected = 0;
@@ -78,7 +78,7 @@ conn_connect_error(struct proto_conn *k)
 static void
 conn_read_cb(evutil_socket_t fd, short what, void *arg)
 {
-	struct proto_conn *k = arg;
+	struct conn *k = arg;
 	char buf[1024];
 	int i;
 	int ret;
@@ -116,7 +116,7 @@ conn_read_cb(evutil_socket_t fd, short what, void *arg)
 static void
 conn_write_cb(evutil_socket_t fd, short what, void *arg)
 {
-	struct proto_conn *k = arg;
+	struct conn *k = arg;
 	int optarg, ret;
 	socklen_t len;
 
@@ -158,7 +158,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 }
 
 int
-conn_set_lcl(struct proto_conn *k, const struct sockaddr_storage *s)
+conn_set_lcl(struct conn *k, const struct sockaddr_storage *s)
 {
 
 	memcpy(&k->lcl, s, sizeof(struct sockaddr_storage));
@@ -166,7 +166,7 @@ conn_set_lcl(struct proto_conn *k, const struct sockaddr_storage *s)
 }
 
 int
-conn_set_peer(struct proto_conn *k, const struct sockaddr_storage *s)
+conn_set_peer(struct conn *k, const struct sockaddr_storage *s)
 {
 
 	memcpy(&k->peer, s, sizeof(struct sockaddr_storage));
@@ -174,7 +174,7 @@ conn_set_peer(struct proto_conn *k, const struct sockaddr_storage *s)
 }
 
 int
-conn_setup(struct proto_conn *k)
+conn_setup(struct conn *k)
 {
 	int fd;
 
@@ -203,7 +203,7 @@ conn_setup(struct proto_conn *k)
 }
 
 int
-conn_connect(struct proto_conn *k)
+conn_connect(struct conn *k)
 {
 	int ret;
 
@@ -241,7 +241,7 @@ conn_connect(struct proto_conn *k)
 }
 
 void
-conn_free(struct proto_conn *k)
+conn_free(struct conn *k)
 {
 
 	conn_close(k);

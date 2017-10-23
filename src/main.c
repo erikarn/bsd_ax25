@@ -10,7 +10,7 @@ int
 main(int argc, const char *argv[])
 {
 	struct event_base *eb;
-	struct proto_conn *k;
+	struct conn *k;
 	struct sockaddr_storage s;
 	struct sockaddr_in *sin;
 
