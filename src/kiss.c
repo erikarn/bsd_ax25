@@ -53,6 +53,16 @@ kiss_close(struct proto_kiss *k)
 }
 
 static void
+kiss_conn_close(struct proto_kiss *k)
+{
+	fprintf(stderr, "%s: called; closing\n", __func__);
+	k->is_connected = 0;
+	event_del(k->read_ev);
+	event_del(k->write_ev);
+	k->is_connected = 0;
+}
+
+static void
 kiss_connect_complete(struct proto_kiss *k)
 {
 	k->is_connecting = 0;
@@ -72,18 +82,39 @@ kiss_connect_error(struct proto_kiss *k)
 static void
 kiss_read_cb(evutil_socket_t fd, short what, void *arg)
 {
-	char buf[1024];
-	int ret;
 	struct proto_kiss *k = arg;
+	char buf[1024];
+	int i;
+	int ret;
 
 	fprintf(stderr, "%s: called!\n", __func__);
 
 	/* XXX loop */
 	ret = read(k->fd, buf, 1024);
-	if (ret < 0)
+	if (ret < 0) {
+		if (ret == EWOULDBLOCK)
+			return;
+		if (ret == EINTR)
+			return;
+		fprintf(stderr, "%s: read failed; errno=%d\n", __func__, errno);
+		kiss_conn_close(k);
 		return;
+	}
+	if (ret == 0) {
+		kiss_conn_close(k);
+		return;
+	}
 
 	fprintf(stderr, "%s: read %d bytes\n", __func__, ret);
+
+	for (i = 0; i < ret; i++) {
+		if (i % 16 == 0)
+			fprintf(stderr, "0x%.4x: ", i);
+		fprintf(stderr, "%.2x ", buf[i] & 0xff);
+		if (i % 16 == 15)
+			fprintf(stderr, "\n");
+	}
+	fprintf(stderr, "\n");
 }
 
 static void
