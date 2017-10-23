@@ -10,6 +10,12 @@
 
 #include "kiss.h"
 
+/*
+ * XXX TODO: This should just become a generic wrapper for doing
+ * libevent stream socket connecting, as it abstracts out the
+ * bits that unfortunately aren't done for us by libevent2.. :(
+ */
+
 struct proto_kiss *
 kiss_create(struct event_base *eb)
 {
