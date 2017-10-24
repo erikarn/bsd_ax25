@@ -56,17 +56,6 @@ conn_close(struct conn *k)
 }
 
 static void
-conn_conn_close(struct conn *k)
-{
-
-	fprintf(stderr, "%s: called; closing\n", __func__);
-	k->is_connected = 0;
-	event_del(k->read_ev);
-	event_del(k->write_ev);
-	k->is_connected = 0;
-}
-
-static void
 conn_connect_complete(struct conn *k)
 {
 
@@ -97,7 +86,6 @@ conn_read_cb(evutil_socket_t fd, short what, void *arg)
 {
 	struct conn *k = arg;
 	char buf[1024];
-	int i;
 	int ret;
 
 	fprintf(stderr, "%s: called!\n", __func__);
@@ -105,29 +93,33 @@ conn_read_cb(evutil_socket_t fd, short what, void *arg)
 	/* XXX loop */
 	ret = read(k->fd, buf, 1024);
 	if (ret < 0) {
-		if (ret == EWOULDBLOCK)
+		if (errno == EWOULDBLOCK)
 			return;
-		if (ret == EINTR)
+		if (errno == EINTR)
 			return;
 		fprintf(stderr, "%s: read failed; errno=%d\n", __func__, errno);
-		conn_conn_close(k);
+		/* notify the caller of a problem, delete the read readiness */
+		if (k->cb.read_cb != NULL) {
+			k->cb.read_cb(k, k->cb.cbdata, NULL, -1, errno);
+			event_del(k->read_ev);
+			return;
+		}
 		return;
 	}
 	if (ret == 0) {
-		conn_conn_close(k);
+		/* notify the caller of a problem, delete the read readiness */
+		if (k->cb.read_cb != NULL) {
+			k->cb.read_cb(k, k->cb.cbdata, NULL, 0, errno);
+			event_del(k->read_ev);
+			return;
+		}
 		return;
 	}
 
-	fprintf(stderr, "%s: read %d bytes\n", __func__, ret);
-
-	for (i = 0; i < ret; i++) {
-		if (i % 16 == 0)
-			fprintf(stderr, "0x%.4x: ", i);
-		fprintf(stderr, "%.2x ", buf[i] & 0xff);
-		if (i % 16 == 15)
-			fprintf(stderr, "\n");
+	/* Read some data, return appropriate */
+	if (k->cb.read_cb != NULL) {
+		k->cb.read_cb(k, k->cb.cbdata, buf, ret, 0);
 	}
-	fprintf(stderr, "\n");
 }
 
 static void
