@@ -85,8 +85,35 @@ proto_kiss_set_host(struct proto_kiss *k, const char *host, int port)
 static int
 proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 {
+	int i;
 
 	fprintf(stderr, "%s: called\n", __func__);
+
+	/* XXX TODO: notify owner */
+	if (len == 0) {
+		fprintf(stderr, "%s: conn is EOF\n", __func__);
+		return (0);
+	}
+
+	/* XXX TODO: notify owner */
+	if (len < 0) {
+		fprintf(stderr, "%s: conn read fail, errno+%d\n", __func__,
+		    xerrno);
+		return (0);
+	}
+
+
+	fprintf(stderr, "%s: read %d bytes\n", __func__, len);
+
+	for (i = 0; i < len; i++) {
+		if (i % 16 == 0)
+			fprintf(stderr, "0x%.4x: ", i);
+		fprintf(stderr, "%.2x ", buf[i] & 0xff);
+		if (i % 16 == 15)
+			fprintf(stderr, "\n");
+	}
+	fprintf(stderr, "\n");
+
 	return (0);
 }
 
