@@ -7,7 +7,7 @@ typedef	int conn_read_cb_t(struct conn *c, void *arg, char *buf,
 	    int len, int xerrno);
 typedef	int conn_write_cb_t(struct conn *c, void *arg, int xerrno);
 typedef	int conn_connect_cb_t(struct conn *c, void *arg, int xerrno);
-typedef	int conn_close_cb_t(struct conn, void *arg, int xerrno);
+typedef	int conn_close_cb_t(struct conn *c, void *arg, int xerrno);
 
 struct conn {
 	struct event_base *eb;

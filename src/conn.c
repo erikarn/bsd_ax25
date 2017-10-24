@@ -47,12 +47,18 @@ conn_close(struct conn *k)
 	event_del(k->write_ev);
 	event_free(k->read_ev);
 	event_free(k->write_ev);
+
+	if (k->cb.close_cb != NULL) {
+		k->cb.close_cb(k, k->cb.cbdata, 0);
+	}
+
 	return (0);
 }
 
 static void
 conn_conn_close(struct conn *k)
 {
+
 	fprintf(stderr, "%s: called; closing\n", __func__);
 	k->is_connected = 0;
 	event_del(k->read_ev);
@@ -63,18 +69,27 @@ conn_conn_close(struct conn *k)
 static void
 conn_connect_complete(struct conn *k)
 {
+
 	k->is_connecting = 0;
 	k->is_connected = 1;
 	event_add(k->read_ev, NULL);
 	fprintf(stderr, "%s: ready!\n", __func__);
+
+	if (k->cb.connect_cb != NULL) {
+		k->cb.connect_cb(k, k->cb.cbdata, 0);
+	}
 }
 
 static void
-conn_connect_error(struct conn *k)
+conn_connect_error(struct conn *k, int xerrno)
 {
 	k->is_connecting = 0;
 	k->is_connected = 0;
 	fprintf(stderr, "%s: error connecting!\n", __func__);
+
+	if (k->cb.connect_cb != NULL) {
+		k->cb.connect_cb(k, k->cb.cbdata, xerrno);
+	}
 }
 
 static void
@@ -138,7 +153,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 		if (ret != 0) {
 			/* Error out if we can't fetch the socket state */
 			warn("%s: getsockopt", __func__);
-			conn_connect_error(k);
+			conn_connect_error(k, errno);
 			return;
 		}
 		if (ret == 0 && optarg == EINTR) {
@@ -152,7 +167,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 		}
 		/* issue? */
 		fprintf(stderr, "%s: connect; failed; errno=%d\n", __func__, optarg);
-		conn_connect_error(k);
+		conn_connect_error(k, optarg);
 		return;
 	}
 
