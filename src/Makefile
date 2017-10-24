@@ -4,6 +4,7 @@ SRCS+=  conn.c
 SRCS+=  util.c
 SRCS+=  buf.c
 SRCS+=  buf_list.c
+SRCS+=	proto_kiss.c
 
 CFLAGS=         -I/usr/local/include -Wall -Werror
 LDADD=-lutil -L/usr/local/lib -levent_core
