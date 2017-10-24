@@ -37,6 +37,13 @@ proto_kiss_create(struct event_base *eb)
 		goto err;
 	}
 
+	/* XXX TODO: may want to make this configurable */
+	k->rx_decap.buf = malloc(1024);
+	if (k->rx_decap.buf == NULL) {
+		warn("%s: malloc, 1024 bytes", __func__);
+		goto err;
+	}
+	k->rx_decap.size = 1024;
 
 	k->eb = eb;
 	return (k);
@@ -46,6 +53,8 @@ err:
 		conn_free(k->conn);
 	if (k->host)
 		free(k->host);
+	if (k->rx_decap.buf)
+		free(k->rx_decap.buf);
 	free(k);
 	return (NULL);
 }
@@ -57,6 +66,8 @@ proto_kiss_free(struct proto_kiss *k)
 		conn_close(k->conn);
 	if (k->host)
 		free(k->host);
+	if (k->rx_decap.buf)
+		free(k->rx_decap.buf);
 	free(k);
 }
 

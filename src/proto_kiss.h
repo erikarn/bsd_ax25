@@ -25,6 +25,18 @@ struct proto_kiss {
 	struct {
 		void *cbdata;
 	} cb;
+
+	/*
+	 * Incoming data buffer and state for a single packet to
+	 * search for start/end fields for.
+	 */
+	struct {
+		char *buf;
+		int size;
+		int len;
+	} rx_decap;
+
+	/* XXX TODO: outbound TX packet list to send up to the TNC. */
 };
 
 extern	struct proto_kiss * proto_kiss_create(struct event_base *eb);
