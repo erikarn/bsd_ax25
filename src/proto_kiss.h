@@ -1,9 +1,19 @@
 #ifndef	__PROTO_KISS_H__
 #define	__PROTO_KISS_H__
 
+typedef enum {
+	PROTO_KISS_CONN_NONE,
+	PROTO_KISS_CONN_IDLE,
+	PROTO_KISS_CONN_CONNECTING,
+	PROTO_KISS_CONN_ACTIVE,
+	PROTO_KISS_CONN_CLOSING,
+} proto_kiss_conn_state_t;
+
 struct proto_kiss {
 	struct event_base *eb;
 	struct conn *conn;
+
+	proto_kiss_conn_state_t state;
 
 	/* KISS terminal server */
 	char *host;

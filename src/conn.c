@@ -242,6 +242,7 @@ conn_connect(struct conn *k)
 	ret = connect(k->fd, (void *) &k->peer, sockaddr_len(&k->peer));
 	if (ret == 0) {
 		/* Finished */
+		/* XXX TODO: should defer this so it doesn't behave re-entrant! */
 		conn_connect_complete(k);
 		return (0);
 	}
