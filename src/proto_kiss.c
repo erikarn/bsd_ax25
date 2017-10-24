@@ -140,7 +140,7 @@ proto_kiss_connect(struct proto_kiss *k)
 	/* XXX TODO - replace */
 	ps->sin_family = AF_INET;
 	ps->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-	ps->sin_port = 8001;
+	ps->sin_port = htons(8001);
 
 	(void) conn_set_lcl(k->conn, (void *) ls);
 	(void) conn_set_peer(k->conn, (void *) ps);
