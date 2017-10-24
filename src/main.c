@@ -6,36 +6,20 @@
 
 #include "buf.h"
 #include "conn.h"
+#include "proto_kiss.h"
 
 int
 main(int argc, const char *argv[])
 {
 	struct event_base *eb;
-	struct conn *k;
-	struct sockaddr_storage s;
-	struct sockaddr_in *sin;
+	struct proto_kiss *p;
 
 	eb = event_base_new();
 
-	k = conn_create(eb);
-	/* For now, assume localhost:8001 */
-	sin = (void *) &s;
-	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-	sin->sin_port = htons(8001);
+	p = proto_kiss_create(eb);
 
-	conn_set_peer(k, (void *) sin);
-
-	/* For now, assume ipv4 */
-	sin = (void *) &s;
-	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = htonl(INADDR_ANY);
-	sin->sin_port = htons(0);
-
-	conn_set_lcl(k, (void *) sin);
-
-	conn_setup(k);
-	conn_connect(k);
+	proto_kiss_set_host(p, "127.0.0.1", 8001);
+	proto_kiss_connect(p);
 
 	event_base_loop(eb, EVLOOP_NO_EXIT_ON_EMPTY);
 
