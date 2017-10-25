@@ -10,7 +10,7 @@ typedef enum {
 } proto_kiss_conn_state_t;
 
 struct proto_kiss {
-	struct event_base *eb;
+	struct ebase *eb;
 	struct conn *conn;
 
 	proto_kiss_conn_state_t state;
@@ -39,7 +39,7 @@ struct proto_kiss {
 	/* XXX TODO: outbound TX packet list to send up to the TNC. */
 };
 
-extern	struct proto_kiss * proto_kiss_create(struct event_base *eb);
+extern	struct proto_kiss * proto_kiss_create(struct ebase *eb);
 extern	void proto_kiss_free(struct proto_kiss *);
 extern	int proto_kiss_set_host(struct proto_kiss *, const char *host,
 	    int port);

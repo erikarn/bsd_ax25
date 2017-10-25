@@ -10,7 +10,7 @@ typedef enum {
 } proto_aprs_igate_state_t;
 
 struct proto_aprs_igate {
-	struct event_base *eb;
+	struct ebase *eb;
 	struct conn *conn;
 
 	proto_aprs_igate_state_t state;
@@ -29,7 +29,7 @@ struct proto_aprs_igate {
 	struct buf *rx_buf;
 };
 
-extern	struct proto_aprs_igate * proto_aprs_igate_create(struct event_base *eb);
+extern	struct proto_aprs_igate * proto_aprs_igate_create(struct ebase *eb);
 extern	int proto_aprs_igate_set_login(struct proto_aprs_igate *, char *login, char *pass);
 extern	int proto_aprs_igate_connect(struct proto_aprs_igate *);
 extern	int proto_aprs_igate_disconnect(struct proto_aprs_igate *);

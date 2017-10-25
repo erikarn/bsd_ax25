@@ -10,7 +10,7 @@ typedef	int conn_connect_cb_t(struct conn *c, void *arg, int xerrno);
 typedef	int conn_close_cb_t(struct conn *c, void *arg, int xerrno);
 
 struct conn {
-	struct event_base *eb;
+	struct ebase *eb;
 	struct sockaddr_storage lcl, peer;
 	int fd;
 	struct event *read_ev;
@@ -28,7 +28,7 @@ struct conn {
 	} cb;
 };
 
-extern	struct conn * conn_create(struct event_base *eb);
+extern	struct conn * conn_create(struct ebase *eb);
 extern	int conn_close(struct conn *k);
 extern	int conn_setup(struct conn *k);
 extern	int conn_set_lcl(struct conn *k, const struct sockaddr_storage *);

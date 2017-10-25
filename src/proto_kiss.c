@@ -9,6 +9,7 @@
 
 #include <event2/event.h>
 
+#include "eb.h"
 #include "buf.h"
 #include "buf_list.h"
 #include "conn.h"
@@ -27,7 +28,7 @@
  */
 
 struct proto_kiss *
-proto_kiss_create(struct event_base *eb)
+proto_kiss_create(struct ebase *eb)
 {
 	struct proto_kiss *k;
 

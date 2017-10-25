@@ -19,7 +19,7 @@
  */
 
 struct proto_aprs_igate *
-proto_aprs_igate_create(struct event_base *eb)
+proto_aprs_igate_create(struct ebase *eb)
 {
 	struct proto_aprs_igate *k;
 

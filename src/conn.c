@@ -11,11 +11,12 @@
 #include <event2/event.h>
 
 #include "util.h"
+#include "eb.h"
 #include "buf.h"
 #include "conn.h"
 
 struct conn *
-conn_create(struct event_base *eb)
+conn_create(struct ebase *eb)
 {
 	struct conn *k;
 
@@ -205,8 +206,8 @@ conn_setup(struct conn *k)
 	k->is_connecting = 0;
 	k->is_connected = 0;
 
-	k->read_ev = event_new(k->eb, k->fd, EV_READ | EV_PERSIST, conn_read_cb, k);
-	k->write_ev = event_new(k->eb, k->fd, EV_WRITE, conn_write_cb, k);
+	k->read_ev = event_new(k->eb->ebase, k->fd, EV_READ | EV_PERSIST, conn_read_cb, k);
+	k->write_ev = event_new(k->eb->ebase, k->fd, EV_WRITE, conn_write_cb, k);
 
 	return (0);
 }
