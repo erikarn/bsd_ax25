@@ -66,19 +66,19 @@ conn_connect_complete(struct conn *k)
 	fprintf(stderr, "%s: ready!\n", __func__);
 
 	if (k->cb.connect_cb != NULL) {
-		k->cb.connect_cb(k, k->cb.cbdata, 0);
+		k->cb.connect_cb(k, k->cb.cbdata, CONN_CONNECT_ERR_OK, 0);
 	}
 }
 
 static void
-conn_connect_error(struct conn *k, int xerrno)
+conn_connect_error(struct conn *k, conn_connect_err_t connerr, int xerrno)
 {
 	k->is_connecting = 0;
 	k->is_connected = 0;
 	fprintf(stderr, "%s: error connecting!\n", __func__);
 
 	if (k->cb.connect_cb != NULL) {
-		k->cb.connect_cb(k, k->cb.cbdata, xerrno);
+		k->cb.connect_cb(k, k->cb.cbdata, connerr, xerrno);
 	}
 }
 
@@ -146,7 +146,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 		if (ret != 0) {
 			/* Error out if we can't fetch the socket state */
 			warn("%s: getsockopt", __func__);
-			conn_connect_error(k, errno);
+			conn_connect_error(k, CONN_CONNECT_ERR_CONN_FAILURE, errno);
 			return;
 		}
 		if (ret == 0 && optarg == EINTR) {
@@ -160,7 +160,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 		}
 		/* issue? */
 		fprintf(stderr, "%s: connect; failed; errno=%d\n", __func__, optarg);
-		conn_connect_error(k, optarg);
+		conn_connect_error(k, CONN_CONNECT_ERR_CONN_REFUSED, optarg);
 		return;
 	}
 
@@ -184,6 +184,22 @@ conn_set_peer(struct conn *k, const struct sockaddr_storage *s)
 }
 
 int
+conn_set_peer_host(struct conn *k, const char *host, int port)
+{
+
+	if (k->dst_host.host != NULL)
+		free(k->dst_host.host);
+	k->dst_host.host = strdup(host);
+	k->dst_host.port = port;
+
+	return (0);
+}
+
+/*
+ * Do the socket setup.  We have enough of the information required
+ * to setup the socket, so do so.
+ */
+static int
 conn_setup(struct conn *k)
 {
 	int fd;
@@ -212,17 +228,15 @@ conn_setup(struct conn *k)
 	return (0);
 }
 
-int
-conn_connect(struct conn *k)
+/*
+ * All of the socket details are available; begin the connection process.
+ */
+static int
+conn_connect_connect(struct conn *k)
 {
 	int ret;
 
-	fprintf(stderr, "%s: called!\n", __func__);
-
-	if (k->fd == -1) {
-		fprintf(stderr, "%s: conn_connect() called before conn_setup()!\n", __func__);
-		return (-1);
-	}
+	fprintf(stderr, "%s: called; beginning things!\n", __func__);
 
 	ret = bind(k->fd, (void *) &k->lcl, sockaddr_len(&k->lcl));
 	if (ret != 0) {
@@ -247,14 +261,39 @@ conn_connect(struct conn *k)
 		return (0);
 	}
 
+	/* We failed; close up and schedule a notification */
 	warn("%s: connect", __func__);
+	close(k->fd);
+	k->fd = -1;
+	conn_connect_error(k, CONN_CONNECT_ERR_CONN_CONNECT_FAILURE, 0);
 	return (-1);
+}
+
+int
+conn_connect(struct conn *k)
+{
+
+	fprintf(stderr, "%s: called!\n", __func__);
+
+	/*
+	 * This is where we would do DNS lookup if required.
+	 */
+
+	/*
+	 * Assume that we now have enough details, so do it!
+	 */
+	conn_setup(k);
+	conn_connect_connect(k);
+
+	/* For now; notifications will eventually be deferred */
+	return (0);
 }
 
 void
 conn_free(struct conn *k)
 {
-
 	conn_close(k);
-
+	if (k->dst_host.host)
+		free(k->dst_host.host);
+	free(k);
 }

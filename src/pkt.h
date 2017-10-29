@@ -8,10 +8,16 @@ enum {
 };
 
 /*
- * A single L2 packet.
+ * A single packet, both the untouched payload and for at least
+ * receive, an optional parsed out payload.
  *
  * For now, no scatter/gather, so one frame is a single packet.
  * (ie, no fragments, mbuf style.)
+ *
+ * The parsed payload makes this packet a kind of useful generic
+ * representation of "stuff" that can be thrown around, rather than
+ * having to try and maintain multiple queue types.  Yes, mumble
+ * C++, etc, etc.
  */
 struct pkt {
 	TAILQ_ENTRY(pkt) int_list;

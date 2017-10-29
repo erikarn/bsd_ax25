@@ -127,7 +127,7 @@ proto_kiss_write_cb(struct conn *c, void *arg, int xerrno)
 }
 
 static int
-proto_kiss_connect_cb(struct conn *c, void *arg, int xerrno)
+proto_kiss_connect_cb(struct conn *c, void *arg, int rettype, int xerrno)
 {
 
 	fprintf(stderr, "%s: called\n", __func__);
@@ -199,11 +199,6 @@ proto_kiss_connect(struct proto_kiss *k)
 	 * wait for notification that we actually have succeeded
 	 * before continuing.
 	 */
-	if (conn_setup(k->conn) != 0) {
-		fprintf(stderr, "%s: conn_setup failed\n", __func__);
-		return (-1);
-	}
-
 	if (conn_connect(k->conn) != 0) {
 		fprintf(stderr, "%s: conn_connect failed\n", __func__);
 		return (-1);

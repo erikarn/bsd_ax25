@@ -57,6 +57,10 @@ proto_aprs_igate_free(struct proto_aprs_igate *k)
 		conn_close(k->conn);
 	if (k->host)
 		free(k->host);
+	if (k->login)
+		free(k->login);
+	if (k->password)
+		free(k->password);
 	if (k->rx_buf)
 		buf_free(k->rx_buf);
 	free(k);
@@ -117,7 +121,7 @@ proto_aprs_igate_write_cb(struct conn *c, void *arg, int xerrno)
 }
 
 static int
-proto_aprs_igate_connect_cb(struct conn *c, void *arg, int xerrno)
+proto_aprs_igate_connect_cb(struct conn *c, void *arg, int rettype, int xerrno)
 {
 
 	fprintf(stderr, "%s: called\n", __func__);
@@ -135,8 +139,6 @@ proto_aprs_igate_close_cb(struct conn *c, void *arg, int xerrno)
 int
 proto_aprs_igate_connect(struct proto_aprs_igate *k)
 {
-	struct sockaddr_storage lcl, peer;
-	struct sockaddr_in *ls, *ps;
 
 	if (k->host == NULL || k->port == 0) {
 		fprintf(stderr, "%s: no host/port set\n", __func__);
@@ -155,16 +157,7 @@ proto_aprs_igate_connect(struct proto_aprs_igate *k)
 		return (-1);
 	}
 
-	/* Setup information for outbound connection - for now, assume localhost:8001 */
-	bzero(&lcl, sizeof(lcl));
-	bzero(&peer, sizeof(peer));
-	ls = (void *) &lcl;
-	ps = (void *) &peer;
-
-	/* XXX TODO: start the DNS connection */
-
-	(void) conn_set_lcl(k->conn, (void *) ls);
-	(void) conn_set_peer(k->conn, (void *) ps);
+	(void) conn_set_peer_host(k->conn, k->host, k->port);
 
 	/*
 	 * For now, manually setup the callbacks required for
@@ -181,18 +174,13 @@ proto_aprs_igate_connect(struct proto_aprs_igate *k)
 	 * wait for notification that we actually have succeeded
 	 * before continuing.
 	 */
-	if (conn_setup(k->conn) != 0) {
-		fprintf(stderr, "%s: conn_setup failed\n", __func__);
-		return (-1);
-	}
-
 	if (conn_connect(k->conn) != 0) {
 		fprintf(stderr, "%s: conn_connect failed\n", __func__);
 		return (-1);
 	}
 
 	/* waiting for connect notification now */
-	k->state = PROTO_KISS_CONN_CONNECTING;
+	k->state = PROTO_APRS_IGATE_CONN_CONNECTING;
 
 	return (0);
 }
@@ -212,7 +200,21 @@ proto_aprs_igate_disconnect(struct proto_aprs_igate *k)
 	k->conn = NULL;
 
 	/* Idle state, need to be reconfigured */
-	k->state = PROTO_KISS_CONN_IDLE;
+	k->state = PROTO_APRS_IGATE_CONN_IDLE;
+
+	return (0);
+}
+
+int
+proto_aprs_igate_set_login(struct proto_aprs_igate *k,
+    const char *callsign, const char *pass)
+{
+	if (k->login != NULL)
+		free(k->login);
+	if (k->password != NULL)
+		free(k->password);
+	k->login = strdup(callsign);
+	k->password = strdup(pass);
 
 	return (0);
 }
