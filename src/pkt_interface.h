@@ -8,8 +8,17 @@
  * sort (typically AX25 but hey, who knows what this will grow.)
  */
 
+typedef int pkt_interface_input_fn(struct pkt_interface *, struct pkt *);
+typedef int pkt_interface_output_fn(struct pkt_interface *, struct pkt *);
+
+struct pkt;
+
 struct pkt_interface {
 	TAILQ_ENTRY(, pkt_interface) n;
+
+	/* XXX TODO: abstract input/output queue */
+	TAILQ_HEAD(, pkt) input_queue;
+	TAILQ_HEAD(, pkt) output_queue;
 
 	char *name;
 
@@ -21,7 +30,7 @@ struct pkt_interface {
 	 * of.
 	 */
 	struct {
-
+		void *cbdata;
 	} owner;
 
 	/*
@@ -33,7 +42,7 @@ struct pkt_interface {
 	 * the given packet type.
 	 */
 	struct {
-
+		void *cbdata;
 	} proto;
 
 	/*

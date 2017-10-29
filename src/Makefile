@@ -3,7 +3,10 @@ SRCS=   main.c
 SRCS+=  conn.c
 SRCS+=  util.c
 SRCS+=  buf.c
+SRCS+=  pkt.c
 SRCS+=  buf_list.c
+
+# Protocols
 SRCS+=	proto_kiss.c
 SRCS+=	proto_aprs_igate.c
 
