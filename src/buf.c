@@ -63,3 +63,24 @@ buf_copy(struct buf *b, const char *src, int len)
 	b->len = cl;
 	return (cl);
 }
+
+int
+buf_append(struct buf *b, const char *src, int len)
+{
+	int cl;
+
+	/* Error out if the buffer is full */
+	if (b->size - b->len <= 0)
+		return (-1);
+
+	/* Only copy as much as the space you have */
+	cl = len;
+	if ((b->size - b->len) < cl)
+		cl = b->size - b->len;
+
+	memcpy(b->buf + b->len, src, cl);
+	b->len += cl;
+
+	/* Return how much was apeended */
+	return (cl);
+}
