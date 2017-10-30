@@ -9,6 +9,7 @@
 #include <arpa/inet.h>
 
 #include <event2/event.h>
+#include <event2/dns.h>
 
 #include "util.h"
 #include "eb.h"
@@ -44,10 +45,16 @@ conn_close(struct conn *k)
 	k->is_setup = 0;
 	k->is_connecting = 0;
 	k->is_connected = 0;
+	k->is_dns_done = 0;
 	event_del(k->read_ev);
 	event_del(k->write_ev);
 	event_free(k->read_ev);
 	event_free(k->write_ev);
+
+	if (k->dns_req != NULL) {
+		evdns_getaddrinfo_cancel(k->dns_req);
+		k->dns_req = NULL;
+	}
 
 	if (k->cb.close_cb != NULL) {
 		k->cb.close_cb(k, k->cb.cbdata, 0);
@@ -180,6 +187,7 @@ conn_set_peer(struct conn *k, const struct sockaddr_storage *s)
 {
 
 	memcpy(&k->peer, s, sizeof(struct sockaddr_storage));
+	k->is_dst_peer_set = 1;
 	return (0);
 }
 
@@ -192,6 +200,8 @@ conn_set_peer_host(struct conn *k, const char *host, int port)
 	k->dst_host.host = strdup(host);
 	k->dst_host.port = port;
 
+	k->is_dst_peer_set = 0;
+
 	return (0);
 }
 
@@ -203,6 +213,7 @@ static int
 conn_setup(struct conn *k)
 {
 	int fd;
+	int f;
 
 	fprintf(stderr, "%s: called!\n", __func__);
 
@@ -210,7 +221,21 @@ conn_setup(struct conn *k)
 		conn_close(k);
 	}
 
-	fd = socket(PF_INET, SOCK_STREAM, 0);
+	/*
+	 * Get the address family from the peer.
+	 */
+	if (k->peer.ss_family == AF_INET) {
+		f = PF_INET;
+	} else if (k->peer.ss_family == AF_INET6) {
+		f = PF_INET6;
+	} else {
+		fprintf(stderr, "%s: unknown address family (%d)\n",
+		    __func__,
+		    k->peer.ss_family);
+		return (-1);
+	}
+
+	fd = socket(f, SOCK_STREAM, 0);
 	if (fd < 0) {
 		warn("%s: socket", __func__);
 		return (-1);
@@ -237,15 +262,18 @@ conn_connect_connect(struct conn *k)
 	int ret;
 
 	fprintf(stderr, "%s: called; beginning things!\n", __func__);
+	k->is_connecting = 1;
+	k->is_connected = 0;
 
+#if 0
 	ret = bind(k->fd, (void *) &k->lcl, sockaddr_len(&k->lcl));
 	if (ret != 0) {
 		warn("%s: bind", __func__);
 		return (-1);
 	}
+#endif
 
 	/* Begin the connect; handle the case where it completes immediately */
-	/* XXX v4 */
 	ret = connect(k->fd, (void *) &k->peer, sockaddr_len(&k->peer));
 	if (ret == 0) {
 		/* Finished */
@@ -269,23 +297,101 @@ conn_connect_connect(struct conn *k)
 	return (-1);
 }
 
+static void
+conn_evdns_complete_callback(int errcode, struct evutil_addrinfo *addr, void *ptr)
+{
+	struct conn *k = ptr;
+	struct evutil_addrinfo *ai;
+
+	/* We no longer need a reference to this */
+	k->dns_req = NULL;
+
+	fprintf(stderr, "%s: called\n", __func__);
+	if (errcode) {
+		fprintf(stderr, "%s: %s -> %s\n",
+		    __func__,
+		    k->dst_host.host,
+		    evutil_gai_strerror(errcode));
+		conn_connect_error(k, CONN_CONNECT_ERR_DNS_FAIL, 0);
+		return;
+	}
+
+	/*
+	 * ok, so for now we're just going to extract the first entry
+	 * and make it the connect host.
+	 */
+	ai = addr;
+	if (ai == NULL) {
+		/* No entries available */
+		fprintf(stderr, "%s: no entries available\n", __func__);
+		conn_connect_error(k, CONN_CONNECT_ERR_DNS_FAIL, 0);
+		return;
+	}
+
+	/*
+	 * Later on I'll include the socket hint to include the port.
+	 * However for now I'll just pass it in..
+	 */
+	sockaddr_copy(&k->peer, (void *) ai->ai_addr);
+	sockaddr_set_port(&k->peer, k->dst_host.port);
+
+	/* Free the list */
+	evutil_freeaddrinfo(addr);
+
+	/* Now we can schedule a setup and connect */
+	k->is_dns_done = 1;
+
+	if (conn_setup(k) != 0) {
+		fprintf(stderr, "%s: conn_setup failed\n", __func__);
+		conn_connect_error(k, CONN_CONNCET_ERR_SETUP_FAIL, 0);
+		return;
+	}
+	if (conn_connect_connect(k) != 0) {
+		conn_connect_error(k, CONN_CONNCET_ERR_CONN_FAIL, 0);
+		return;
+	}
+
+	/* Ok, so now we just wait for the connection to finish .. */
+}
+
 int
 conn_connect(struct conn *k)
 {
+	struct evutil_addrinfo hints;
 
 	fprintf(stderr, "%s: called!\n", __func__);
 
 	/*
 	 * This is where we would do DNS lookup if required.
 	 */
+	k->is_setup = 0;
+	k->is_connecting = 1;
+	k->is_connected = 0;
+	k->is_dns_done = 0;
 
-	/*
-	 * Assume that we now have enough details, so do it!
-	 */
-	conn_setup(k);
-	conn_connect_connect(k);
+	if (k->is_dst_peer_set == 1) {
+		if (conn_setup(k) != 0)
+			return (-1);
+		if (conn_connect_connect(k) != 0)
+			return (-1);
+		return (0);
+	}
 
-	/* For now; notifications will eventually be deferred */
+	/* Do DNS setup */
+	bzero(&hints, sizeof(hints));
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_flags = EVUTIL_AI_CANONNAME;
+
+	k->dns_req = evdns_getaddrinfo(k->eb->edns, k->dst_host.host, NULL,
+	    &hints, conn_evdns_complete_callback, k);
+	if (k->dns_req == NULL) {
+		fprintf(stderr, "%s: failed to schedule DNS request\n",
+		    __func__);
+		return (-1);
+	}
+
 	return (0);
 }
 

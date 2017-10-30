@@ -11,6 +11,8 @@ typedef enum {
 	CONN_CONNECT_ERR_CONN_CONNECT_FAILURE,
 	CONN_CONNECT_ERR_CONN_REFUSED,
 	CONN_CONNCET_ERR_CONN_TIMEOUT,
+	CONN_CONNCET_ERR_SETUP_FAIL,		/* socket setup failed */
+	CONN_CONNCET_ERR_CONN_FAIL,		/* connection setup failed */
 } conn_connect_err_t;
 
 typedef	int conn_read_cb_t(struct conn *c, void *arg, char *buf,
@@ -27,8 +29,12 @@ struct conn {
 	struct event *read_ev;
 	struct event *write_ev;
 	int is_setup;
+	int is_dns_done;
 	int is_connecting;
 	int is_connected;
+	int is_dst_peer_set;
+
+	struct evdns_getaddrinfo_request *dns_req;
 
 	struct {
 		char *host;
