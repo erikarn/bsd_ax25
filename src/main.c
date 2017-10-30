@@ -30,7 +30,7 @@ main(int argc, const char *argv[])
 
 	pg = proto_aprs_igate_create(&eb);
 	proto_aprs_igate_set_login(pg, "KK6VQK", "-1");
-	proto_aprs_igate_set_host(pg, "rotate2.aprs.net", 14580);
+	proto_aprs_igate_set_host(pg, "rotate.aprs2.net", 14580);
 	proto_aprs_igate_connect(pg);
 
 	event_base_loop(eb.ebase, EVLOOP_NO_EXIT_ON_EMPTY);
