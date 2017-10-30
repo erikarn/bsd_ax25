@@ -5,6 +5,8 @@ typedef enum {
 	PROTO_APRS_IGATE_CONN_NONE,
 	PROTO_APRS_IGATE_CONN_IDLE,
 	PROTO_APRS_IGATE_CONN_CONNECTING,
+	PROTO_APRS_IGATE_CONN_LOGIN,
+	PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE,
 	PROTO_APRS_IGATE_CONN_ACTIVE,
 	PROTO_APRS_IGATE_CONN_CLOSING,
 } proto_aprs_igate_state_t;
@@ -15,11 +17,16 @@ struct proto_aprs_igate {
 
 	proto_aprs_igate_state_t state;
 
+	/* Callsign / password for login */
 	char *login;
 	char *password;
 
+	/* APRS host */
 	char *host;
 	int port;
+
+	/* Provided APRS server info */
+	char *aprs_server_info;
 
 	struct {
 		float filt_lat, filt_long;

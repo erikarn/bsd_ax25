@@ -63,6 +63,8 @@ proto_aprs_igate_free(struct proto_aprs_igate *k)
 		free(k->password);
 	if (k->rx_buf)
 		buf_free(k->rx_buf);
+	if (k->aprs_server_info)
+		free(k->aprs_server_info);
 	free(k);
 }
 
@@ -80,7 +82,9 @@ proto_aprs_igate_set_host(struct proto_aprs_igate *k, const char *host, int port
 static int
 proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 {
-	int i;
+	struct proto_aprs_igate *k = arg;
+	int r;
+//	int i;
 
 	fprintf(stderr, "%s: called\n", __func__);
 
@@ -100,6 +104,9 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 
 	fprintf(stderr, "%s: read %d bytes\n", __func__, len);
 
+	fprintf(stderr, "%s: --> %.*s\n", __func__, len, buf);
+
+#if 0
 	for (i = 0; i < len; i++) {
 		if (i % 16 == 0)
 			fprintf(stderr, "0x%.4x: ", i);
@@ -108,6 +115,26 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 			fprintf(stderr, "\n");
 	}
 	fprintf(stderr, "\n");
+#endif
+
+	/* Append into incoming buffer */
+	r = buf_append(k->rx_buf, buf, len);
+	if (r < len) {
+		fprintf(stderr, "%s: error appending to buffer (r = %d)\n",
+		    __func__,
+		    r);
+		/* XXX TODO: notify owner */
+		return (0);
+	}
+
+	/* Call per-state handler */
+	switch (k->state) {
+	case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
+	case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
+		break;
+	default:
+		break;
+	}
 
 	return (0);
 }
@@ -123,8 +150,25 @@ proto_aprs_igate_write_cb(struct conn *c, void *arg, int xerrno)
 static int
 proto_aprs_igate_connect_cb(struct conn *c, void *arg, int rettype, int xerrno)
 {
+	struct proto_aprs_igate *k = arg;
 
 	fprintf(stderr, "%s: called\n", __func__);
+	/* XXX owner notification */
+
+	if (rettype != CONN_CONNECT_ERR_OK) {
+		fprintf(stderr,
+		    "%s: didn't connect successfully!; rettype=%d, errno=%d\n",
+		    __func__,
+		    rettype,
+		    xerrno);
+		return (0);
+	}
+
+	/*
+	 * Ok, connected - so advance to the login state, wait for the
+	 * login prompt.
+	 */
+	k->state = PROTO_APRS_IGATE_CONN_LOGIN;
 	return (0);
 }
 
@@ -133,6 +177,7 @@ proto_aprs_igate_close_cb(struct conn *c, void *arg, int xerrno)
 {
 
 	fprintf(stderr, "%s: called\n", __func__);
+	/* XXX owner notification */
 	return (0);
 }
 
