@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <err.h>
 #include <sys/queue.h>
+#include <sys/param.h>
 
 #include "buf.h"
 
@@ -83,4 +84,67 @@ buf_append(struct buf *b, const char *src, int len)
 
 	/* Return how much was apeended */
 	return (cl);
+}
+
+int
+buf_consume(struct buf *b, int len)
+{
+	int c;
+
+	c = MIN(len, b->len);
+	memmove(b->buf, b->buf + c, c);
+	b->len -= c;
+
+	return (c);
+}
+
+/*
+ * Consume a string from the given buffer.
+ *
+ * The returned string is a NUL terminated C string.
+ *
+ * The length of the string (minus the terminating NUL)
+ * is returned; 0 if there's no line found, -1 if we
+ * don't have a big enough buffer for the line.
+ */
+int
+buf_gets(struct buf *b, char *buf, int buflen)
+{
+	char *r;
+	int rr;
+
+	/* Find an end-of-line */
+	r = memchr(b->buf, '\n', b->len);
+
+	/* Nothing? no line */
+	if (r == NULL)
+		return (0);
+
+	/* Ok, find out how much data there is in the buffer */
+	rr = r - b->buf;
+
+	/*
+	 * Find out how much data is there; see if there's
+	 * enough space in the target buffer.
+	 */
+	if (rr > (buflen - 1)) {
+		return (-1);
+	}
+
+	/*
+	 * Copy, NUL terminate.
+	 */
+	memcpy(buf, b->buf, rr);
+	buf[rr] = '\0';
+
+	/*
+	 * Consume.
+	 */
+	buf_consume(b, rr);
+
+	/*
+	 * Return how many bytes were consumed in the line, including the
+	 * terminating \r\n.  It's up to the consumer to strip it.
+	 */
+	return (rr);
 }
