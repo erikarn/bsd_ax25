@@ -148,3 +148,20 @@ buf_gets(struct buf *b, char *buf, int buflen)
 	 */
 	return (rr);
 }
+
+/*
+ * Trim the CRLF off the end of a buffer.
+ */
+int
+buf_trim_crlf(struct buf *b)
+{
+	int r = 0;
+
+	while ((b->len) != 0 &&
+	    (b->buf[b->len - 1] == '\r' || b->buf[b->len - 1] == '\n')) {
+		b->len--;
+		r++;
+	}
+
+	return (r);
+}
