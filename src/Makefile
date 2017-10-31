@@ -5,6 +5,7 @@ SRCS+=  util.c
 SRCS+=  buf.c
 SRCS+=  pkt.c
 SRCS+=  buf_list.c
+SRCS+=  str.c
 
 # Protocols
 SRCS+=	proto_kiss.c
