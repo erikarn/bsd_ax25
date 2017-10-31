@@ -82,9 +82,9 @@ proto_aprs_igate_set_host(struct proto_aprs_igate *k, const char *host, int port
 static int
 proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 {
+	char rbuf[1024];
 	struct proto_aprs_igate *k = arg;
 	int r;
-//	int i;
 
 	fprintf(stderr, "%s: called\n", __func__);
 
@@ -101,21 +101,8 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 		return (0);
 	}
 
-
 	fprintf(stderr, "%s: read %d bytes\n", __func__, len);
-
 	fprintf(stderr, "%s: --> %.*s\n", __func__, len, buf);
-
-#if 0
-	for (i = 0; i < len; i++) {
-		if (i % 16 == 0)
-			fprintf(stderr, "0x%.4x: ", i);
-		fprintf(stderr, "%.2x ", buf[i] & 0xff);
-		if (i % 16 == 15)
-			fprintf(stderr, "\n");
-	}
-	fprintf(stderr, "\n");
-#endif
 
 	/* Append into incoming buffer */
 	r = buf_append(k->rx_buf, buf, len);
@@ -127,14 +114,28 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 		return (0);
 	}
 
+	/* Extract out lines until we can't! */
+	while ((r = buf_gets(k->rx_buf, rbuf, 1024)) > 0) {
+		fprintf(stderr, "%s: buf: '%.*s'\n", __func__, r, rbuf);
+	}
+
+	/* 0? We're ok. -1? Error */
+	if (r < 0) {
+		fprintf(stderr, "%s: error buf_gets; should close\n", __func__);
+		return (0);
+	}
+
+#if 0
 	/* Call per-state handler */
 	switch (k->state) {
 	case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
+		break;
 	case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
 		break;
 	default:
 		break;
 	}
+#endif
 
 	return (0);
 }
