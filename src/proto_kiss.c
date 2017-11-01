@@ -119,10 +119,12 @@ proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 }
 
 static int
-proto_kiss_write_cb(struct conn *c, void *arg, int xerrno)
+proto_kiss_write_cb(struct conn *c, void *arg, struct buf *b, int rettype,
+    int xerrno)
 {
 
 	fprintf(stderr, "%s: called\n", __func__);
+	buf_free(b);
 	return (0);
 }
 

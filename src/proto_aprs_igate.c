@@ -81,6 +81,62 @@ proto_aprs_igate_set_host(struct proto_aprs_igate *k, const char *host, int port
 }
 
 static int
+proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
+    int len)
+{
+	struct buf *b;
+	char bb[1024];
+	int r;
+
+	/* Save the server info */
+	if (k->aprs_server_info)
+		free(k->aprs_server_info);
+	k->aprs_server_info = strndup(buf, len);
+
+	/* Send our login string */
+	r = snprintf(bb, 1024, "user %s pass %s vers %s %s filter r/%.2f/%.2f/%d\n",
+	    k->login,
+	    k->password,
+	    "bsd_ax25",
+	    "0.1",
+	    k->filter_settings.filt_lat,
+	    k->filter_settings.filt_long,
+	    (int) k->filter_settings.filt_range);
+
+	b = buf_create(1024);
+	if (b == NULL) {
+		fprintf(stderr, "%s: failed to allocate buf\n", __func__);
+		return (-1);
+	}
+
+	if (buf_append(b, bb, r) != r) {
+		fprintf(stderr, "%s: couldn't add login string to buf\n",
+		    __func__);
+		buf_free(b);
+		return (-1);
+	}
+
+	k->state = PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE;
+
+	if (conn_write(k->conn, b) != 0) {
+		fprintf(stderr, "%s: couldn't queue buffer for writing\n",
+		    __func__);
+		buf_free(b);
+		return (-1);
+	}
+
+	return (0);
+}
+
+static int
+proto_aprs_igate_read_login_response(struct proto_aprs_igate *k,
+    const char *buf, int len)
+{
+
+	return (0);
+}
+
+static int
 proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 {
 	char rbuf[1024];
@@ -127,26 +183,29 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 		return (0);
 	}
 
-#if 0
 	/* Call per-state handler */
 	switch (k->state) {
 	case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
+		proto_aprs_igate_read_login(k, buf, r);
 		break;
 	case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
+		proto_aprs_igate_read_login_response(k, buf, r);
 		break;
 	default:
 		break;
 	}
-#endif
 
 	return (0);
 }
 
 static int
-proto_aprs_igate_write_cb(struct conn *c, void *arg, int xerrno)
+proto_aprs_igate_write_cb(struct conn *c, void *arg, struct buf *b,
+    int rettype, int xerrno)
 {
 
-	fprintf(stderr, "%s: called\n", __func__);
+	fprintf(stderr, "%s: called; buf=%p, rettype=%d, errno=%d\n", __func__,
+	    b, rettype, xerrno);
+	buf_free(b);
 	return (0);
 }
 
