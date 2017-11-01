@@ -9,6 +9,7 @@
 
 #include <event2/event.h>
 
+#include "str.h"
 #include "buf.h"
 #include "buf_list.h"
 #include "conn.h"
@@ -116,6 +117,7 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 
 	/* Extract out lines until we can't! */
 	while ((r = buf_gets(k->rx_buf, rbuf, 1024)) > 0) {
+		r = str_trim(rbuf, r);
 		fprintf(stderr, "%s: buf: '%.*s'\n", __func__, r, rbuf);
 	}
 
