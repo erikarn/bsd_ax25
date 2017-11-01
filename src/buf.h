@@ -8,6 +8,7 @@ struct buf {
 	char *buf;
 	int len;
 	int size;
+	int write_offset;
 };
 
 extern	struct buf * buf_create(int len);

@@ -14,6 +14,7 @@
 #include "util.h"
 #include "eb.h"
 #include "buf.h"
+#include "buf_list.h"
 #include "conn.h"
 
 struct conn *
@@ -24,6 +25,12 @@ conn_create(struct ebase *eb)
 	k = calloc(1, sizeof(*k));
 	if (k == NULL) {
 		warn("%s: calloc", __func__);
+		return (NULL);
+	}
+
+	k->write_q = buf_list_create();
+	if (k->write_q == NULL) {
+		free(k);
 		return (NULL);
 	}
 
@@ -58,6 +65,20 @@ conn_close(struct conn *k)
 
 	if (k->cb.close_cb != NULL) {
 		k->cb.close_cb(k, k->cb.cbdata, 0);
+	}
+
+	conn_write_flush(k);
+
+	return (0);
+}
+
+int
+conn_write_flush(struct conn *k)
+{
+	struct buf *b;
+
+	while ((b = buf_list_pop(k->write_q)) != NULL) {
+		buf_free(b);
 	}
 
 	return (0);
@@ -136,6 +157,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 	struct conn *k = arg;
 	int optarg, ret;
 	socklen_t len;
+	struct buf *b;
 
 	fprintf(stderr, "%s: called!\n", __func__);
 
@@ -163,6 +185,7 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 		}
 		if (ret == 0 && optarg == 0) {
 			conn_connect_complete(k);
+			/* XXX TODO: check if we have pending writeq? */
 			return;
 		}
 		/* issue? */
@@ -172,6 +195,43 @@ conn_write_cb(evutil_socket_t fd, short what, void *arg)
 	}
 
 	/* ok, if we get here, we can write normal data */
+	if (k->is_connected == 1) {
+		while ((b = buf_list_pop(k->write_q)) != NULL) {
+			ret = write(k->fd, b->buf + b->write_offset, b->len - b->write_offset);
+			if (ret == 0) {
+				/* EOF; notify caller */
+				k->cb.write_cb(k, k->cb.cbdata, b,
+				    CONN_WRITE_ERR_EOF, 0);
+				break;
+			}
+			/* Handle any other failure as temporary; should revisit */
+			if (ret < 0) {
+				buf_list_push(k->write_q, b);
+				break;
+			}
+
+			/* Finished this buf? */
+			if (ret + b->write_offset >= b->len) {
+				if (ret + b->write_offset > b->len) {
+					fprintf(stderr,
+					     "%s: ERR: wrote too much?\n",
+					     __func__);
+				}
+				k->cb.write_cb(k, k->cb.cbdata, b,
+				    CONN_WRITE_ERR_OK, 0);
+				continue;
+			}
+
+			/* Partial buffer write */
+			b->write_offset += ret;
+			/* Put it back at head of queue for more writing */
+			buf_list_push(k->write_q, b);
+		}
+
+		/* Any more data? Not EOF? Requeue */
+		if (ret != 0 && buf_list_isempty(k->write_q) == 0)
+			event_add(k->write_ev, NULL);
+	}
 }
 
 int
@@ -401,5 +461,17 @@ conn_free(struct conn *k)
 	conn_close(k);
 	if (k->dst_host.host)
 		free(k->dst_host.host);
+	buf_list_free(k->write_q);
 	free(k);
+}
+
+int
+conn_write(struct conn *k, struct buf *b)
+{
+
+	if (buf_list_append(k->write_q, b) != 0) {
+		return (-1);
+	}
+	event_add(k->write_ev, NULL);
+	return (0);
 }
