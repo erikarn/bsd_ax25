@@ -121,7 +121,7 @@ buf_gets(struct buf *b, char *buf, int buflen)
 		return (0);
 
 	/* Ok, find out how much data there is in the buffer */
-	rr = r - b->buf;
+	rr = r - b->buf + 1;
 
 	/*
 	 * Find out how much data is there; see if there's

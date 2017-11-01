@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include <event2/event.h>
+#include <netdb.h>
 
 #include "os/endian.h"
 

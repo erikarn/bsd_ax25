@@ -34,7 +34,7 @@ main(int argc, const char *argv[])
 
 	pg->filter_settings.filt_lat = 37.76;
 	pg->filter_settings.filt_long = -122.19;
-	pg->filter_settings.filt_range = 100;
+	pg->filter_settings.filt_range = 1000;
 
 	proto_aprs_igate_connect(pg);
 
