@@ -173,26 +173,25 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 
 	/* Extract out lines until we can't! */
 	while ((r = buf_gets(k->rx_buf, rbuf, 1024)) > 0) {
+		/* 0? We're ok. -1? Error */
+		if (r < 0) {
+			fprintf(stderr, "%s: error buf_gets; should close\n", __func__);
+			return (0);
+		}
 		r = str_trim(rbuf, r);
 		fprintf(stderr, "%s: buf: '%.*s'\n", __func__, r, rbuf);
-	}
 
-	/* 0? We're ok. -1? Error */
-	if (r < 0) {
-		fprintf(stderr, "%s: error buf_gets; should close\n", __func__);
-		return (0);
-	}
-
-	/* Call per-state handler */
-	switch (k->state) {
-	case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
-		proto_aprs_igate_read_login(k, buf, r);
-		break;
-	case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
-		proto_aprs_igate_read_login_response(k, buf, r);
-		break;
-	default:
-		break;
+		/* Call per-state handler */
+		switch (k->state) {
+		case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
+			proto_aprs_igate_read_login(k, buf, r);
+			break;
+		case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
+			proto_aprs_igate_read_login_response(k, buf, r);
+			break;
+		default:
+			break;
+		}
 	}
 
 	return (0);
