@@ -97,11 +97,50 @@ ATF_TC_BODY(test_append_line_1, tc)
 	buf_free(b);
 }
 
+
+/*
+ * Append three lines, ensure we can consume those lines.
+ */
+ATF_TC_WITHOUT_HEAD(test_append_line_all);
+ATF_TC_BODY(test_append_line_all, tc)
+{
+	char buf[1024];
+	struct buf *b;
+	int i, r, l;
+
+	b = buf_create(65536);
+	ATF_REQUIRE(b != NULL);
+
+	for (i = 0; test_strings[i] != NULL; i++) {
+		l = strlen(test_strings[i]);
+		printf("%s: testing string %s\r\n", __func__, test_strings[i]);
+		printf("%s: strlen=%d, buf len=%d\n", __func__, l, b->len);
+		r = buf_append(b, test_strings[i], l);
+		printf("%s: append len=%d\n", __func__, r);
+		ATF_REQUIRE(r == l);
+	}
+
+	for (i = 0; test_strings[i] != NULL; i++) {
+		l = strlen(test_strings[i]);
+		r = buf_gets(b, buf, 1024);
+		printf("%s: gets len=%d\n", __func__, r);
+		ATF_REQUIRE(r == l);
+
+		ATF_REQUIRE(memcmp(buf, test_strings[i], l) == 0);
+		printf("==\n");
+	}
+
+	buf_free(b);
+}
+
+
+
 ATF_TP_ADD_TCS(tp)
 {
 
 	ATF_TP_ADD_TC(tp, test_test);
 	ATF_TP_ADD_TC(tp, test_create_destroy);
 	ATF_TP_ADD_TC(tp, test_append_line_1);
+	ATF_TP_ADD_TC(tp, test_append_line_all);
 	return (atf_no_error());
 }
