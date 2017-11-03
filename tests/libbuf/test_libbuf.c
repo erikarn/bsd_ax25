@@ -119,15 +119,16 @@ ATF_TC_BODY(test_append_line_all, tc)
 		printf("%s: append len=%d\n", __func__, r);
 		ATF_REQUIRE(r == l);
 	}
+	printf("%s: ==== time to read\n", __func__);
 
 	for (i = 0; test_strings[i] != NULL; i++) {
 		l = strlen(test_strings[i]);
 		r = buf_gets(b, buf, 1024);
-		printf("%s: gets len=%d\n", __func__, r);
+		printf("%s: [%d] strlen=%d, gets len=%d\n", __func__, i, l, r);
 		ATF_REQUIRE(r == l);
 
 		ATF_REQUIRE(memcmp(buf, test_strings[i], l) == 0);
-		printf("==\n");
+		printf("%s: ==\n", __func__);
 	}
 
 	buf_free(b);
