@@ -91,8 +91,13 @@ buf_consume(struct buf *b, int len)
 {
 	int c;
 
+	if (len < 0)
+		return (-1);
+	if (len == 0)
+		return (0);
+
 	c = MIN(len, b->len);
-	memmove(b->buf, b->buf + c, c);
+	memmove(b->buf, b->buf + c, b->len - c);
 	b->len -= c;
 
 	return (c);
