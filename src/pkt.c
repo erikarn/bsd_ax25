@@ -41,6 +41,10 @@ error:
 void
 pkt_free(struct pkt *p)
 {
+
+	if (p->pp_cb.free_cb != NULL)
+		p->pp_cb.free_cb(p, p->pp_cb.arg);
+
 	if (p->buf)
 		buf_free(p->buf);
 	free(p);

@@ -158,8 +158,10 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 		return (0);
 	}
 
+#if 0
 	fprintf(stderr, "%s: read %d bytes\n", __func__, len);
 	fprintf(stderr, "%s: --> %.*s\n", __func__, len, buf);
+#endif
 
 	/* Append into incoming buffer */
 	r = buf_append(k->rx_buf, buf, len);
