@@ -20,12 +20,18 @@ kiss_payload_parse(const uint8_t *sbuf, int slen, uint8_t *dbuf, int *dlen)
 {
 	int l, i;
 	int found_start = 0;
+	int kiss_channel;
 
 	l = 0;
 	for (i = 0; i < slen; i++) {
 		/* Search for start of frame */
 		if (found_start == 0 && sbuf[i] == FEND) {
 			found_start = 1;
+			/* Consume the next byte - that's the channel identifier */
+			if (i < (slen - 1)) {
+				kiss_channel = sbuf[i+1];
+				i++;	/* Skip this byte too */
+			}
 			continue;
 		}
 		/* Skip bytes until we see a start of frame */

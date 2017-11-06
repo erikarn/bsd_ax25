@@ -5,10 +5,13 @@ SRCS=   main.c
 SRCS+=  pkt.c
 SRCS+=  str.c
 
+# KISS
+SRCS+=  kiss.c
+
 # APRS
 SRCS+=  pkt_l3_aprs.c
 
-# Protocols
+# Protocol clients
 SRCS+=	proto_kiss.c
 SRCS+=	proto_aprs_igate.c
 
