@@ -286,7 +286,10 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 			return (0);
 		}
 		r = str_trim(rbuf, r);
+
+#if 0
 		fprintf(stderr, "%s: buf: '%.*s'\n", __func__, r, rbuf);
+#endif
 
 		/* Call per-state handler */
 		switch (k->state) {
