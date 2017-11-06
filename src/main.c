@@ -10,7 +10,22 @@
 #include "buf.h"
 #include "conn.h"
 #include "proto_kiss.h"
+#include "pkt_l3_aprs.h"
 #include "proto_aprs_igate.h"
+
+static void
+igate_read_cb(struct proto_aprs_igate *k, void *arg,
+    struct pkt_l3_aprs *l)
+{
+
+	printf("SRC: %s; PATH: %s; PAYLOAD: %s\n",
+	    l->src,
+	    l->path,
+	    l->payload);
+	printf("====\n");
+
+	pkt_l3_aprs_free(l);
+}
 
 int
 main(int argc, const char *argv[])
@@ -31,6 +46,8 @@ main(int argc, const char *argv[])
 	pg = proto_aprs_igate_create(&eb);
 	proto_aprs_igate_set_login(pg, "KK6VQK", "-1");
 	proto_aprs_igate_set_host(pg, "rotate.aprs2.net", 14580);
+	pg->owner_cb.arg = NULL;
+	pg->owner_cb.read_cb = igate_read_cb;
 
 	pg->filter_settings.filt_lat = 37.76;
 	pg->filter_settings.filt_long = -122.19;

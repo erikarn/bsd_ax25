@@ -1,6 +1,15 @@
 #ifndef	__PROTO_APRS_IGATE_H__
 #define	__PROTO_APRS_IGATE_H__
 
+struct proto_aprs_igate;
+struct pkt_l3_aprs;
+typedef	void proto_aprs_igate_owner_read_cb_t(struct proto_aprs_igate *,
+	    void *arg, struct pkt_l3_aprs *l);
+typedef	void proto_aprs_igate_owner_close_cb_t(struct proto_aprs_igate *,
+	    void *arg);
+typedef	void proto_aprs_igate_owner_connected_cb_t(struct proto_aprs_igate *,
+	    void *arg, int status);
+
 typedef enum {
 	PROTO_APRS_IGATE_CONN_NONE,
 	PROTO_APRS_IGATE_CONN_IDLE,
@@ -27,6 +36,7 @@ struct proto_aprs_igate {
 
 	/* Provided APRS server info */
 	char *aprs_server_info;
+	char *aprs_login_response;
 
 	struct {
 		float filt_lat, filt_long;
@@ -34,6 +44,13 @@ struct proto_aprs_igate {
 	} filter_settings;
 
 	struct buf *rx_buf;
+
+	struct {
+		proto_aprs_igate_owner_read_cb_t *read_cb;
+		proto_aprs_igate_owner_close_cb_t *close_cb;
+		proto_aprs_igate_owner_connected_cb_t *connected_cb;
+		void *arg;
+	} owner_cb;
 };
 
 extern	struct proto_aprs_igate * proto_aprs_igate_create(struct ebase *eb);

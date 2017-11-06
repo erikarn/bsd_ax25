@@ -13,6 +13,7 @@
 #include "buf.h"
 #include "buf_list.h"
 #include "conn.h"
+#include "pkt_l3_aprs.h"
 #include "proto_aprs_igate.h"
 
 /*
@@ -66,6 +67,8 @@ proto_aprs_igate_free(struct proto_aprs_igate *k)
 		buf_free(k->rx_buf);
 	if (k->aprs_server_info)
 		free(k->aprs_server_info);
+	if (k->aprs_login_response)
+		free(k->aprs_login_response);
 	free(k);
 }
 
@@ -128,14 +131,116 @@ proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
 	return (0);
 }
 
+/*
+ * Read in active responses.
+ *
+ * This state is when we receive normal APRS igate lines.
+ * They may be actual payloads or server responses preceded with
+ * a '#' character.
+ */
 static int
-proto_aprs_igate_read_login_response(struct proto_aprs_igate *k,
+proto_aprs_igate_read_active(struct proto_aprs_igate *k,
     const char *buf, int len)
 {
+	struct pkt_l3_aprs *l;
+	const char *b, *s, *pt, *py;
+	int ns, npt, npy;
+	int pl;
+
+	/* Skip blank lines */
+	if (len == 0)
+		return (0);
+
+	/* Skip comments / server responses for now */
+	if (buf[0] == '#')
+		return (0);
+
+	/*
+	 * Ok, TNC2 monitor line.
+	 *
+	 * eg: TG9AOR-D>APDG02,TCPIP*,qAC,TG9AOR-DS:!1431.68ND09027.24W&RNG0001 2m Voice 145.03000MHz +0.0000MHz
+	 *
+	 * The format is:
+	 * SRC, DST path:payload
+	 *
+	 * The destination path is .. more complicated for APRS, but we
+	 * are not the ones parsing this string out right now.
+	 * That will be handled by some shared APRS code that sits
+	 * above us.
+	 */
+
+	/* simple parsing - XXX should be replaced */
+	pl = len;
+	s = b = buf;
+
+	/* Find the end of the ssid */
+	pt = memchr(buf, '>', pl);
+	if (pt == NULL) {
+		return (0);
+	}
+	ns = pt - buf;
+	/* Skip src + '>' */
+	pl -= ns + 1;
+	pt++;
+	buf += ns;
+
+	/* find the end of the path */
+	py = memchr(buf, ':', pl);
+	if (py == NULL) {
+		return (0);
+	}
+	npt = py - buf - 1;
+	/* Skip path + ":" */
+	pl -= npt + 1;
+	py++;
+	buf += npt;
+
+	/* Rest of the string is payload */
+	npy = pl;
+
+	/* Create an L3 APRS piece */
+	l = pkt_l3_aprs_create();
+	if (l == NULL)
+		return (0);
+
+	/* Populate the parsed frame */
+	pkt_l3_aprs_set_src(l, s, ns);
+	pkt_l3_aprs_set_path(l, pt, npt);
+	pkt_l3_aprs_set_payload(l, py, npy);
+
+	/* Call the owner with this */
+	k->owner_cb.read_cb(k, k->owner_cb.arg, l);
 
 	return (0);
 }
 
+/*
+ * Read login response.
+ *
+ * Here's where we would check for an error and tell the owner
+ * whether we're connected or not.
+ */
+static int
+proto_aprs_igate_read_login_response(struct proto_aprs_igate *k,
+    const char *buf, int len)
+{
+	if (k->aprs_login_response)
+		free(k->aprs_login_response);
+	k->aprs_login_response = strndup(buf, len);
+
+	k->state = PROTO_APRS_IGATE_CONN_ACTIVE;
+
+	return (0);
+}
+
+/*
+ * Read callback from libconn.
+ *
+ * This is called whenever more data is available.
+ *
+ * (For now there's no flow control, so we can't tell the caller
+ * to stop sending us data..)
+ */
 static int
 proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 {
@@ -186,10 +291,13 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 		/* Call per-state handler */
 		switch (k->state) {
 		case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
-			proto_aprs_igate_read_login(k, buf, r);
+			proto_aprs_igate_read_login(k, rbuf, r);
 			break;
 		case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
-			proto_aprs_igate_read_login_response(k, buf, r);
+			proto_aprs_igate_read_login_response(k, rbuf, r);
+			break;
+		case PROTO_APRS_IGATE_CONN_ACTIVE:	/* Running */
+			proto_aprs_igate_read_active(k, rbuf, r);
 			break;
 		default:
 			break;
