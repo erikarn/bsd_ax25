@@ -90,12 +90,15 @@ conn_connect_complete(struct conn *k)
 
 	k->is_connecting = 0;
 	k->is_connected = 1;
-	event_add(k->read_ev, NULL);
 	fprintf(stderr, "%s: ready!\n", __func__);
 
 	if (k->cb.connect_cb != NULL) {
 		k->cb.connect_cb(k, k->cb.cbdata, CONN_CONNECT_ERR_OK, 0);
 	}
+
+	/* If the caller started us paused then don't start reading */
+	if (k->is_paused == 0)
+		event_add(k->read_ev, NULL);
 }
 
 static void
@@ -120,6 +123,8 @@ conn_read_cb(evutil_socket_t fd, short what, void *arg)
 	fprintf(stderr, "%s: called!\n", __func__);
 
 	/* XXX loop */
+	/* XXX zero-copy read todo? */
+
 	ret = read(k->fd, buf, 1024);
 	if (ret < 0) {
 		if (errno == EWOULDBLOCK)
@@ -473,5 +478,29 @@ conn_write(struct conn *k, struct buf *b)
 		return (-1);
 	}
 	event_add(k->write_ev, NULL);
+	return (0);
+}
+
+int
+conn_read_pause(struct conn *k)
+{
+
+	k->is_paused = 1;
+
+	/* Only flip this off if we're connected */
+	if (k->is_connected)
+		event_del(k->read_ev);
+	return (0);
+}
+
+int
+conn_read_resume(struct conn *k)
+{
+
+	k->is_paused = 0;
+
+	/* Only flip this on if we're connected */
+	if (k->is_connected)
+		event_add(k->read_ev, NULL);
 	return (0);
 }

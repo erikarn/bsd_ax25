@@ -41,6 +41,7 @@ struct conn {
 	int is_connecting;
 	int is_connected;
 	int is_dst_peer_set;
+	int is_paused;
 
 	struct evdns_getaddrinfo_request *dns_req;
 
@@ -70,5 +71,7 @@ extern	void conn_free(struct conn *k);
 
 extern	int conn_write(struct conn *k, struct buf *b);
 extern	int conn_write_flush(struct conn *k);
+extern	int conn_read_pause(struct conn *k);
+extern	int conn_read_resume(struct conn *k);
 
 #endif	/* __CONN_H__ */
