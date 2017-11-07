@@ -14,6 +14,8 @@
 #include "buf_list.h"
 #include "conn.h"
 #include "proto_kiss.h"
+#include "ax25.h"
+#include "kiss.h"
 
 /*
  * This implements a connection to a KISS TNC -
@@ -39,12 +41,11 @@ proto_kiss_create(struct ebase *eb)
 	}
 
 	/* XXX TODO: may want to make this configurable */
-	k->rx_decap.buf = malloc(1024);
-	if (k->rx_decap.buf == NULL) {
+	k->rx_buf = buf_create(65536);
+	if (k->rx_buf == NULL) {
 		warn("%s: malloc, 1024 bytes", __func__);
 		goto err;
 	}
-	k->rx_decap.size = 1024;
 
 	k->eb = eb;
 	return (k);
@@ -54,8 +55,8 @@ err:
 		conn_free(k->conn);
 	if (k->host)
 		free(k->host);
-	if (k->rx_decap.buf)
-		free(k->rx_decap.buf);
+	if (k->rx_buf)
+		buf_free(k->rx_buf);
 	free(k);
 	return (NULL);
 }
@@ -67,8 +68,8 @@ proto_kiss_free(struct proto_kiss *k)
 		conn_close(k->conn);
 	if (k->host)
 		free(k->host);
-	if (k->rx_decap.buf)
-		free(k->rx_decap.buf);
+	if (k->rx_buf)
+		buf_free(k->rx_buf);
 	free(k);
 }
 
@@ -86,7 +87,11 @@ proto_kiss_set_host(struct proto_kiss *k, const char *host, int port)
 static int
 proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 {
-	int i;
+	struct proto_kiss *k = arg;
+	int r, i;
+	int ss, se;
+	uint8_t *ax25_buf;
+	int ax25_len;
 
 	fprintf(stderr, "%s: called\n", __func__);
 
@@ -103,9 +108,17 @@ proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 		return (0);
 	}
 
-
 	fprintf(stderr, "%s: read %d bytes\n", __func__, len);
 
+	/* Append data into the receive buffer */
+	r = buf_append(k->rx_buf, buf, len);
+	if (r != len) {
+		fprintf(stderr, "%s: buf full, erk\n", __func__);
+		/* XXX error, pass up to caller, stop reading, etc */
+		return (0);
+	}
+
+#if 1
 	for (i = 0; i < len; i++) {
 		if (i % 16 == 0)
 			fprintf(stderr, "0x%.4x: ", i);
@@ -114,6 +127,41 @@ proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 			fprintf(stderr, "\n");
 	}
 	fprintf(stderr, "\n");
+#endif
+	fflush(stderr);
+
+	while (1) {
+		/* Start looking for 0xc0 .. 0xc0 to delimit a packet */
+		ss = -1;
+		se = -1;
+		for (i = 0; i < k->rx_buf->len; i++) {
+			if (ss == -1 && k->rx_buf->buf[i] == 0xc0) {
+				ss = i;
+				continue;
+			}
+			if (ss != -1 && k->rx_buf->buf[i] == 0xc0) {
+				se = i;
+				break;
+			}
+		}
+		printf("ss=%d, se=%d\n", ss, se);
+
+		if (ss == -1 || se == -1)
+			break;
+
+		/* Parse - for now, do both kiss and ax25 decap for debugging! */
+		ax25_buf = malloc(ax25_len);
+		if (ax25_buf != NULL) {
+			kiss_payload_parse(k->rx_buf->buf + ss, se - ss + 1,
+			    ax25_buf, &ax25_len);
+
+			ax25_pkt_parse(ax25_buf, ax25_len);
+		}
+
+		/* Consume everything until second 0xc0 */
+		buf_consume(k->rx_buf, se);
+	}
+
 
 	return (0);
 }
