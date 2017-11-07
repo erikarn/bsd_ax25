@@ -5,6 +5,9 @@ SRCS=   main.c
 SRCS+=  pkt.c
 SRCS+=  str.c
 
+# AX.25
+SRCS+=  ax25.c
+
 # KISS
 SRCS+=  kiss.c
 
