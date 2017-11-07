@@ -108,7 +108,7 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 		if (i >= len)
 			goto end;
 
-		printf("%.*s", i, &buf[i]);
+		printf("%.*s", len - i, &buf[i]);
 	}
 
 	/* PID, info, etc if appropriate */
