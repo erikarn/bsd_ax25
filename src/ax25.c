@@ -90,6 +90,7 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	}
 
 	/* Following byte is the control byte */
+	/* XXX TODO: should handle PID escape sequences, multi-byte protocols */
 	ax25_pkt_control_parse(buf[i]);
 	ctrl = buf[i];
 	i++;
