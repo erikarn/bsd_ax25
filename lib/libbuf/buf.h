@@ -5,7 +5,7 @@ struct buf;
 
 struct buf {
 	TAILQ_ENTRY(buf) n;
-	char *buf;
+	uint8_t *buf;
 	int len;
 	int size;
 	int write_offset;
