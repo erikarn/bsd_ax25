@@ -25,6 +25,8 @@ pkt_l3_aprs_free(struct pkt_l3_aprs *l)
 
 	if (l->src)
 		free(l->src);
+	if (l->dst)
+		free(l->dst);
 	if (l->path)
 		free(l->path);
 	if (l->payload)
@@ -47,6 +49,23 @@ pkt_l3_aprs_set_src(struct pkt_l3_aprs *l, const char *buf, int len)
 
 	return (0);
 }
+
+int
+pkt_l3_aprs_set_dst(struct pkt_l3_aprs *l, const char *buf, int len)
+{
+
+	if (l->dst)
+		free(l->dst);
+
+	l->dst = strndup(buf, len);
+	if (l->dst == NULL) {
+		warn("%s: strndup; %d bytes", __func__, len);
+		return (-1);
+	}
+
+	return (0);
+}
+
 
 int
 pkt_l3_aprs_set_path(struct pkt_l3_aprs *l, const char *buf, int len)

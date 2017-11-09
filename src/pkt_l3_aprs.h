@@ -5,11 +5,13 @@
  * This is the representation of a parsed L3 APRS monitor frame.
  */
 struct pkt_l3_aprs {
-
-	/* aprs source */
+	/* APRS source */
 	char *src;
 
-	/* aprs path */
+	/* APRS destination */
+	char *dst;
+
+	/* APRS digipeater path */
 	char *path;
 
 	/* the rest of the payload */
@@ -20,6 +22,8 @@ extern	struct pkt_l3_aprs * pkt_l3_aprs_create(void);
 extern	void pkt_l3_aprs_free(struct pkt_l3_aprs *);
 
 extern	int pkt_l3_aprs_set_src(struct pkt_l3_aprs *l,
+	    const char *buf, int len);
+extern	int pkt_l3_aprs_set_dst(struct pkt_l3_aprs *l,
 	    const char *buf, int len);
 extern	int pkt_l3_aprs_set_path(struct pkt_l3_aprs *l,
 	    const char *buf, int len);
