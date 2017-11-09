@@ -1,6 +1,11 @@
 #ifndef	__AX25_PKT_H__
 #define	__AX25_PKT_H__
 
+struct ax25_address {
+	char callsign[6];	/* 6 character callsign, space padded */
+	uint8_t ssid;		/* SSID field, C/M bits, etc */
+};
+
 struct pkt_ax25 {
 	/* This is the original packet payload; yes should be buf_t */
 	char *buf;
@@ -19,6 +24,12 @@ struct pkt_ax25 {
 };
 
 extern	int ax25_pkt_parse(const uint8_t *buf, int len);
+
+extern	int ax25_addr_assign(struct ax25_address *a, const char *b,
+	    uint8_t ssid);
+
+extern	struct pkt_ax25 * pkt_ax25_create(void);
+extern	void pkt_ax25_free(struct pkt_ax25 *);
 
 #endif	/* __AX25_PKT_H__ */
 

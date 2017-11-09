@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <err.h>
 
 #include "ax25.h"
 #include "kiss.h"
@@ -132,3 +133,34 @@ main(int argc, const char *argv[])
 	ax25_pkt_parse(kbuf, kbuf_len);
 }
 #endif
+
+int
+ax25_addr_assign(struct ax25_address *a, const char *b, uint8_t ssid)
+{
+
+	memcpy(a->callsign, b, 6);
+	a->ssid = ssid;
+	return (0);
+}
+
+
+struct pkt_ax25 *
+pkt_ax25_create(void)
+{
+	struct pkt_ax25 *p;
+
+	p = calloc(1, sizeof(*p));
+	if (p == NULL) {
+		warn("%s: calloc", __func__);
+		return (NULL);
+	}
+	return (p);
+}
+
+void
+pkt_ax25_free(struct pkt_ax25 *p)
+{
+	if (p->buf)
+		free(p->buf);
+	free(p);
+}

@@ -13,9 +13,9 @@
 #include "buf.h"
 #include "buf_list.h"
 #include "conn.h"
-#include "proto_kiss.h"
 #include "ax25.h"
 #include "kiss.h"
+#include "proto_kiss.h"
 
 /*
  * This implements a connection to a KISS TNC -
@@ -155,6 +155,7 @@ proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
 			kiss_payload_parse(k->rx_buf->buf + ss, se - ss + 1,
 			    ax25_buf, &ax25_len);
 
+			/* Create an AX25 packet, pass it up to the owner */
 			ax25_pkt_parse(ax25_buf, ax25_len);
 		}
 

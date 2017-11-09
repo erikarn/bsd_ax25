@@ -9,6 +9,10 @@ typedef enum {
 	PROTO_KISS_CONN_CLOSING,
 } proto_kiss_conn_state_t;
 
+struct proto_kiss;
+typedef	int proto_kiss_read_cb_t(struct proto_kiss *, void *arg,
+	    struct pkt_ax25 *p);
+
 struct proto_kiss {
 	struct ebase *eb;
 	struct conn *conn;
@@ -23,9 +27,11 @@ struct proto_kiss {
 	int is_full_duplex;
 
 	struct {
-		void *cbdata;
-	} cb;
+		proto_kiss_read_cb_t *read_cb;
+		void *arg;
+	} owner_cb;
 
+	/* buffer for RX decap */
 	struct buf *rx_buf;
 
 	/* XXX TODO: outbound TX packet list to send up to the TNC. */
