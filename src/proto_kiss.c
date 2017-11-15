@@ -85,7 +85,8 @@ proto_kiss_set_host(struct proto_kiss *k, const char *host, int port)
 }
 
 static int
-proto_kiss_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
+proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
+    int xerrno)
 {
 	struct proto_kiss *k = arg;
 	int r, i;

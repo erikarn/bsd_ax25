@@ -66,7 +66,6 @@ pkt_l3_aprs_set_dst(struct pkt_l3_aprs *l, const char *buf, int len)
 	return (0);
 }
 
-
 int
 pkt_l3_aprs_set_path(struct pkt_l3_aprs *l, const char *buf, int len)
 {

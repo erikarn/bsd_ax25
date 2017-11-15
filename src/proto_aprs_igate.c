@@ -84,8 +84,7 @@ proto_aprs_igate_set_host(struct proto_aprs_igate *k, const char *host, int port
 }
 
 static int
-proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
-    int len)
+proto_aprs_igate_read_login(struct proto_aprs_igate *k, struct buf *rb)
 {
 	struct buf *b;
 	char bb[1024];
@@ -94,7 +93,8 @@ proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
 	/* Save the server info */
 	if (k->aprs_server_info)
 		free(k->aprs_server_info);
-	k->aprs_server_info = strndup(buf, len);
+	k->aprs_server_info = strndup((const char *) buf_get_ptr_const(rb),
+	    buf_get_len(rb));
 
 	/* Send our login string */
 	r = snprintf(bb, 1024, "user %s pass %s vers %s %s filter r/%.2f/%.2f/%d\n",
@@ -109,13 +109,15 @@ proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
 	b = buf_create(1024);
 	if (b == NULL) {
 		fprintf(stderr, "%s: failed to allocate buf\n", __func__);
+		buf_free(rb);
 		return (-1);
 	}
 
-	if (buf_append(b, bb, r) != r) {
+	if (buf_append(b, (const uint8_t *) bb, r) != r) {
 		fprintf(stderr, "%s: couldn't add login string to buf\n",
 		    __func__);
 		buf_free(b);
+		buf_free(rb);
 		return (-1);
 	}
 
@@ -125,9 +127,11 @@ proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
 		fprintf(stderr, "%s: couldn't queue buffer for writing\n",
 		    __func__);
 		buf_free(b);
+		buf_free(rb);
 		return (-1);
 	}
 
+	buf_free(rb);
 	return (0);
 }
 
@@ -140,20 +144,29 @@ proto_aprs_igate_read_login(struct proto_aprs_igate *k, const char *buf,
  */
 static int
 proto_aprs_igate_read_active(struct proto_aprs_igate *k,
-    const char *buf, int len)
+    struct buf *rb)
 {
 	struct pkt_l3_aprs *l;
-	const char *b, *s, *pt, *py;
+	const uint8_t *b, *s, *pt, *py;
 	int ns, npt, npy;
 	int pl;
+	const uint8_t *buf;
+	int len;
+
+	buf = buf_get_ptr_const(rb);
+	len = buf_get_len(rb);
 
 	/* Skip blank lines */
-	if (len == 0)
+	if (len == 0) {
+		buf_free(rb);
 		return (0);
+	}
 
 	/* Skip comments / server responses for now */
-	if (buf[0] == '#')
+	if (buf[0] == '#') {
+		buf_free(rb);
 		return (0);
+	}
 
 	/*
 	 * Ok, TNC2 monitor line.
@@ -200,16 +213,21 @@ proto_aprs_igate_read_active(struct proto_aprs_igate *k,
 
 	/* Create an L3 APRS piece */
 	l = pkt_l3_aprs_create();
-	if (l == NULL)
+	if (l == NULL) {
+		buf_free(rb);
 		return (0);
+	}
 
 	/* Populate the parsed frame */
-	pkt_l3_aprs_set_src(l, s, ns);
-	pkt_l3_aprs_set_path(l, pt, npt);
-	pkt_l3_aprs_set_payload(l, py, npy);
+	pkt_l3_aprs_set_src(l, (const char *) s, ns);
+	pkt_l3_aprs_set_path(l, (const char *) pt, npt);
+	pkt_l3_aprs_set_payload(l, (const char *) py, npy);
 
 	/* Call the owner with this */
 	k->owner_cb.read_cb(k, k->owner_cb.arg, l);
+
+	/* Done with the original buffer */
+	buf_free(rb);
 
 	return (0);
 }
@@ -222,13 +240,15 @@ proto_aprs_igate_read_active(struct proto_aprs_igate *k,
  */
 static int
 proto_aprs_igate_read_login_response(struct proto_aprs_igate *k,
-    const char *buf, int len)
+    struct buf *rb)
 {
 	if (k->aprs_login_response)
 		free(k->aprs_login_response);
-	k->aprs_login_response = strndup(buf, len);
+	k->aprs_login_response = strndup((const char *) buf_get_ptr_const(rb),
+	    buf_get_len(rb));
 
 	k->state = PROTO_APRS_IGATE_CONN_ACTIVE;
+	buf_free(rb);
 
 	return (0);
 }
@@ -242,10 +262,11 @@ proto_aprs_igate_read_login_response(struct proto_aprs_igate *k,
  * to stop sending us data..)
  */
 static int
-proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerrno)
+proto_aprs_igate_read_cb(struct conn *c, void *arg, const uint8_t *buf,
+    int len, int xerrno)
 {
-	char rbuf[1024];
 	struct proto_aprs_igate *k = arg;
+	struct buf *rb;
 	int r;
 
 	fprintf(stderr, "%s: called\n", __func__);
@@ -279,13 +300,10 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 	}
 
 	/* Extract out lines until we can't! */
-	while ((r = buf_gets(k->rx_buf, rbuf, 1024)) > 0) {
-		/* 0? We're ok. -1? Error */
-		if (r < 0) {
-			fprintf(stderr, "%s: error buf_gets; should close\n", __func__);
-			return (0);
-		}
-		r = str_trim(rbuf, r);
+	while ((rb = buf_gets(k->rx_buf)) != NULL) {
+
+		/* Trim trailing CRLF */
+		buf_trim_crlf(rb);
 
 #if 0
 		fprintf(stderr, "%s: buf: '%.*s'\n", __func__, r, rbuf);
@@ -294,15 +312,16 @@ proto_aprs_igate_read_cb(struct conn *c, void *arg, char *buf, int len, int xerr
 		/* Call per-state handler */
 		switch (k->state) {
 		case PROTO_APRS_IGATE_CONN_LOGIN:		/* Waiting for server hello string */
-			proto_aprs_igate_read_login(k, rbuf, r);
+			proto_aprs_igate_read_login(k, rb);
 			break;
 		case PROTO_APRS_IGATE_CONN_LOGIN_RESPONSE:	/* Waiting for login attempt */
-			proto_aprs_igate_read_login_response(k, rbuf, r);
+			proto_aprs_igate_read_login_response(k, rb);
 			break;
 		case PROTO_APRS_IGATE_CONN_ACTIVE:	/* Running */
-			proto_aprs_igate_read_active(k, rbuf, r);
+			proto_aprs_igate_read_active(k, rb);
 			break;
 		default:
+			buf_free(rb);
 			break;
 		}
 	}
