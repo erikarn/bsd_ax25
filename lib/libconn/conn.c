@@ -117,7 +117,7 @@ static void
 conn_read_cb(evutil_socket_t fd, short what, void *arg)
 {
 	struct conn *k = arg;
-	char buf[1024];
+	uint8_t buf[1024];
 	int ret;
 
 	fprintf(stderr, "%s: called!\n", __func__);

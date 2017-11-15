@@ -22,7 +22,7 @@ typedef enum {
 	CONN_WRITE_ERR_FAIL,
 } conn_write_err_t;
 
-typedef	int conn_read_cb_t(struct conn *c, void *arg, char *buf,
+typedef	int conn_read_cb_t(struct conn *c, void *arg, const uint8_t *buf,
 	    int len, int xerrno);
 typedef	int conn_write_cb_t(struct conn *c, void *arg, struct buf *b,
 	    int rettype, int xerrno);
