@@ -15,7 +15,7 @@
  * final address field.  -1 if there's an error.
  */
 static int
-ax25_pkt_address_parse(const uint8_t *buf, int len)
+ax25_pkt_address_parse(struct ax25_address *a, const uint8_t *buf, int len)
 {
 	char callsign[8];
 	int i;
@@ -32,11 +32,39 @@ ax25_pkt_address_parse(const uint8_t *buf, int len)
 			return (-1);
 	}
 
+	ax25_addr_assign(a, callsign, buf[7]);
+
 	printf("%s-%d", callsign, buf[7] & 0xf);
 
 	return ((buf[7] & 0x01) == 0);
 }
 
+/*
+ * Note: this is the modulo-8 version of the control parser.
+ * Modulo-128 (a 16 bit control field) allows for more outstanding
+ * frames to be acked, however it is negotiated between TNCs.
+ *
+ * From what I can tell, this is negotiated between two TNCs.
+ * I can't see anything in the frame that tells us explicitly which
+ * mode to decode as; it looks like it's something specific to a
+ * pair of TNCs talking.
+ *
+ * Which makes parsing a pain in the ass, because you can't go
+ * and parse out the the frame entirely until you query some higher
+ * session management layer to know whether data from this particular
+ * source has negotiated certain options.  Sigh.
+ *
+ * For KISS TNCs (eg direwolf), I'm not sure whether direwolf is
+ * doing the data-link layer negotiation or not.  I have a feeling
+ * that it isn't, and it's up to this layer to do all of the heavy
+ * lifting.
+ *
+ * ... which is fine, as for now we can just reject negotiating
+ * modulo 128 and worry about how to teach this code about it later.
+ *
+ * TODO: go re-re-read the ax25 specification to better understand
+ * when/how to flip up to modulo 128.
+ */
 static int
 ax25_pkt_control_parse(uint8_t ctrl)
 {
@@ -71,6 +99,7 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	uint8_t ctrl, pid;
 	i = 0;
 	struct pkt_ax25 *pkt;
+	int naddr = 0;
 
 	printf("%s: total length: %d\n", __func__, len);
 
@@ -85,7 +114,29 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	 * through a repeater.
 	 */
 	do {
-		r = ax25_pkt_address_parse(buf + i, len - i);
+		struct ax25_address a;
+
+		/* Parse out an address */
+		r = ax25_pkt_address_parse(&a, buf + i, len - i);
+		if (r < 0) {
+			/* XXX parser error */
+			break;
+		}
+
+		if (naddr == 0) {
+			ax25_addr_copy(&pkt->dest_addr, &a);
+		} else if (naddr == 1) {
+			ax25_addr_copy(&pkt->source_addr, &a);
+		} else if (pkt->repeater_addr_count > AX25_MAX_NUM_REPEATERS) {
+			/* Too many addresses to parse */
+			fprintf(stderr, "%s: too many addresses\n", __func__);
+			goto fail;
+		} else {
+			ax25_addr_copy(&pkt->repeater_addr_list[pkt->repeater_addr_count], &a);
+			pkt->repeater_addr_count++;
+		}
+		naddr++;
+
 		printf(" ");
 		i = i + 7;
 		if (r < 1)
@@ -125,6 +176,10 @@ end:
 	printf("\n");
 
 	return (pkt);
+fail:
+	if (pkt)
+		pkt_ax25_free(pkt);
+	return (NULL);
 }
 
 int
@@ -134,6 +189,13 @@ ax25_addr_assign(struct ax25_address *a, const char *b, uint8_t ssid)
 	memcpy(a->callsign, b, 6);
 	a->ssid = ssid;
 	return (0);
+}
+
+void
+ax25_addr_copy(struct ax25_address *dst, const struct ax25_address *src)
+{
+
+	memcpy(dst, src, sizeof(*dst));
 }
 
 
@@ -157,6 +219,30 @@ pkt_ax25_free(struct pkt_ax25 *p)
 	free(p);
 }
 
+void
+pkt_ax25_print(struct pkt_ax25 *p)
+{
+	int i;
+
+	printf("  source: %.*s-%d (flags 0x%.2x)\n",
+	    6, p->source_addr.callsign,
+	    p->source_addr.ssid & 0xf,
+	    p->source_addr.ssid);
+
+	printf("  destination: %.*s-%d (flags 0x%.2x)\n",
+	    6, p->dest_addr.callsign,
+	    p->dest_addr.ssid & 0xf,
+	    p->dest_addr.ssid);
+
+	for (i = 0; i < p->repeater_addr_count; i++) {
+		printf("  repeater[%d]: %.*s-%d (flags 0x%.2x)\n",
+		    i,
+		    6, p->repeater_addr_list[i].callsign,
+		    p->repeater_addr_list[i].ssid & 0xf,
+		    p->repeater_addr_list[i].ssid);
+	}
+}
+
 #ifdef STANDALONE
 int
 main(int argc, const char *argv[])
@@ -168,7 +254,27 @@ main(int argc, const char *argv[])
 	kiss_payload_parse(kiss_ax25_aprs_example_1, sizeof(kiss_ax25_aprs_example_1),
 	    kbuf, &kbuf_len);
 	pkt = ax25_pkt_parse(kbuf, kbuf_len);
-	pkt_ax25_free(pkt);
+	if (pkt) {
+		pkt_ax25_print(pkt);
+		pkt_ax25_free(pkt);
+	}
+
+	kiss_payload_parse(kiss_ax25_aprs_example_2, sizeof(kiss_ax25_aprs_example_2),
+	    kbuf, &kbuf_len);
+	pkt = ax25_pkt_parse(kbuf, kbuf_len);
+	if (pkt) {
+		pkt_ax25_print(pkt);
+		pkt_ax25_free(pkt);
+	}
+	kiss_payload_parse(kiss_ax25_aprs_example_3, sizeof(kiss_ax25_aprs_example_3),
+	    kbuf, &kbuf_len);
+	pkt = ax25_pkt_parse(kbuf, kbuf_len);
+	if (pkt) {
+		pkt_ax25_print(pkt);
+		pkt_ax25_free(pkt);
+	}
+
+
 }
 #endif
 

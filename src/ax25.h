@@ -38,6 +38,8 @@ extern	struct pkt_ax25 * ax25_pkt_parse(const uint8_t *buf, int len);
 
 extern	int ax25_addr_assign(struct ax25_address *a, const char *b,
 	    uint8_t ssid);
+extern	void ax25_addr_copy(struct ax25_address *dst,
+	    const struct ax25_address *src);
 
 extern	struct pkt_ax25 * pkt_ax25_create(void);
 extern	void pkt_ax25_free(struct pkt_ax25 *);
