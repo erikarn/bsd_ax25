@@ -11,6 +11,20 @@ struct buf {
 	int write_offset;
 };
 
+static inline uint8_t *
+buf_get_ptr(struct buf *b)
+{
+
+	return (b->buf);
+}
+
+static inline const uint8_t *
+buf_get_ptr_const(struct buf *b)
+{
+
+	return (b->buf);
+}
+
 extern	struct buf * buf_create(int len);
 extern	void buf_free(struct buf *);
 
