@@ -153,11 +153,15 @@ proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
 		/* Parse - for now, do both kiss and ax25 decap for debugging! */
 		ax25_buf = malloc(ax25_len);
 		if (ax25_buf != NULL) {
+			struct pkt_ax25 *pkt;
+
 			kiss_payload_parse(k->rx_buf->buf + ss, se - ss + 1,
 			    ax25_buf, &ax25_len);
 
 			/* Create an AX25 packet, pass it up to the owner */
-			ax25_pkt_parse(ax25_buf, ax25_len);
+			pkt = ax25_pkt_parse(ax25_buf, ax25_len);
+			if (pkt)
+				pkt_ax25_free(pkt);
 		}
 
 		/* Consume everything until second 0xc0 */
