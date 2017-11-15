@@ -64,14 +64,20 @@ ax25_pkt_control_parse(uint8_t ctrl)
 /*
  * Parse an AX.25 payload.
  */
-int
+struct pkt_ax25 *
 ax25_pkt_parse(const uint8_t *buf, int len)
 {
 	int i, r;
 	uint8_t ctrl, pid;
 	i = 0;
+	struct pkt_ax25 *pkt;
 
 	printf("%s: total length: %d\n", __func__, len);
+
+	pkt = pkt_ax25_create();
+	if (pkt == NULL) {
+		return (NULL);
+	}
 
 	/* First up are the address field(s) - note, SSID is the 7th byte */
 	/*
@@ -118,21 +124,8 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 end:
 	printf("\n");
 
-	return (0);
+	return (pkt);
 }
-
-#ifdef STANDALONE
-int
-main(int argc, const char *argv[])
-{
-	uint8_t kbuf[1024];
-	int kbuf_len;
-
-	kiss_payload_parse(kiss_ax25_aprs_example_1, sizeof(kiss_ax25_aprs_example_1),
-	    kbuf, &kbuf_len);
-	ax25_pkt_parse(kbuf, kbuf_len);
-}
-#endif
 
 int
 ax25_addr_assign(struct ax25_address *a, const char *b, uint8_t ssid)
@@ -160,7 +153,23 @@ pkt_ax25_create(void)
 void
 pkt_ax25_free(struct pkt_ax25 *p)
 {
-	if (p->buf)
-		free(p->buf);
+
 	free(p);
 }
+
+#ifdef STANDALONE
+int
+main(int argc, const char *argv[])
+{
+	uint8_t kbuf[1024];
+	int kbuf_len;
+	struct pkt_ax25 *pkt;
+
+	kiss_payload_parse(kiss_ax25_aprs_example_1, sizeof(kiss_ax25_aprs_example_1),
+	    kbuf, &kbuf_len);
+	pkt = ax25_pkt_parse(kbuf, kbuf_len);
+	pkt_ax25_free(pkt);
+}
+#endif
+
+
