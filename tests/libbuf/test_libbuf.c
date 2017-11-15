@@ -71,8 +71,7 @@ static const char *test_strings[] = {
 ATF_TC_WITHOUT_HEAD(test_append_line_1);
 ATF_TC_BODY(test_append_line_1, tc)
 {
-	char buf[1024];
-	struct buf *b;
+	struct buf *b, *rb;
 	int i, r, l;
 
 	b = buf_create(65536);
@@ -82,16 +81,15 @@ ATF_TC_BODY(test_append_line_1, tc)
 		l = strlen(test_strings[i]);
 		printf("%s: testing string %s\r\n", __func__, test_strings[i]);
 		printf("%s: strlen=%d, buf len=%d\n", __func__, l, b->len);
-		r = buf_append(b, test_strings[i], l);
+		r = buf_append(b, (const uint8_t *) test_strings[i], l);
 		printf("%s: append len=%d\n", __func__, r);
 		ATF_REQUIRE(r == l);
 
-		r = buf_gets(b, buf, 1024);
-		printf("%s: gets len=%d\n", __func__, r);
-		ATF_REQUIRE(r == l);
-
-		ATF_REQUIRE(memcmp(buf, test_strings[i], l) == 0);
+		rb = buf_gets(b);
+		ATF_REQUIRE(buf_get_len(rb) == l);
+		ATF_REQUIRE(memcmp(buf_get_ptr(rb), test_strings[i], l) == 0);
 		printf("==\n");
+		buf_free(rb);
 	}
 
 	buf_free(b);
@@ -104,8 +102,7 @@ ATF_TC_BODY(test_append_line_1, tc)
 ATF_TC_WITHOUT_HEAD(test_append_line_all);
 ATF_TC_BODY(test_append_line_all, tc)
 {
-	char buf[1024];
-	struct buf *b;
+	struct buf *b, *rb;
 	int i, r, l;
 
 	b = buf_create(65536);
@@ -115,7 +112,7 @@ ATF_TC_BODY(test_append_line_all, tc)
 		l = strlen(test_strings[i]);
 		printf("%s: testing string %s\r\n", __func__, test_strings[i]);
 		printf("%s: strlen=%d, buf len=%d\n", __func__, l, b->len);
-		r = buf_append(b, test_strings[i], l);
+		r = buf_append(b, (const uint8_t *) test_strings[i], l);
 		printf("%s: append len=%d\n", __func__, r);
 		ATF_REQUIRE(r == l);
 	}
@@ -123,12 +120,12 @@ ATF_TC_BODY(test_append_line_all, tc)
 
 	for (i = 0; test_strings[i] != NULL; i++) {
 		l = strlen(test_strings[i]);
-		r = buf_gets(b, buf, 1024);
+		rb = buf_gets(b);
 		printf("%s: [%d] strlen=%d, gets len=%d\n", __func__, i, l, r);
-		ATF_REQUIRE(r == l);
-
-		ATF_REQUIRE(memcmp(buf, test_strings[i], l) == 0);
+		ATF_REQUIRE(buf_get_len(rb) == l);
+		ATF_REQUIRE(memcmp(buf_get_ptr(rb), test_strings[i], l) == 0);
 		printf("%s: ==\n", __func__);
+		buf_free(rb);
 	}
 
 	buf_free(b);
