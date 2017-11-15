@@ -31,7 +31,7 @@ igate_read_cb(struct proto_aprs_igate *k, void *arg,
 }
 #endif
 
-#if 0
+#if 1
 static int
 kiss_read_cb(struct proto_kiss *p, void *arg,
     struct pkt_ax25 *pkt)
@@ -46,14 +46,14 @@ kiss_read_cb(struct proto_kiss *p, void *arg,
 int
 main(int argc, const char *argv[])
 {
-//	struct proto_kiss *p;
+	struct proto_kiss *p;
 	struct proto_aprs_igate *pg;
 	struct ebase eb;
 
 	eb.ebase = event_base_new();
 	eb.edns = evdns_base_new(eb.ebase, 1);
 
-#if 0
+#if 1
 	p = proto_kiss_create(&eb);
 	p->owner_cb.arg = NULL;
 	p->owner_cb.read_cb = kiss_read_cb;
