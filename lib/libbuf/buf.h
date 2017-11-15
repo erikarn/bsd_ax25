@@ -16,9 +16,9 @@ extern	void buf_free(struct buf *);
 
 extern	int buf_get_len(struct buf *);
 extern	int buf_get_size(struct buf *);
-extern	int buf_copy(struct buf *, const char *src, int len);
-extern	int buf_append(struct buf *, const char *src, int len);
-extern	int buf_gets(struct buf *, char *buf, int buflen);
+extern	int buf_copy(struct buf *, const uint8_t *src, int len);
+extern	int buf_append(struct buf *, const uint8_t *src, int len);
+extern	struct buf * buf_gets(struct buf *);
 extern	int buf_trim_crlf(struct buf *);
 extern	int buf_consume(struct buf *, int);
 

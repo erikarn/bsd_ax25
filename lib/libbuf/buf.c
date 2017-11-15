@@ -53,7 +53,7 @@ buf_get_size(struct buf *b)
 }
 
 int
-buf_copy(struct buf *b, const char *src, int len)
+buf_copy(struct buf *b, const uint8_t *src, int len)
 {
 	int cl;
 
@@ -67,7 +67,7 @@ buf_copy(struct buf *b, const char *src, int len)
 }
 
 int
-buf_append(struct buf *b, const char *src, int len)
+buf_append(struct buf *b, const uint8_t *src, int len)
 {
 	int cl;
 
@@ -107,15 +107,12 @@ buf_consume(struct buf *b, int len)
 /*
  * Consume a string from the given buffer.
  *
- * The returned string is a NUL terminated C string.
- *
- * The length of the string (minus the terminating NUL)
- * is returned; 0 if there's no line found, -1 if we
- * don't have a big enough buffer for the line.
+ * Return NULL if a line wasn't found in the buffer.
  */
-int
-buf_gets(struct buf *b, char *buf, int buflen)
+struct buf *
+buf_gets(struct buf *b)
 {
+	struct buf *bb;
 	uint8_t *r;
 	int rr;
 
@@ -124,24 +121,17 @@ buf_gets(struct buf *b, char *buf, int buflen)
 
 	/* Nothing? no line */
 	if (r == NULL)
-		return (0);
+		return (NULL);
 
 	/* Ok, find out how much data there is in the buffer */
 	rr = r - b->buf + 1;
 
-	/*
-	 * Find out how much data is there; see if there's
-	 * enough space in the target buffer.
-	 */
-	if (rr > (buflen - 1)) {
-		return (-1);
-	}
+	bb = buf_create(rr);
+	if (bb == NULL)
+		return (NULL);
 
-	/*
-	 * Copy, NUL terminate.
-	 */
-	memcpy(buf, b->buf, rr);
-	buf[rr] = '\0';
+	/* Copy */
+	buf_append(bb, b->buf, rr);
 
 	/*
 	 * Consume.
@@ -149,10 +139,9 @@ buf_gets(struct buf *b, char *buf, int buflen)
 	buf_consume(b, rr);
 
 	/*
-	 * Return how many bytes were consumed in the line, including the
-	 * terminating \r\n.  It's up to the consumer to strip it.
+	 * Return the newly consumed line.
 	 */
-	return (rr);
+	return (bb);
 }
 
 /*
