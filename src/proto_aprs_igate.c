@@ -141,14 +141,16 @@ proto_aprs_igate_read_login(struct proto_aprs_igate *k, struct buf *rb)
  * This state is when we receive normal APRS igate lines.
  * They may be actual payloads or server responses preceded with
  * a '#' character.
+ *
+ * XXX TODO: this needs to be completely rewritten! The parser is terrible!
  */
 static int
 proto_aprs_igate_read_active(struct proto_aprs_igate *k,
     struct buf *rb)
 {
 	struct pkt_l3_aprs *l;
-	const uint8_t *b, *s, *pt, *py;
-	int ns, npt, npy;
+	const uint8_t *b, *s, *pt, *py, *sd;
+	int ns, npt, npy, nd;
 	int pl;
 	const uint8_t *buf;
 	int len;
@@ -189,6 +191,7 @@ proto_aprs_igate_read_active(struct proto_aprs_igate *k,
 	/* Find the end of the ssid */
 	pt = memchr(buf, '>', pl);
 	if (pt == NULL) {
+		buf_free(rb);
 		return (0);
 	}
 	ns = pt - buf;
@@ -200,6 +203,7 @@ proto_aprs_igate_read_active(struct proto_aprs_igate *k,
 	/* find the end of the path */
 	py = memchr(buf, ':', pl);
 	if (py == NULL) {
+		buf_free(rb);
 		return (0);
 	}
 	npt = py - buf - 1;
@@ -211,6 +215,57 @@ proto_aprs_igate_read_active(struct proto_aprs_igate *k,
 	/* Rest of the string is payload */
 	npy = pl;
 
+	/*
+	 * Now, let's do the mental gymnastics to turn the path
+	 * into a destination, digipeater list.
+	 *
+	 * Yes, it'd be easier if/when buf_t grows the C++
+	 * string class like parser/iterator stuff.  Eventually!
+	 *
+	 * Look for the first ','.  If we find one then
+	 * everything before it is the destination and the rest is
+	 * the path.  Otherwise, it's a single entry - it's the
+	 * destination and the path is empty.
+	 */
+	sd = memchr(pt, ',', npt);
+	if (sd == NULL) {
+		/* No comma, everything is the source */
+		sd = pt;
+		nd = npt;
+
+		/* .. with no path */
+		pt = NULL;
+		npt = 0;
+	} else {
+		int pl, dl;
+		const uint8_t *p;
+		/*
+		 * sd points to the first path entry, so flip
+		 * things around.
+		 */
+
+		/* length of the dest*/
+		dl = sd - pt;
+
+		/* starting point for the path */
+		p = sd + 1;
+
+		/* Length of the rest of the path */
+		pl = npt - dl - 1;
+
+#if 0
+		printf(" ---> dst: %.*s\n", dl, pt);
+		printf(" ---> path: %.*s\n", pl, p);
+#endif
+
+		/* .. and now */
+		sd = pt;
+		nd = dl;
+
+		pt = p;
+		npt = pl;
+	}
+
 	/* Create an L3 APRS piece */
 	l = pkt_l3_aprs_create();
 	if (l == NULL) {
@@ -220,7 +275,10 @@ proto_aprs_igate_read_active(struct proto_aprs_igate *k,
 
 	/* Populate the parsed frame */
 	pkt_l3_aprs_set_src(l, (const char *) s, ns);
-	pkt_l3_aprs_set_path(l, (const char *) pt, npt);
+	pkt_l3_aprs_set_dst(l, (const char *) sd, nd);
+	/* Set path if it's there */
+	if (npt != 0)
+		pkt_l3_aprs_set_path(l, (const char *) pt, npt);
 	pkt_l3_aprs_set_payload(l, (const char *) py, npy);
 
 	/* Call the owner with this */
