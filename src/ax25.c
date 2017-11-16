@@ -4,6 +4,9 @@
 #include <string.h>
 #include <err.h>
 
+#include <sys/queue.h>
+
+#include "buf.h"
 #include "ax25.h"
 #include "kiss.h"
 #include "ax25_pkt_examples.h"
@@ -89,6 +92,23 @@ ax25_pkt_control_print(uint8_t ctrl)
 	return (0);
 }
 
+int
+pkt_ax25_set_info(struct pkt_ax25 *p, const uint8_t *buf, int len)
+{
+	if (p->info_buf) {
+		buf_free(p->info_buf);
+		p->info_buf = NULL;
+	}
+
+	p->info_buf = buf_create(len);
+	if (p->info_buf == NULL) {
+		return (-1);
+	}
+
+	buf_append(p->info_buf, buf, len);
+	return (0);
+}
+
 /*
  * Parse an AX.25 payload.
  */
@@ -154,9 +174,9 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	i++;
 
 	/*
-	 * Only I-frames have a PID.
+	 * Only I-frames and UI frames have a PID.
 	 */
-	if (AX25_CTRL_FRAME_I(pkt->ctrl)) {
+	if (AX25_CTRL_FRAME_I(pkt->ctrl) || AX25_CTRL_FRAME_UI(pkt->ctrl)) {
 		if (i >= len)
 			goto fail;
 		/* Note this isn't strictly true - PID can be multi-byte! */
@@ -172,6 +192,9 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	}
 
 	/* Rest of the payload is info */
+	if (pkt_ax25_set_info(pkt, &buf[i], len - i) < 0) {
+		goto fail;
+	}
 
 end:
 	printf("\n");
@@ -215,7 +238,8 @@ pkt_ax25_create(void)
 void
 pkt_ax25_free(struct pkt_ax25 *p)
 {
-
+	if (p->info_buf)
+		buf_free(p->info_buf);
 	free(p);
 }
 
@@ -244,12 +268,18 @@ pkt_ax25_print(struct pkt_ax25 *p)
 
 	printf("  Control: ");
 	ax25_pkt_control_print(p->ctrl);
-	if (AX25_CTRL_FRAME_I(p->ctrl)) {
+	if (AX25_CTRL_FRAME_I(p->ctrl) || AX25_CTRL_FRAME_UI(p->ctrl)) {
 		/* Note this isn't strictly true - PID can be multi-byte! */
 		printf("  PID: %.2x", p->pid);
 		printf("\n");
 	}
 	printf("\n");
+	if (p->info_buf) {
+		printf("  Payload: (%d bytes): %.*s\n",
+		    p->info_buf->len,
+		    p->info_buf->len,
+		    p->info_buf->buf);
+	}
 }
 
 #ifdef STANDALONE
@@ -282,8 +312,6 @@ main(int argc, const char *argv[])
 		pkt_ax25_print(pkt);
 		pkt_ax25_free(pkt);
 	}
-
-
 }
 #endif
 

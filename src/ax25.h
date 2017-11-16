@@ -9,6 +9,9 @@
 #define	AX25_CTRL_FRAME_S(ctrl)		(((ctrl) & 0x3) == 0x1)
 #define	AX25_CTRL_FRAME_U(ctrl)		(((ctrl) & 0x3) == 0x3)
 
+/* UI - is type U, but the M flags (bits 7..5,3..2) are all 0. */
+#define	AX25_CTRL_FRAME_UI(ctrl)		(((ctrl) & 0xef) == 0x3)
+
 struct ax25_address {
 	char callsign[6];	/* 6 character callsign, space padded */
 	uint8_t ssid;		/* SSID field, C/M bits, etc */
@@ -36,7 +39,8 @@ struct pkt_ax25 {
 	/* depending upon the frame type, pid may actually be a value */
 	uint8_t pid;
 
-	/* TODO: info / payload field */
+	/* info / payload field */
+	struct buf * info_buf;
 };
 
 extern	struct pkt_ax25 * ax25_pkt_parse(const uint8_t *buf, int len);
@@ -45,6 +49,7 @@ extern	int ax25_addr_assign(struct ax25_address *a, const char *b,
 	    uint8_t ssid);
 extern	void ax25_addr_copy(struct ax25_address *dst,
 	    const struct ax25_address *src);
+extern	int pkt_ax25_set_info(struct pkt_ax25 *, const uint8_t *buf, int len);
 
 extern	struct pkt_ax25 * pkt_ax25_create(void);
 extern	void pkt_ax25_print(struct pkt_ax25 *);
