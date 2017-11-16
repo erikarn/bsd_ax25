@@ -4,6 +4,11 @@
 /* Maximum number of repeaters is 2, but we will handle up to 8 */
 #define	AX25_MAX_NUM_REPEATERS		8
 
+/* Frame types - look at the control field (8 or 16 bit) */
+#define	AX25_CTRL_FRAME_I(ctrl)		(((ctrl) & 0x1) == 0)
+#define	AX25_CTRL_FRAME_S(ctrl)		(((ctrl) & 0x3) == 0x1)
+#define	AX25_CTRL_FRAME_U(ctrl)		(((ctrl) & 0x3) == 0x3)
+
 struct ax25_address {
 	char callsign[6];	/* 6 character callsign, space padded */
 	uint8_t ssid;		/* SSID field, C/M bits, etc */
@@ -42,6 +47,7 @@ extern	void ax25_addr_copy(struct ax25_address *dst,
 	    const struct ax25_address *src);
 
 extern	struct pkt_ax25 * pkt_ax25_create(void);
+extern	void pkt_ax25_print(struct pkt_ax25 *);
 extern	void pkt_ax25_free(struct pkt_ax25 *);
 
 #endif	/* __AX25_PKT_H__ */

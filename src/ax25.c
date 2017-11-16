@@ -66,7 +66,7 @@ ax25_pkt_address_parse(struct ax25_address *a, const uint8_t *buf, int len)
  * when/how to flip up to modulo 128.
  */
 static int
-ax25_pkt_control_parse(uint8_t ctrl)
+ax25_pkt_control_print(uint8_t ctrl)
 {
 	switch (ctrl & 0x3) {
 		case 0:		/* low bit is 0, rest is i-frame */
@@ -96,7 +96,6 @@ struct pkt_ax25 *
 ax25_pkt_parse(const uint8_t *buf, int len)
 {
 	int i, r;
-	uint8_t ctrl, pid;
 	i = 0;
 	struct pkt_ax25 *pkt;
 	int naddr = 0;
@@ -149,32 +148,31 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 
 	/* Following byte is the control byte */
 	/* XXX TODO: should handle PID escape sequences, multi-byte protocols */
-	ax25_pkt_control_parse(buf[i]);
-	ctrl = buf[i];
+	pkt->ctrl = buf[i];
 	i++;
 
-	printf(": ");
-
-	/* XXX hack, yes, for i-frames and payload */
-	if (((buf[i] & 0x3) == 0) || ((buf[i] & 0x3) == 2)) {
+	/*
+	 * Only I-frames have a PID.
+	 */
+	if (AX25_CTRL_FRAME_I(pkt->ctrl)) {
 		if (i >= len)
-			goto end;
-
-		pid = buf[i];
+			goto fail;
+		/* Note this isn't strictly true - PID can be multi-byte! */
+		pkt->pid = buf[i];
+		if (pkt->pid == 0xff) {
+			fprintf(stderr, "%s: multi-byte PID not supported yet\n",
+			    __func__);
+			goto fail;
+		}
 		i++;
-
-		printf("PID: 0x%.2x: ", pid);
 		if (i >= len)
-			goto end;
-
-		printf("%.*s", len - i, &buf[i]);
+			goto fail;
 	}
 
-	/* PID, info, etc if appropriate */
+	/* Rest of the payload is info */
 
 end:
 	printf("\n");
-
 	return (pkt);
 fail:
 	if (pkt)
@@ -241,6 +239,15 @@ pkt_ax25_print(struct pkt_ax25 *p)
 		    p->repeater_addr_list[i].ssid & 0xf,
 		    p->repeater_addr_list[i].ssid);
 	}
+
+	printf("  Control: ");
+	ax25_pkt_control_print(p->ctrl);
+	if (AX25_CTRL_FRAME_I(p->ctrl)) {
+		/* Note this isn't strictly true - PID can be multi-byte! */
+		printf("  PID: %.2x", p->pid);
+		printf("\n");
+	}
+	printf("\n");
 }
 
 #ifdef STANDALONE
