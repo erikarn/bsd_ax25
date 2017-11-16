@@ -160,8 +160,10 @@ proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
 
 			/* Create an AX25 packet, pass it up to the owner */
 			pkt = ax25_pkt_parse(ax25_buf, ax25_len);
-			if (pkt)
+			if (pkt) {
+				pkt_ax25_print(pkt);
 				pkt_ax25_free(pkt);
+			}
 		}
 
 		/* Consume everything until second 0xc0 */
