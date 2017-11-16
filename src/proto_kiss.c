@@ -145,7 +145,7 @@ proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
 				break;
 			}
 		}
-		printf("ss=%d, se=%d\n", ss, se);
+//		printf("ss=%d, se=%d\n", ss, se);
 
 		if (ss == -1 || se == -1)
 			break;
