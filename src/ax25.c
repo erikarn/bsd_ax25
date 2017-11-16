@@ -101,6 +101,8 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	int naddr = 0;
 
 	printf("%s: total length: %d\n", __func__, len);
+	if (len == 0)
+		return (NULL);
 
 	pkt = pkt_ax25_create();
 	if (pkt == NULL) {
