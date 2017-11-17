@@ -160,9 +160,12 @@ proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
 
 			/* Create an AX25 packet, pass it up to the owner */
 			pkt = ax25_pkt_parse(ax25_buf, ax25_len);
-			if (pkt) {
-				pkt_ax25_print(pkt);
+
+			/* Pass it to the owner */
+			if (pkt != NULL && k->owner_cb.read_cb == NULL) {
 				pkt_ax25_free(pkt);
+			} else if (pkt != NULL) {
+				k->owner_cb.read_cb(k, k->owner_cb.arg, pkt);
 			}
 		}
 

@@ -14,7 +14,7 @@
 #include "pkt_l3_aprs.h"
 #include "proto_aprs_igate.h"
 
-#if 1
+#if 0
 static void
 igate_read_cb(struct proto_aprs_igate *k, void *arg,
     struct pkt_l3_aprs *l)
@@ -38,6 +38,7 @@ kiss_read_cb(struct proto_kiss *p, void *arg,
 {
 
 	printf("%s: called\n", __func__);
+	pkt_ax25_print(pkt);
 	pkt_ax25_free(pkt);
 	return (0);
 }
@@ -47,7 +48,7 @@ int
 main(int argc, const char *argv[])
 {
 	struct proto_kiss *p;
-	struct proto_aprs_igate *pg;
+//	struct proto_aprs_igate *pg;
 	struct ebase eb;
 
 	eb.ebase = event_base_new();
@@ -61,7 +62,7 @@ main(int argc, const char *argv[])
 	proto_kiss_connect(p);
 #endif
 
-#if 1
+#if 0
 	pg = proto_aprs_igate_create(&eb);
 	proto_aprs_igate_set_login(pg, "KK6VQK", "-1");
 	proto_aprs_igate_set_host(pg, "rotate.aprs2.net", 14580);
