@@ -17,6 +17,14 @@ struct ax25_address {
 	uint8_t ssid;		/* SSID field, C/M bits, etc */
 };
 
+/* Accessor methods for grabbing information out of the SSID field */
+#define	AX25_ADDR_SSID_TO_SSID(ssid)		(((ssid) & 0x1e) >> 1)
+/* Repeater addresses - whether this has been repeated */
+#define	AX25_ADDR_SSID_TO_H(ssid)		((ssid) & 0x80)
+/* Command/response frames */
+#define	AX25_ADDR_SSID_TO_CR(ssid)		((ssid) & 0x80)
+#define	AX25_ADDR_SSID_TO_LAST(ssid)		((ssid) & 0x01)
+
 /*
  * Note - this isn't a binary representation of an ax25 packet.
  * This is designed for ease of programming, not ease of encode/decode.

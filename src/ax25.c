@@ -37,8 +37,6 @@ ax25_pkt_address_parse(struct ax25_address *a, const uint8_t *buf, int len)
 
 	ax25_addr_assign(a, callsign, buf[7]);
 
-	printf("%s-%d", callsign, buf[7] & 0xf);
-
 	return ((buf[7] & 0x01) == 0);
 }
 
@@ -250,19 +248,19 @@ pkt_ax25_print(struct pkt_ax25 *p)
 
 	printf("  source: %.*s-%d (flags 0x%.2x)\n",
 	    6, p->source_addr.callsign,
-	    p->source_addr.ssid & 0xf,
+	    AX25_ADDR_SSID_TO_SSID(p->source_addr.ssid),
 	    p->source_addr.ssid);
 
 	printf("  destination: %.*s-%d (flags 0x%.2x)\n",
 	    6, p->dest_addr.callsign,
-	    p->dest_addr.ssid & 0xf,
+	    AX25_ADDR_SSID_TO_SSID(p->dest_addr.ssid),
 	    p->dest_addr.ssid);
 
 	for (i = 0; i < p->repeater_addr_count; i++) {
 		printf("  repeater[%d]: %.*s-%d (flags 0x%.2x)\n",
 		    i,
 		    6, p->repeater_addr_list[i].callsign,
-		    p->repeater_addr_list[i].ssid & 0xf,
+		    AX25_ADDR_SSID_TO_SSID(p->repeater_addr_list[i].ssid),
 		    p->repeater_addr_list[i].ssid);
 	}
 
