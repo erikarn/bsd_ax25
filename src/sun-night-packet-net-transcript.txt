@@ -1,0 +1,2296 @@
+Script started on Sun Nov 19 16:34:07 2017
+
+ [32;01m*[0m [35;01mkeychain [0m[36m2.8.3[0m ~ [32;01mhttp://www.funtoo.org[0m
+ [32;01m*[0m Found existing ssh-agent: [36m896[0m
+
+You have mail.
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % exec startx[11D./ax25[K
+[Kadrian@sabrina:~/git/github/erikarn/bsd_ax25/src % ./
+ax25*             bsd_packet*       bsd_packet.debug* bsd_packet.full*  
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % ./bsd_packet
+conn_connect: called!
+conn_setup: called!
+conn_connect_connect: called; beginning things!
+conn_connect_connect: in progress!
+conn_write_cb: called!
+conn_connect_complete: ready!
+proto_kiss_connect_cb: called
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: ID    -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96)
+  destination: BEACON-7 (flags 0xae)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KTRAC -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KBETH -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 73 bytes
+0x0000: c0 00 a8 9e 88 88 40 40 60 96 8c 6c 82 9c b0 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 74 65 73 74 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 70
+         : 
+kiss_read_cb: called
+  source: KF6ANX-11 (flags 0x96)
+  destination: TODD  -11 (flags 0x96)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KBETH -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KTRAC -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (5 bytes): test
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 69 bytes
+0x0000: c0 00 a8 9e 88 88 40 40 60 96 8c 6c 82 9c b0 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 66
+         : 
+kiss_read_cb: called
+  source: KF6ANX-11 (flags 0x96)
+  destination: TODD  -11 (flags 0x96)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KBETH -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KTRAC -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: ID    -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 74 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 66 86 96 8c 40 60 
+0x0010: 96 86 9e a4 9c 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e1 03 f0 4e 33 43 4b 46 2f 52 20 4b 
+0x0030: 56 4f 4c 43 2f 44 20 4e 33 43 4b 46 2d 32 2f 42 
+0x0040: 20 4b 56 4f 4c 43 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 71
+     : 
+kiss_read_cb: called
+  source: N3CKF -11 (flags 0x96)
+  destination: ID    -14 (flags 0x9c)
+  repeater[0]: KCORN -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N3CKF/R KVOLC/D N3CKF-2/B KVOLC/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 73 bytes
+0x0000: c0 00 a8 9e 88 88 40 40 60 96 8c 6c 82 9c b0 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 74 65 73 74 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 70
+         : 
+kiss_read_cb: called
+  source: KF6ANX-11 (flags 0x96)
+  destination: TODD  -11 (flags 0x96)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KBETH -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KTRAC -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (5 bytes): test
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 69 bytes
+0x0000: c0 00 a8 9e 88 88 40 40 60 96 8c 6c 82 9c b0 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 66
+         : 
+kiss_read_cb: called
+  source: KF6ANX-11 (flags 0x96)
+  destination: TODD  -11 (flags 0x96)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KBETH -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KTRAC -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: conn is EOF
+^C
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % ./bsd_packet
+conn_connect: called!
+conn_setup: called!
+conn_connect_connect: called; beginning things!
+conn_connect_connect: in progress!
+conn_write_cb: called!
+conn_connect_complete: ready!
+proto_kiss_connect_cb: called
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 73 bytes
+0x0000: c0 00 a8 9e 88 88 40 40 60 96 8c 6c 82 9c b0 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 74 65 73 74 0d c0 
+ax25_pkt_parse: total length: 70
+         : 
+kiss_read_cb: called
+  source: KF6ANX-11 (flags 0x96)
+  destination: TODD  -11 (flags 0x96)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KBETH -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KTRAC -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (5 bytes): test
+hv  conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: ID    -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 70 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4c 50 52 43 33 2f 4e 45 54 20 4b 4c 50 52 
+0x0020: 43 33 2f 4e 4f 44 45 20 2d 4d 74 2e 20 4c 6f 6d 
+0x0030: 61 20 50 72 69 65 74 61 2d 20 2d 4c 50 52 43 2e 
+0x0040: 6e 65 74 2d 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 67
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: BEACON-14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (51 bytes): LPRC3/NET KLPRC3/NODE -Mt. Loma Prieta- -LPRC.net-
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 40 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 69 
+0x0010: 03 f0 4e 65 74 77 6f 72 6b 20 4e 6f 64 65 20 28 
+0x0020: 4c 50 52 43 33 29 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 37
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: ID    -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (21 bytes): Network Node (LPRC3)
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 154 bytes
+0x0000: c0 00 9c 9e 88 8a a6 40 e0 9c 6c 82 86 96 40 69 
+0x0010: 03 cf ff 4c 50 52 43 33 20 96 8c 6c 88 a2 aa 12 
+0x0020: 42 41 4e 4e 45 52 96 6c 94 82 86 40 08 92 9c 66 
+0x0030: 86 96 8c 40 0a 56 4f 4c 43 20 20 96 6c 94 82 86 
+0x0040: 40 08 92 ae 84 6c b2 9c 9a 06 42 45 54 48 45 4c 
+0x0050: ae 84 6c b2 9c 9a 06 db dc 96 6c 92 b0 82 40 0a 
+0x0060: 42 55 4c 4e 20 20 96 6c 94 82 86 40 08 92 ae 82 
+0x0070: 6c a8 9e ae 02 50 41 43 20 20 20 ae 82 6c a8 9e 
+0x0080: ae 02 a0 96 92 6c aa 88 b4 0e 46 43 49 54 59 20 
+0x0090: 96 92 6c aa 88 b4 0e db dc c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 149
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: NODES -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: cf
+
+  Payload: (133 bytes): ÿLPRC3 –Œlˆ¢ªBANNER–l”‚†@’œf†–Œ@
+VOLC  –l”‚†@’®„l²œšBETHEL®„l²œšÀ–l’°‚@
+BULN  –l”‚†@’®‚l¨ž®PAC   ®‚l¨ž® –’lªˆ´FCITY –’lªˆ´À
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 153 bytes
+0x0000: c0 00 9c 9e 88 8a a6 40 e0 9c 6c 82 86 96 40 69 
+0x0010: 03 cf ff 4c 50 52 43 33 20 96 8c 6c 82 9c b0 0a 
+0x0020: 48 49 4c 4c 20 20 96 6c 94 82 86 40 08 92 96 6c 
+0x0030: 94 82 86 40 08 42 45 52 52 59 20 96 6c 94 82 86 
+0x0040: 40 08 c2 ae 82 6c b2 9c 8e 02 52 44 47 20 20 20 
+0x0050: 96 6c 94 82 86 40 08 93 ae 6c 94 8a b0 40 0a 43 
+0x0060: 4f 52 4e 20 20 96 6c 94 82 86 40 08 92 96 92 6c 
+0x0070: b4 90 88 0a 53 43 4c 41 52 41 96 92 6c b4 90 88 
+0x0080: 0a 78 ae 84 6c b2 9c 9a 0a 54 52 41 43 59 20 ae 
+0x0090: 84 6c b2 9c 9a 0a db dc c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 149
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: NODES -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: cf
+
+  Payload: (133 bytes): ÿLPRC3 –Œl‚œ°
+HILL  –l”‚†@’–l”‚†@BERRY –l”‚†@Â®‚l²œŽRDG   –l”‚†@“®l”Š°@
+CORN  –l”‚†@’–’l´ˆ
+SCLARA–’l´ˆ
+x®„l²œš
+TRACY ®„l²œš
+À
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 89 bytes
+0x0000: c0 00 9c 9e 88 8a a6 40 e0 9c 6c 82 86 96 40 69 
+0x0010: 03 cf ff 4c 50 52 43 33 20 96 6c a8 aa 9e 40 0a 
+0x0020: 54 55 4f 20 20 20 96 6c 94 82 86 40 08 92 ae 82 
+0x0030: 6e 88 8e 40 08 52 4f 53 45 20 20 96 6c 94 82 86 
+0x0040: 40 08 8c 9c 6c b4 b0 40 40 0a 57 42 41 59 20 20 
+0x0050: 96 6c 94 82 86 40 08 92 c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 86
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: NODES -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: cf
+
+  Payload: (70 bytes): ÿLPRC3 –l¨ªž@
+TUO   –l”‚†@’®‚nˆŽ@ROSE  –l”‚†@Œœl´°@@
+WBAY  –l”‚†@’
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 65 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 4b 36 
+0x0030: 57 4c 53 2f 52 20 4b 36 57 4c 53 2d 31 2f 42 0d 
+0x0040: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 62
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96)
+  destination: ID    -11 (flags 0x96)
+  repeater[0]: KBERR -11 (flags 0x96)
+  repeater[1]: KLPRC3-11 (flags 0x96)
+  repeater[2]: KTRAC -4 (flags 0xa8)
+  repeater[3]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (18 bytes): K6WLS/R K6WLS-1/B
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: ID    -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96)
+  destination: BEACON-7 (flags 0xae)
+  repeater[0]: KHILL -11 (flags 0x96)
+  repeater[1]: KBERR -11 (flags 0x96)
+  repeater[2]: KLPRC3-11 (flags 0x96)
+  repeater[3]: KTRAC -11 (flags 0x96)
+  repeater[4]: KBULN -11 (flags 0x96)
+  repeater[5]: KBETH -4 (flags 0xa8)
+  repeater[6]: TAH0E -1 (flags 0x03)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+ls  conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03)
+  destination: ID    -14 (flags 0x9c)
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+^C
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % make
+rm -f .depend
+echo bsd_packet.full: /usr/lib/libc.a  >> .depend
+Warning: Object directory not changed from original /usr/home/adrian/git/github/erikarn/bsd_ax25/src
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.main.o -MTmain.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c main.c -o main.o
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.pkt.o -MTpkt.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c pkt.c -o pkt.o
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.ax25.o -MTax25.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c ax25.c -o ax25.o
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.kiss.o -MTkiss.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c kiss.c -o kiss.o
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.pkt_l3_aprs.o -MTpkt_l3_aprs.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c pkt_l3_aprs.c -o pkt_l3_aprs.o
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.proto_kiss.o -MTproto_kiss.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c proto_kiss.c -o proto_kiss.o
+cc  -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror   -g -MD  -MF.depend.proto_aprs_igate.o -MTproto_aprs_igate.o -std=gnu99 -fstack-protector-strong    -Qunused-arguments  -c proto_aprs_igate.c -o proto_aprs_igate.o
+^[[Acc -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -Wall -Werror -g -std=gnu99 -fstack-protector-strong -Qunused-arguments  -o bsd_packet.full main.o pkt.o ax25.o kiss.o pkt_l3_aprs.o proto_kiss.o proto_aprs_igate.o  -lutil -L/usr/local/lib -levent_core -levent_extra -L../lib/libbuf -L../lib/libconn -lconn -lbuf -L../lib/libaxutil -laxutil -L../lib/libstr -lstr
+objcopy --only-keep-debug bsd_packet.full bsd_packet.debug
+objcopy --strip-debug --add-gnu-debuglink=bsd_packet.debug  bsd_packet.full bsd_packet
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % make./bsd_packet
+conn_connect: called!
+conn_setup: called!
+conn_connect_connect: called; beginning things!
+conn_connect_complete: ready!
+proto_kiss_connect_cb: called
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03) R
+  destination: ID    -14 (flags 0x9c) C
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 74 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 66 86 96 8c 40 60 
+0x0010: 96 86 9e a4 9c 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e1 03 f0 4e 33 43 4b 46 2f 52 20 4b 
+0x0030: 56 4f 4c 43 2f 44 20 4e 33 43 4b 46 2d 32 2f 42 
+0x0040: 20 4b 56 4f 4c 43 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 71
+     : 
+kiss_read_cb: called
+  source: N3CKF -11 (flags 0x96) C
+  destination: ID    -14 (flags 0x9c) C
+  repeater[0]: KCORN -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N3CKF/R KVOLC/D N3CKF-2/B KVOLC/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 96 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 57 42 36 59 4e 4d 2f 52 20 57 42 36 59 
+0x0050: 4e 4d 2d 31 2f 42 20 4b 42 45 54 48 2f 4e 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 93
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: ID    -7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (28 bytes): WB6YNM/R WB6YNM-1/B KBETH/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: BEACON-7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 65 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 4b 36 
+0x0030: 57 4c 53 2f 52 20 4b 36 57 4c 53 2d 31 2f 42 0d 
+0x0040: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 62
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: ID    -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (18 bytes): K6WLS/R K6WLS-1/B
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 48 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 45
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 49 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 0d 0d 
+0x0030: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 46
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (2 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 48 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 03 c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 45
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 70 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4c 50 52 43 33 2f 4e 45 54 20 4b 4c 50 52 
+0x0020: 43 33 2f 4e 4f 44 45 20 2d 4d 74 2e 20 4c 6f 6d 
+0x0030: 61 20 50 72 69 65 74 61 2d 20 2d 4c 50 52 43 2e 
+0x0040: 6e 65 74 2d 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 67
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03) R
+  destination: BEACON-14 (flags 0x9c) C
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (51 bytes): LPRC3/NET KLPRC3/NODE -Mt. Loma Prieta- -LPRC.net-
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 58 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 4d 4f 
+0x0030: 4e 49 54 4f 52 20 4f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 55
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (11 bytes): MONITOR ON
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 51 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 0d 0d 
+0x0030: 0d 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 48
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (4 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 76 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 63 20 62 65 72 72 79 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 73
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (8 bytes): c berry
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: BEACON-7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03) R
+  destination: ID    -14 (flags 0x9c) C
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 74 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 66 86 96 8c 40 60 
+0x0010: 96 86 9e a4 9c 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e1 03 f0 4e 33 43 4b 46 2f 52 20 4b 
+0x0030: 56 4f 4c 43 2f 44 20 4e 33 43 4b 46 2d 32 2f 42 
+0x0040: 20 4b 56 4f 4c 43 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 71
+     : 
+kiss_read_cb: called
+  source: N3CKF -11 (flags 0x96) C
+  destination: ID    -14 (flags 0x9c) C
+  repeater[0]: KCORN -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N3CKF/R KVOLC/D N3CKF-2/B KVOLC/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: BEACON-7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: BEACON-7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: BEACON-7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 96 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 57 42 36 59 4e 4d 2f 52 20 57 42 36 59 
+0x0050: 4e 4d 2d 31 2f 42 20 4b 42 45 54 48 2f 4e 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 93
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: ID    -7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (28 bytes): WB6YNM/R WB6YNM-1/B KBETH/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 50 61 63 6b 65 74 
+0x0050: 20 4e 65 74 20 38 3a 30 30 70 6d 20 4e 43 20 43 
+0x0060: 68 75 63 6b 2c 20 57 47 36 43 46 53 20 68 65 61 
+0x0070: 72 73 20 4b 42 45 52 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: BEACON-7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): Sunday Packet Net 8:00pm NC Chuck, WG6CFS hears KBERR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 113 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 75 6e 64 61 79 20 4e 69 67 68 74 20 
+0x0050: 50 61 63 6b 65 74 20 4e 65 74 20 73 74 61 72 74 
+0x0060: 73 20 69 6e 20 35 20 6d 69 6e 75 74 65 73 21 0d 
+0x0070: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 110
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (45 bytes): Sunday Night Packet Net starts in 5 minutes!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 121 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 54 68 69 73 20 69 73 20 43 68 75 63 6b 
+0x0050: 2c 20 4e 65 74 20 43 6f 6e 74 72 6f 6c 20 53 74 
+0x0060: 61 74 69 6f 6e 20 66 6f 72 20 74 68 69 73 20 65 
+0x0070: 76 65 6e 69 6e 67 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 118
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (53 bytes): This is Chuck, Net Control Station for this evening.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 112 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 54 68 69 73 20 6e 65 74 20 6d 65 65 74 
+0x0050: 73 20 53 75 6e 64 61 79 73 20 61 20 38 3a 30 30 
+0x0060: 50 4d 20 4c 6f 63 61 6c 20 54 69 6d 65 2e 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 109
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (44 bytes): This net meets Sundays a 8:00PM Local Time.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 147 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 4a 6f 69 6e 20 62 79 20 63 68 65 63 6b 
+0x0050: 69 6e 67 20 69 6e 20 61 6e 64 20 62 65 20 61 64 
+0x0060: 64 65 64 20 74 6f 20 6f 75 72 20 6c 69 73 74 20 
+0x0070: 6f 66 20 6d 65 6d 62 65 72 73 2e 20 4e 65 77 20 
+0x0080: 73 74 61 74 69 6f 6e 73 20 77 65 6c 63 6f 6d 65 
+0x0090: 21 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 144
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (79 bytes): Join by checking in and be added to our list of members. New stations welcome!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 135 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 42 65 66 6f 72 65 20 77 65 20 73 74 61 
+0x0050: 72 74 2c 20 69 73 20 74 68 65 72 65 20 61 20 56 
+0x0060: 6f 6c 75 6e 74 65 65 72 20 66 6f 72 20 4e 65 74 
+0x0070: 20 43 6f 6e 74 72 6f 6c 20 6e 65 78 74 20 53 75 
+0x0080: 6e 64 61 79 3f 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 132
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (67 bytes): Before we start, is there a Volunteer for Net Control next Sunday?
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 108 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 49 74 27 73 20 66 75 6e 20 61 6e 64 20 
+0x0050: 61 20 67 6f 6f 64 20 73 6b 69 6c 6c 20 74 6f 20 
+0x0060: 70 72 61 63 74 69 63 65 21 21 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 105
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (40 bytes): It's fun and a good skill to practice!!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 125 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 2d 2d 2d 2d 3e 4f 70 65 6e 20 43 68 65 
+0x0050: 63 6b 20 49 6e 20 74 6f 6e 69 67 68 74 2e 20 41 
+0x0060: 6c 6c 20 73 74 61 74 69 6f 6e 73 20 41 2d 5a 20 
+0x0070: 63 61 6c 6c 20 6e 6f 77 2e 2e 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 122
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (57 bytes): ---->Open Check In tonight. All stations A-Z call now...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 86 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 44 45 
+0x0030: 20 4b 65 6e 20 4b 36 57 4c 53 20 69 6e 20 57 6f 
+0x0040: 6f 64 6c 61 6e 64 20 47 45 20 74 6f 20 74 68 65 
+0x0050: 20 4e 65 74 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 83
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (39 bytes): DE Ken K6WLS in Woodland GE to the Net
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 48 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 45
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 126 bytes
+0x0000: c0 00 88 82 ac 92 88 40 e0 96 92 6c b4 90 88 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 96 a4 
+0x0020: 88 8e 40 40 60 ae 6c 94 8a b0 40 60 96 ac 9e 98 
+0x0030: 86 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 48 65 6c 6c 6f 20 66 72 6f 6d 20 53 61 
+0x0050: 6e 74 61 20 43 4c 61 72 61 2e 2e 20 74 68 61 6e 
+0x0060: 6b 73 20 66 6f 72 20 74 61 6b 69 6e 67 20 74 68 
+0x0070: 65 20 6e 65 74 20 43 68 75 63 6b 21 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 123
+         : 
+kiss_read_cb: called
+  source: KI6ZHD-11 (flags 0x96) C
+  destination: DAVID -11 (flags 0x96) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KRDG  -7 (flags 0xae) Repeated
+  repeater[3]: W6JEX -11 (flags 0x96) Repeated
+  repeater[4]: KVOLC -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (58 bytes): Hello from Santa CLara.. thanks for taking the net Chuck!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 73 bytes
+0x0000: c0 00 98 8a ae 40 40 40 60 ae 84 6c 98 8a ae 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 9e 8a 40 61 03 f0 44 45 
+0x0030: 20 4c 65 77 20 57 42 36 4c 45 57 20 69 6e 20 57 
+0x0040: 6f 6f 64 6c 61 6e 64 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 70
+      : 
+kiss_read_cb: called
+  source: WB6LEW-11 (flags 0x96) C
+  destination: LEW   -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAHOE -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (26 bytes): DE Lew WB6LEW in Woodland
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 99 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 54 68 61 6e 6b 73 20 4b 65 6e 2c 20 4b 
+0x0050: 36 57 4c 53 20 69 6e 20 57 6f 6f 64 6c 61 6e 64 
+0x0060: 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 96
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (31 bytes): Thanks Ken, K6WLS in Woodland.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 104 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 54 68 61 6e 6b 73 20 44 61 76 69 64 20 
+0x0050: 4b 49 36 5a 48 44 20 69 6e 20 53 61 6e 74 61 20 
+0x0060: 43 6c 61 72 61 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 101
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (36 bytes): Thanks David KI6ZHD in Santa Clara.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 69 bytes
+0x0000: c0 00 84 9e 84 40 40 40 60 96 92 6c 84 b4 a4 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 60 96 86 9e a4 
+0x0030: 9c 40 60 96 ac 9e 98 86 40 60 96 84 8a a8 90 40 
+0x0040: 61 03 f0 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 66
+         : 
+kiss_read_cb: called
+  source: KI6BZR-11 (flags 0x96) C
+  destination: BOB   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -11 (flags 0x96) Repeated
+  repeater[4]: KCORN -11 (flags 0x96) Repeated
+  repeater[5]: KVOLC -11 (flags 0x96) Repeated
+  repeater[6]: KBETH -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 91 bytes
+0x0000: c0 00 94 8a 8c 8c 40 40 e0 96 94 6c 9c 96 a4 66 
+0x0010: a8 82 90 60 8a 40 e0 96 84 8a a8 90 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 a8 a4 82 86 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 84 8a a4 a4 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 49 73 20 74 68 65 72 65 20 61 20 6e 65 
+0x0050: 74 20 74 6f 6e 69 67 68 74 3f c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 88
+         : 
+kiss_read_cb: called
+  source: KJ6NKR-4 (flags 0xa8) C
+  destination: JEFF  -11 (flags 0x96) C
+  repeater[0]: TAH0E -11 (flags 0x96) Repeated
+  repeater[1]: KBETH -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KTRAC -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KBERR -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (23 bytes): Is there a net tonight?
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03) R
+  destination: ID    -14 (flags 0x9c) C
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 91 bytes
+0x0000: c0 00 82 98 40 40 40 40 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 52 65 6c 61 79 20 66 6f 72 20 4a 65 66 
+0x0050: 66 2c 20 4b 4a 36 4e 4b 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 88
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: AL    -7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (23 bytes): Relay for Jeff, KJ6NKR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 97 bytes
+0x0000: c0 00 86 82 a4 98 40 40 60 ae 6c 96 8e 9e 40 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 ae 9e 
+0x0020: 9e 88 b2 40 60 96 84 8a a4 a4 40 60 96 84 8a a8 
+0x0030: 90 40 60 a8 82 90 60 8a 40 61 03 f0 47 45 2c 20 
+0x0040: 43 61 72 6c 20 69 6e 20 48 61 79 77 61 72 64 2c 
+0x0050: 20 48 2e 20 54 68 61 6e 6b 73 67 69 76 69 6e 67 
+0x0060: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 94
+        : 
+kiss_read_cb: called
+  source: W6KGO -11 (flags 0x96) C
+  destination: CARL  -7 (flags 0xae) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -7 (flags 0xae) Repeated
+  repeater[2]: WOODY -11 (flags 0x96) Repeated
+  repeater[3]: KBERR -11 (flags 0x96) Repeated
+  repeater[4]: KBETH -4 (flags 0xa8) Repeated
+  repeater[5]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (36 bytes): GE, Carl in Hayward, H. Thanksgiving
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 74 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 4f 4b 2e 2e 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 71
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (6 bytes): OK...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 97 bytes
+0x0000: c0 00 86 82 a4 98 40 40 60 ae 6c 96 8e 9e 40 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 ae 9e 
+0x0020: 9e 88 b2 40 60 96 84 8a a4 a4 40 60 96 84 8a a8 
+0x0030: 90 40 60 a8 82 90 60 8a 40 61 03 f0 47 45 2c 20 
+0x0040: 43 61 72 6c 20 69 6e 20 48 61 79 77 61 72 64 2c 
+0x0050: 20 48 2e 20 54 68 61 6e 6b 73 67 69 76 69 6e 67 
+0x0060: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 94
+        : 
+kiss_read_cb: called
+  source: W6KGO -11 (flags 0x96) C
+  destination: CARL  -7 (flags 0xae) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -7 (flags 0xae) Repeated
+  repeater[2]: WOODY -11 (flags 0x96) Repeated
+  repeater[3]: KBERR -11 (flags 0x96) Repeated
+  repeater[4]: KBETH -4 (flags 0xa8) Repeated
+  repeater[5]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (36 bytes): GE, Carl in Hayward, H. Thanksgiving
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 78 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 49 20 68 61 76 65 2e 2e 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 75
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (10 bytes): I have...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 90 bytes
+0x0000: c0 00 98 8a ae 40 40 40 60 ae 84 6c 98 8a ae 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 9e 8a 40 61 03 f0 43 68 
+0x0030: 75 63 6b 20 64 69 64 20 79 6f 72 20 63 6f 70 79 
+0x0040: 20 4c 65 77 20 57 42 36 4c 45 57 20 69 6e 20 57 
+0x0050: 6f 6f 64 6c 61 6e 64 3f 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 87
+      : 
+kiss_read_cb: called
+  source: WB6LEW-11 (flags 0x96) C
+  destination: LEW   -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAHOE -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (43 bytes): Chuck did yor copy Lew WB6LEW in Woodland?
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 90 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 41 6c 2c 20 57 42 36 57 4e 4d 20 42 65 
+0x0050: 74 68 65 6c 20 49 73 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 87
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (22 bytes): Al, WB6WNM Bethel Is.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 93 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 4c 65 77 2c 20 57 42 36 4c 45 57 20 69 
+0x0050: 6e 20 57 6f 6f 64 6c 61 6e 64 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 90
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (25 bytes): Lew, WB6LEW in Woodland.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 97 bytes
+0x0000: c0 00 86 82 a4 98 40 40 60 ae 6c 96 8e 9e 40 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 ae 9e 
+0x0020: 9e 88 b2 40 60 96 84 8a a4 a4 40 60 96 84 8a a8 
+0x0030: 90 40 60 a8 82 90 60 8a 40 61 03 f0 47 45 2c 20 
+0x0040: 43 61 72 6c 20 69 6e 20 48 61 79 77 61 72 64 2c 
+0x0050: 20 48 2e 20 54 68 61 6e 6b 73 67 69 76 69 6e 67 
+0x0060: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 94
+        : 
+kiss_read_cb: called
+  source: W6KGO -11 (flags 0x96) C
+  destination: CARL  -7 (flags 0xae) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -7 (flags 0xae) Repeated
+  repeater[2]: WOODY -11 (flags 0x96) Repeated
+  repeater[3]: KBERR -11 (flags 0x96) Repeated
+  repeater[4]: KBETH -4 (flags 0xa8) Repeated
+  repeater[5]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (36 bytes): GE, Carl in Hayward, H. Thanksgiving
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 105 bytes
+0x0000: c0 00 82 98 40 40 40 40 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 52 65 6c 61 79 20 66 6f 72 20 4b 46 36 
+0x0050: 41 4e 58 20 4b 49 36 42 5a 52 20 57 36 4b 47 4f 
+0x0060: 20 57 42 36 4c 45 57 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 102
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: AL    -7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (37 bytes): Relay for KF6ANX KI6BZR W6KGO WB6LEW
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 86 bytes
+0x0000: c0 00 88 82 ac 92 88 40 e0 96 92 6c b4 90 88 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 96 a4 
+0x0020: 88 8e 40 40 60 ae 6c 94 8a b0 40 60 96 ac 9e 98 
+0x0030: 86 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 57 65 20 68 61 76 65 20 79 6f 75 20 4a 
+0x0050: 65 66 66 21 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 83
+         : 
+kiss_read_cb: called
+  source: KI6ZHD-11 (flags 0x96) C
+  destination: DAVID -11 (flags 0x96) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KRDG  -7 (flags 0xae) Repeated
+  repeater[3]: W6JEX -11 (flags 0x96) Repeated
+  repeater[4]: KVOLC -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (18 bytes): We have you Jeff!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 91 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 42 6f 62 20 4b 49 36 42 5a 52 20 69 6e 
+0x0050: 20 57 6f 6f 64 6c 61 6e 64 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 88
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (23 bytes): Bob KI6BZR in Woodland
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 86 bytes
+0x0000: c0 00 88 82 ac 92 88 40 e0 96 92 6c b4 90 88 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 96 a4 
+0x0020: 88 8e 40 40 60 ae 6c 94 8a b0 40 60 96 ac 9e 98 
+0x0030: 86 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 57 65 20 68 61 76 65 20 79 6f 75 20 4a 
+0x0050: 65 66 66 21 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 83
+         : 
+kiss_read_cb: called
+  source: KI6ZHD-11 (flags 0x96) C
+  destination: DAVID -11 (flags 0x96) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KRDG  -7 (flags 0xae) Repeated
+  repeater[3]: W6JEX -11 (flags 0x96) Repeated
+  repeater[4]: KVOLC -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (18 bytes): We have you Jeff!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 40 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 69 
+0x0010: 03 f0 4e 65 74 77 6f 72 6b 20 4e 6f 64 65 20 28 
+0x0020: 4c 50 52 43 33 29 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 37
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03) R
+  destination: ID    -14 (flags 0x9c) C
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (21 bytes): Network Node (LPRC3)
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 91 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 43 61 72 6c 20 57 36 4b 47 4f 20 69 6e 
+0x0050: 20 48 61 79 77 61 72 64 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 88
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (23 bytes): Carl W6KGO in Hayward.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 89 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 4f 4b 2c 20 77 68 6f 20 64 69 64 20 49 
+0x0050: 20 6d 69 73 73 3f 3f 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 86
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (21 bytes): OK, who did I miss??
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 70 bytes
+0x0000: c0 00 84 9e 84 40 40 40 60 96 92 6c 84 b4 a4 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 60 96 86 9e a4 
+0x0030: 9c 40 60 96 ac 9e 98 86 40 60 96 84 8a a8 90 40 
+0x0040: 61 03 f0 6b 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 67
+         : 
+kiss_read_cb: called
+  source: KI6BZR-11 (flags 0x96) C
+  destination: BOB   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -11 (flags 0x96) Repeated
+  repeater[4]: KCORN -11 (flags 0x96) Repeated
+  repeater[5]: KVOLC -11 (flags 0x96) Repeated
+  repeater[6]: KBETH -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (2 bytes): k
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 92 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 49 20 64 6f 20 68 61 76 65 20 42 6f 62 
+0x0050: 20 4b 49 36 42 5a 52 2e 2e 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 89
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (24 bytes): I do have Bob KI6BZR...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 95 bytes
+0x0000: c0 00 a8 9e 88 88 40 40 60 96 8c 6c 82 9c b0 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 47 65 20 66 72 6f 6d 20 54 6f 64 64 20 
+0x0050: 69 6e 20 4c 69 76 65 72 6d 6f 72 65 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 92
+         : 
+kiss_read_cb: called
+  source: KF6ANX-11 (flags 0x96) C
+  destination: TODD  -11 (flags 0x96) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (27 bytes): Ge from Todd in Livermore.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 97 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 54 6f 64 64 2c 20 4b 46 36 41 4e 58 20 
+0x0050: 69 6e 20 4c 69 76 65 72 6d 6f 72 65 2e 2e 2e 0d 
+0x0060: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 94
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (29 bytes): Todd, KF6ANX in Livermore...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 109 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 49 20 68 61 76 65 20 38 20 73 74 61 74 
+0x0050: 69 6f 6e 73 2e 20 61 6e 79 20 6d 69 73 73 65 64 
+0x0060: 20 6f 72 20 72 65 6c 61 79 3f 3f 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 106
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (41 bytes): I have 8 stations. any missed or relay??
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 77 bytes
+0x0000: c0 00 82 98 40 40 40 40 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 49 20 63 6f 70 79 20 39 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 74
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: AL    -7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (9 bytes): I copy 9
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 98 bytes
+0x0000: c0 00 94 8a 8c 8c 40 40 e0 96 94 6c 9c 96 a4 66 
+0x0010: a8 82 90 60 8a 40 e0 96 84 8a a8 90 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 a8 82 90 60 
+0x0030: 8a 40 61 03 f0 4e 6f 74 20 68 65 61 72 69 6e 67 
+0x0040: 20 61 6e 79 74 68 69 6e 67 20 68 65 72 65 2e 20 
+0x0050: 47 6f 6f 64 20 6e 69 67 68 74 20 41 6c 6c 2e 2e 
+0x0060: 2e c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 95
+       : 
+kiss_read_cb: called
+  source: KJ6NKR-4 (flags 0xa8) C
+  destination: JEFF  -11 (flags 0x96) C
+  repeater[0]: TAH0E -11 (flags 0x96) Repeated
+  repeater[1]: KBETH -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -4 (flags 0xa8) Repeated
+  repeater[4]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (44 bytes): Not hearing anything here. Good night All...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 138 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 53 74 61 74 69 6f 6e 20 77 65 72 65 20 
+0x0050: 63 6f 6d 69 6e 67 20 66 61 73 74 20 61 6e 64 20 
+0x0060: 66 75 72 69 6f 75 73 2c 20 68 61 76 65 20 74 6f 
+0x0070: 20 65 6d 61 69 6c 20 6d 79 20 72 65 73 75 6c 74 
+0x0080: 73 2c 20 41 6c 2e 2e 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 135
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (70 bytes): Station were coming fast and furious, have to email my results, Al...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 108 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 41 6e 79 6f 6e 65 20 69 6e 74 65 72 65 
+0x0050: 73 74 65 64 20 69 6e 20 4e 43 53 20 66 6f 72 20 
+0x0060: 6e 65 78 74 20 77 65 65 6b 3f 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 105
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (40 bytes): Anyone interested in NCS for next week?
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 113 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 4e 65 74 20 63 6c 6f 73 65 64 20 61 74 
+0x0050: 20 32 30 32 33 20 68 72 73 2e 20 20 53 65 65 20 
+0x0060: 79 6f 75 20 6e 65 78 74 20 77 65 65 6b 21 21 0d 
+0x0070: c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 110
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (45 bytes): Net closed at 2023 hrs.  See you next week!!
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 74 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 70 6c 
+0x0030: 65 61 73 65 20 63 68 65 63 6b 20 69 6e 20 42 6f 
+0x0040: 62 20 4b 49 36 42 5a 52 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 71
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (27 bytes): please check in Bob KI6BZR
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 48 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 45
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 104 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 48 69 20 4b 65 6e 2c 20 49 20 64 6f 20 
+0x0050: 68 61 76 65 20 42 6f 62 20 63 68 65 63 6b 65 64 
+0x0060: 20 69 6e 2e 2e 2e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 101
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (36 bytes): Hi Ken, I do have Bob checked in...
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 55 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 74 68 
+0x0030: 79 61 6e 6b 73 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 52
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (8 bytes): thyanks
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 64 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 6f 6f 
+0x0030: 6f 70 73 20 63 61 6e 27 74 20 74 79 70 65 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 61
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (17 bytes): ooops can't type
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 48 bytes
+0x0000: c0 00 96 8a 9c 40 40 40 60 96 6c ae 98 a6 40 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 61 03 f0 0d c0 
+
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 45
+      : 
+kiss_read_cb: called
+  source: K6WLS -11 (flags 0x96) C
+  destination: KEN   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (1 bytes): 
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 82 bytes
+0x0000: c0 00 84 9e 84 40 40 40 60 96 92 6c 84 b4 a4 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 a8 
+0x0020: a4 82 86 40 60 a8 82 90 60 8a 40 60 96 86 9e a4 
+0x0030: 9c 40 60 96 ac 9e 98 86 40 60 96 84 8a a8 90 40 
+0x0040: 61 03 f0 54 68 61 6e 6b 73 20 43 68 75 63 6b 2e 
+0x0050: 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 79
+         : 
+kiss_read_cb: called
+  source: KI6BZR-11 (flags 0x96) C
+  destination: BOB   -11 (flags 0x96) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[3]: TAH0E -11 (flags 0x96) Repeated
+  repeater[4]: KCORN -11 (flags 0x96) Repeated
+  repeater[5]: KVOLC -11 (flags 0x96) Repeated
+  repeater[6]: KBETH -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (14 bytes): Thanks Chuck.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 122 bytes
+0x0000: c0 00 82 98 40 40 40 40 60 ae 84 6c b2 9c 9a 60 
+0x0010: 96 90 92 98 98 40 e0 96 84 8a a4 a4 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 96 84 aa 98 
+0x0030: 9c 40 60 96 a8 a4 82 86 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 2d 2d 2d 2d 3e 52 6f 73 74 65 72 20 50 
+0x0050: 6f 73 74 65 64 20 68 74 74 70 3a 2f 2f 77 77 77 
+0x0060: 2e 76 61 72 6d 69 6e 74 61 6c 2e 63 6f 6d 2f 61 
+0x0070: 68 61 6d 70 2e 68 74 6d 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 119
+         : 
+kiss_read_cb: called
+  source: WB6YNM-11 (flags 0x96) C
+  destination: AL    -7 (flags 0xae) C
+  repeater[0]: KHILL -11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -11 (flags 0x96) Repeated
+  repeater[4]: KBULN -11 (flags 0x96) Repeated
+  repeater[5]: KTRAC -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (54 bytes): ---->Roster Posted http://www.varmintal.com/ahamp.htm
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: conn is EOF
+^C
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % ./bsd_packet
+conn_connect: called!
+conn_setup: called!
+conn_connect_connect: called; beginning things!
+conn_connect_connect: in progress!
+conn_write_cb: called!
+conn_connect_complete: ready!
+proto_kiss_connect_cb: called
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 106 bytes
+0x0000: c0 00 86 90 aa 86 96 40 60 ae 8e 6c 86 8c a6 60 
+0x0010: 96 84 8a a4 a4 40 e0 96 98 a0 a4 86 66 e0 96 84 
+0x0020: 8a a4 a4 40 60 96 84 82 9c 9c 40 60 96 a4 88 8e 
+0x0030: 40 40 60 96 a8 aa 9e 40 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 48 65 79 20 52 6f 6e 2c 20 77 68 65 72 
+0x0050: 65 20 61 72 65 20 79 6f 75 20 63 68 65 63 6b 69 
+0x0060: 6e 67 20 66 72 6f 6d 3f 0d c0 
+ax25_pkt_parse: total length: 103
+         : 
+kiss_read_cb: called
+  source: WG6CFS-11 (flags 0x96) C
+  destination: CHUCK -7 (flags 0xae) C
+  repeater[0]: KBERR -11 (flags 0x96) Repeated
+  repeater[1]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[2]: KBERR -11 (flags 0x96) Repeated
+  repeater[3]: KBANN -11 (flags 0x96) Repeated
+  repeater[4]: KRDG  -11 (flags 0x96) Repeated
+  repeater[5]: KTUO  -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (38 bytes): Hey Ron, where are you checking from?
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 118 bytes
+0x0000: c0 00 94 8a 8c 8c 40 40 e0 96 94 6c 9c 96 a4 66 
+0x0010: a8 82 90 60 8a 40 e0 96 84 8a a8 90 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 a8 82 90 60 
+0x0030: 8a 40 61 03 f0 49 20 74 68 69 6e 6b 20 54 41 48 
+0x0040: 30 45 20 69 73 20 75 70 20 74 6f 20 69 74 27 73 
+0x0050: 20 6f 6c 64 20 74 72 69 63 6b 73 20 61 6e 64 20 
+0x0060: 6e 6f 74 20 68 65 61 72 69 6e 67 20 73 6f 20 77 
+0x0070: 65 6c 6c 2e 2e c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 115
+       : 
+kiss_read_cb: called
+  source: KJ6NKR-4 (flags 0xa8) C
+  destination: JEFF  -11 (flags 0x96) C
+  repeater[0]: TAH0E -11 (flags 0x96) Repeated
+  repeater[1]: KBETH -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -4 (flags 0xa8) Repeated
+  repeater[4]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (64 bytes): I think TAH0E is up to it's old tricks and not hearing so well..
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 83 bytes
+0x0000: c0 00 94 8a 8c 8c 40 40 e0 96 94 6c 9c 96 a4 66 
+0x0010: a8 82 90 60 8a 40 e0 96 84 8a a8 90 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 a8 82 90 60 
+0x0030: 8a 40 61 03 f0 4f 6b 61 79 20 69 74 20 68 65 61 
+0x0040: 72 64 20 4b 42 45 74 68 20 74 68 61 74 20 74 69 
+0x0050: 6d 65 c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 80
+       : 
+kiss_read_cb: called
+  source: KJ6NKR-4 (flags 0xa8) C
+  destination: JEFF  -11 (flags 0x96) C
+  repeater[0]: TAH0E -11 (flags 0x96) Repeated
+  repeater[1]: KBETH -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -4 (flags 0xa8) Repeated
+  repeater[4]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (29 bytes): Okay it heard KBEth that time
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 53 bytes
+0x0000: c0 00 92 88 40 40 40 40 60 9c 6c 82 86 96 40 61 
+0x0010: 03 f0 4e 36 41 43 4b 2f 52 20 4e 36 41 43 4b 2d 
+0x0020: 33 2f 44 20 4c 42 4f 58 2f 42 20 4b 4c 50 52 43 
+0x0030: 33 2f 4e 0d c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 50
+  : 
+kiss_read_cb: called
+  source: N6ACK -1 (flags 0x03) R
+  destination: ID    -14 (flags 0x9c) C
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (34 bytes): N6ACK/R N6ACK-3/D LBOX/B KLPRC3/N
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 121 bytes
+0x0000: c0 00 94 8a 8c 8c 40 40 e0 96 94 6c 9c 96 a4 66 
+0x0010: a8 82 90 60 8a 40 e0 96 84 8a a8 90 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 a8 82 90 60 
+0x0030: 8a 40 61 03 f0 43 68 75 63 6b 20 69 66 20 79 6f 
+0x0040: 75 20 61 72 65 20 68 65 61 72 69 6e 67 20 61 6c 
+0x0050: 6c 20 6f 66 20 74 68 69 73 2e 2e 54 41 48 30 45 
+0x0060: 20 69 73 6e 27 74 20 70 69 63 6b 69 6e 67 20 75 
+0x0070: 70 20 4b 42 45 52 52 2e c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 118
+       : 
+kiss_read_cb: called
+  source: KJ6NKR-4 (flags 0xa8) C
+  destination: JEFF  -11 (flags 0x96) C
+  repeater[0]: TAH0E -11 (flags 0x96) Repeated
+  repeater[1]: KBETH -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -4 (flags 0xa8) Repeated
+  repeater[4]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (67 bytes): Chuck if you are hearing all of this..TAH0E isn't picking up KBERR.
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 77 bytes
+0x0000: c0 00 94 8a 8c 8c 40 40 e0 96 94 6c 9c 96 a4 66 
+0x0010: a8 82 90 60 8a 40 e0 96 84 8a a8 90 40 e0 96 98 
+0x0020: a0 a4 86 66 e0 96 84 8a a8 90 40 60 a8 82 90 60 
+0x0030: 8a 40 61 03 f0 49 74 73 20 73 6f 72 74 61 20 68 
+0x0040: 65 61 72 69 6e 67 20 4b 42 45 54 48 c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 74
+       : 
+kiss_read_cb: called
+  source: KJ6NKR-4 (flags 0xa8) C
+  destination: JEFF  -11 (flags 0x96) C
+  repeater[0]: TAH0E -11 (flags 0x96) Repeated
+  repeater[1]: KBETH -11 (flags 0x96) Repeated
+  repeater[2]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[3]: KBETH -4 (flags 0xa8) Repeated
+  repeater[4]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (23 bytes): Its sorta hearing KBETH
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: read 140 bytes
+0x0000: c0 00 84 8a 82 86 9e 9c e0 96 92 6c b4 90 88 60 
+0x0010: 96 98 a0 a4 86 66 e0 96 84 8a a4 a4 40 60 96 a4 
+0x0020: 88 8e 40 40 60 96 86 9e a4 9c 40 60 96 ac 9e 98 
+0x0030: 86 40 60 96 84 8a a8 90 40 60 a8 82 90 60 8a 40 
+0x0040: 61 03 f0 4b 49 36 5a 48 44 2f 6b 20 4b 49 36 5a 
+0x0050: 48 44 2f 64 20 4b 49 36 5a 48 44 2d 31 2f 70 20 
+0x0060: 53 43 4c 41 52 41 2f 6e 20 34 34 2e 34 2e 31 30 
+0x0070: 2e 33 39 2f 69 70 20 2d 37 33 20 66 72 6f 6d 20 
+0x0080: 53 61 6e 74 61 20 43 6c 61 72 61 c0 
+ax25_pkt_parse: total length: 0
+ax25_pkt_parse: total length: 137
+         : 
+kiss_read_cb: called
+  source: KI6ZHD-11 (flags 0x96) C
+  destination: BEACON-11 (flags 0x96) C
+  repeater[0]: KLPRC3-11 (flags 0x96) Repeated
+  repeater[1]: KBERR -11 (flags 0x96) Repeated
+  repeater[2]: KRDG  -11 (flags 0x96) Repeated
+  repeater[3]: KCORN -11 (flags 0x96) Repeated
+  repeater[4]: KVOLC -11 (flags 0x96) Repeated
+  repeater[5]: KBETH -4 (flags 0xa8) Repeated
+  repeater[6]: TAH0E -1 (flags 0x03) 
+  Control: U-frame: M-field: 0x03  PID: f0
+
+  Payload: (72 bytes): KI6ZHD/k KI6ZHD/d KI6ZHD-1/p SCLARA/n 44.4.10.39/ip -73 from Santa Clara
+conn_read_cb: called!
+proto_kiss_read_cb: called
+proto_kiss_read_cb: conn is EOF
+^C
+adrian@sabrina:~/git/github/erikarn/bsd_ax25/src % git diff[8D[K^Dexit
+
+Script done on Sun Nov 19 21:00:14 2017
