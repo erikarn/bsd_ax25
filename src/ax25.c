@@ -29,8 +29,16 @@ ax25_pkt_log_rx(uint8_t *buf, int len)
 	/* XXX no error checking */
 	v = htole32(1);
 	r = write(pkt_log_fd, &v, sizeof(v));
+
+	/* Timestamp - 0 for now */
+	v = 0;
+	r = write(pkt_log_fd, &v, sizeof(v));
+
+	/* Payload length */
 	v = htole32(len);
 	r = write(pkt_log_fd, &v, sizeof(v));
+
+	/* Payload itself */
 	r = write(pkt_log_fd, buf, len);
 
 	return (len + sizeof(v) + sizeof(v));
