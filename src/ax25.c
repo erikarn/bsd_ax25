@@ -27,6 +27,8 @@ ax25_pkt_log_rx(uint8_t *buf, int len)
 		return (0);
 
 	/* XXX no error checking */
+
+	/* field - 1, means received packet */
 	v = htole32(1);
 	r = write(pkt_log_fd, &v, sizeof(v));
 
