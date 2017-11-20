@@ -246,22 +246,25 @@ pkt_ax25_print(struct pkt_ax25 *p)
 {
 	int i;
 
-	printf("  source: %.*s-%d (flags 0x%.2x)\n",
+	printf("  source: %.*s-%d (flags 0x%.2x) %s\n",
 	    6, p->source_addr.callsign,
 	    AX25_ADDR_SSID_TO_SSID(p->source_addr.ssid),
-	    p->source_addr.ssid);
+	    p->source_addr.ssid,
+	    !! AX25_ADDR_SSID_TO_CR(p->source_addr.ssid) ? "C" : "R");
 
-	printf("  destination: %.*s-%d (flags 0x%.2x)\n",
+	printf("  destination: %.*s-%d (flags 0x%.2x) %s\n",
 	    6, p->dest_addr.callsign,
 	    AX25_ADDR_SSID_TO_SSID(p->dest_addr.ssid),
-	    p->dest_addr.ssid);
+	    p->dest_addr.ssid,
+	    !! AX25_ADDR_SSID_TO_CR(p->dest_addr.ssid) ? "C" : "R");
 
 	for (i = 0; i < p->repeater_addr_count; i++) {
-		printf("  repeater[%d]: %.*s-%d (flags 0x%.2x)\n",
+		printf("  repeater[%d]: %.*s-%d (flags 0x%.2x) %s\n",
 		    i,
 		    6, p->repeater_addr_list[i].callsign,
 		    AX25_ADDR_SSID_TO_SSID(p->repeater_addr_list[i].ssid),
-		    p->repeater_addr_list[i].ssid);
+		    p->repeater_addr_list[i].ssid,
+		    !! AX25_ADDR_SSID_TO_H(p->repeater_addr_list[i].ssid) ? "Repeated" : "");
 	}
 
 	printf("  Control: ");
