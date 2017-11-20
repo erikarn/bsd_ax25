@@ -63,5 +63,8 @@ extern	struct pkt_ax25 * pkt_ax25_create(void);
 extern	void pkt_ax25_print(struct pkt_ax25 *);
 extern	void pkt_ax25_free(struct pkt_ax25 *);
 
+extern	int pkt_ax25_log_open(const char *path);
+extern	int pkt_ax25_log_close(void);
+
 #endif	/* __AX25_PKT_H__ */
 

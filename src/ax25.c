@@ -3,13 +3,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <err.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #include <sys/queue.h>
+#include <sys/endian.h>
 
 #include "buf.h"
 #include "ax25.h"
 #include "kiss.h"
 #include "ax25_pkt_examples.h"
+
+/* Total debug hack, as we don't yet have a per-decoder thingy here */
+static int pkt_log_fd = -1;
+
+static int
+ax25_pkt_log_rx(uint8_t *buf, int len)
+{
+	int r;
+	uint32_t v;
+
+	if (pkt_log_fd < 0)
+		return (0);
+
+	/* XXX no error checking */
+	v = htole32(1);
+	r = write(pkt_log_fd, &v, sizeof(v));
+	v = htole32(len);
+	r = write(pkt_log_fd, &v, sizeof(v));
+	r = write(pkt_log_fd, buf, len);
+
+	return (len + sizeof(v) + sizeof(v));
+}
 
 /*
  * Print an ax.25 address field - callsign, ssid field, C/H bits.
@@ -121,6 +146,8 @@ ax25_pkt_parse(const uint8_t *buf, int len)
 	printf("%s: total length: %d\n", __func__, len);
 	if (len == 0)
 		return (NULL);
+
+	(void) ax25_pkt_log_rx((void *) buf, len);
 
 	pkt = pkt_ax25_create();
 	if (pkt == NULL) {
@@ -283,6 +310,30 @@ pkt_ax25_print(struct pkt_ax25 *p)
 	}
 }
 
+int
+pkt_ax25_log_open(const char *path)
+{
+	int r;
+
+	r = open(path, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (r < 0)
+		return (-1);
+	pkt_log_fd = r;
+
+	return (0);
+}
+
+int
+pkt_ax25_log_close(void)
+{
+	if (pkt_log_fd < 0)
+		return (-1);
+
+	close(pkt_log_fd);
+	pkt_log_fd = -1;
+	return (0);
+}
+
 #ifdef STANDALONE
 int
 main(int argc, const char *argv[])
@@ -315,5 +366,3 @@ main(int argc, const char *argv[])
 	}
 }
 #endif
-
-
