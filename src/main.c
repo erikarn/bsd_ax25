@@ -54,6 +54,8 @@ main(int argc, const char *argv[])
 	eb.ebase = event_base_new();
 	eb.edns = evdns_base_new(eb.ebase, 1);
 
+	pkt_ax25_log_open("ax25-pkt.log");
+
 #if 1
 	p = proto_kiss_create(&eb);
 	p->owner_cb.arg = NULL;
