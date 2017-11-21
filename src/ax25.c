@@ -43,6 +43,8 @@ ax25_pkt_log_rx(uint8_t *buf, int len)
 	/* Payload itself */
 	r = write(pkt_log_fd, buf, len);
 
+	fsync(pkt_log_fd);
+
 	return (len + sizeof(v) + sizeof(v));
 }
 
