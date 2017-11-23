@@ -2,13 +2,10 @@
 #include <stdlib.h>
 #include <err.h>
 
-#include "ax25_lmsm.h"
+#include "ax25_plsm.h"
 
 /*
- * This implements the Link Multiplexer State Machine.
- *
- * This is the interface between the physical state machine and
- * the upper layer Data Link State Machine.
+ * This implements the Physical Link State Machine.
  */
 
 /*
@@ -17,10 +14,10 @@
  * AX.25 stack.
  */
 
-struct ax25_lmsm *
-ax25_lmsm_create(struct ebase *eb)
+struct ax25_plsm *
+ax25_plsm_create(struct ebase *eb)
 {
-	struct ax25_lmsm *a;
+	struct ax25_plsm *a;
 
 	a = calloc(1, sizeof(*a));
 	if (a == NULL) {
@@ -35,21 +32,12 @@ ax25_lmsm_create(struct ebase *eb)
 }
 
 void
-ax25_lmsm_free(struct ax25_lmsm *a)
+ax25_plsm_free(struct ax25_plsm *a)
 {
 
 	/* Free frames on the queue */
 	free(a);
 }
-
-/* Routines / interactions that are provided up to the DLSM */
-
-/* LM-SEIZE request */
-/* LM-SEIZE confirm */
-/* LM-DATA request */
-/* LM-DATA indication */
-
-/* .. and what it calls in the physical layer handler */
 
 /* PH-SEIZE request */
 /* PH-SEIZE confirm */
