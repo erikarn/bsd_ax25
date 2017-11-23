@@ -4,6 +4,7 @@ PROG=   ax25
 SRCS=   main.c
 
 # AX.25
+SRCS+=  ax25_pkt.c
 SRCS+=  ax25_plsm.c
 SRCS+=  ax25_lmsm.c
 SRCS+=  ax25_dlsm.c
