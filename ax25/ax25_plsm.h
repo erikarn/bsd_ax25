@@ -17,7 +17,9 @@
  * The application should:
  *
  * + create an instance of the PLSM
- * + create an instance of the 
+ * + create a client instance of something - like PLSM KISS TNC glue
+ * + create an instance of the LMSM
+ * + link all the function pointers up, manually for now!
  */
 
 struct ax25_plsm;
