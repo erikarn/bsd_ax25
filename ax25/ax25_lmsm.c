@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <err.h>
 
+#include <sys/queue.h>
+
+#include "buf.h"
+#include "ax25_pkt.h"
+#include "ax25_pkt_list.h"
 #include "ax25_lmsm.h"
 
 /*
@@ -10,13 +16,6 @@
  * This is the interface between the physical state machine and
  * the upper layer Data Link State Machine.
  */
-
-/*
- * For BSD-AX25 this is a generic interface for queuing and dequeuing
- * AX.25 frames from a TNC (eg a KISS TNC) which doesn't provide a full
- * AX.25 stack.
- */
-
 struct ax25_lmsm *
 ax25_lmsm_create(struct ebase *eb)
 {
@@ -39,6 +38,7 @@ ax25_lmsm_free(struct ax25_lmsm *a)
 {
 
 	/* Free frames on the queue */
+
 	free(a);
 }
 
