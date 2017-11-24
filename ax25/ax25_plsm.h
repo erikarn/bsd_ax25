@@ -40,6 +40,12 @@ typedef int ph_client_free_t(struct ax25_plsm *);
 struct ax25_plsm {
 	struct ebase *eb;
 
+	/* For now the implementation takes care of queue management, state, etc */
+#if 0
+	struct ax25_pkt_list *priority_q;
+	struct ax25_pkt_list *normal_q;
+#endif
+
 	struct {
 		void *arg;
 
