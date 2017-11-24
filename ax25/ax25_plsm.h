@@ -64,6 +64,9 @@ struct ax25_plsm {
 };
 
 extern	struct ax25_plsm * ax25_plsm_create(struct ebase *eb);
-extern	void ax25_plsm_free(struct ax25_plsm *);
+extern	void ax25_plsm_free(struct ax25_plsm *p);
+
+extern	int ax25_plsm_seize_request(struct ax25_plsm *p);
+extern	int ax25_plsm_seize_confirm(struct ax25_plsm *p);
 
 #endif	/* __AX25_PLSM_H__ */

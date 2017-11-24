@@ -31,3 +31,17 @@ ax25_plsm_free(struct ax25_plsm *p)
 	p->owner.ph_owner_free_cb(p);
 	free(p);
 }
+
+int
+ax25_plsm_seize_request(struct ax25_plsm *p)
+{
+
+	return (p->owner.ph_seize_request_cb(p));
+}
+
+int
+ax25_plsm_seize_confirm(struct ax25_plsm *p)
+{
+
+	return (p->client.ph_seize_confirm_cb(p));
+}
