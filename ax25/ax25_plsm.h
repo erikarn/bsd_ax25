@@ -27,11 +27,12 @@ typedef int ph_seize_request_t(struct ax25_plsm *);
 typedef int ph_seize_confirm_t(struct ax25_plsm *);
 typedef int ph_data_request_t(struct ax25_plsm *, struct ax25_pkt *);
 typedef int ph_release_request_t(struct ax25_plsm *);
-typedef int ph_expedited_data_request_t(struct ax25_plsm *);
+typedef int ph_expedited_data_request_t(struct ax25_plsm *, struct ax25_pkt *);
 typedef int ph_data_indication_t(struct ax25_plsm *, struct ax25_pkt *);
 typedef int ph_busy_indication_t(struct ax25_plsm *);
 typedef int ph_quiet_indication_t(struct ax25_plsm *);
-typedef int ph_owner_free_t(struct ax25_plsm *);
+
+typedef int ph_client_free_t(struct ax25_plsm *);
 
 #define	AX25_PLSM_CLIENT_ARG(a)		((a)->client.arg)
 #define	AX25_PLSM_OWNER_ARG(a)		((a)->owner.arg)
@@ -49,8 +50,8 @@ struct ax25_plsm {
 		ph_expedited_data_request_t * ph_expedited_data_request_cb;
 
 		/* extra state stuff */
-		ph_owner_free_t * ph_owner_free_cb;
-	} owner;
+		ph_client_free_t * ph_client_free_cb;
+	} client;
 
 	struct {
 		void *arg;
@@ -60,7 +61,7 @@ struct ax25_plsm {
 		ph_data_indication_t * ph_data_indication_cb;
 		ph_busy_indication_t * ph_busy_indication_cb;
 		ph_quiet_indication_t * ph_quiet_indication_cb;
-	} client;
+	} owner;
 };
 
 extern	struct ax25_plsm * ax25_plsm_create(struct ebase *eb);
