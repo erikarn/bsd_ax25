@@ -1,7 +1,4 @@
-PROG=   ax25
-
-# Base
-SRCS=   main.c
+LIB=   ax25
 
 # AX.25
 SRCS+=  ax25_pkt.c
@@ -17,4 +14,4 @@ LDADD=-lutil -L/usr/local/lib -levent_core -levent_extra -L../lib/libbuf -L../li
 
 MK_MAN=no
 
-.include <bsd.prog.mk>
+.include <bsd.lib.mk>
