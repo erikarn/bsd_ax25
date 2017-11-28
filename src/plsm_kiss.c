@@ -15,7 +15,7 @@
 #include "conn.h"
 #include "ax25.h"
 #include "kiss.h"
-#include "proto_kiss.h"
+#include "plsm_kiss.h"
 
 /*
  * This implements a connection to a KISS TNC -
@@ -29,10 +29,10 @@
  * to encap/decap KISS.
  */
 
-struct proto_kiss *
-proto_kiss_create(struct ebase *eb)
+struct plsm_kiss *
+plsm_kiss_create(struct ebase *eb)
 {
-	struct proto_kiss *k;
+	struct plsm_kiss *k;
 
 	k = calloc(1, sizeof(*k));
 	if (k == NULL) {
@@ -62,7 +62,7 @@ err:
 }
 
 void
-proto_kiss_free(struct proto_kiss *k)
+plsm_kiss_free(struct plsm_kiss *k)
 {
 	if (k->conn)
 		conn_close(k->conn);
@@ -74,7 +74,7 @@ proto_kiss_free(struct proto_kiss *k)
 }
 
 int
-proto_kiss_set_host(struct proto_kiss *k, const char *host, int port)
+plsm_kiss_set_host(struct plsm_kiss *k, const char *host, int port)
 {
 	if (k->host != NULL)
 		free(k->host);
@@ -85,10 +85,10 @@ proto_kiss_set_host(struct proto_kiss *k, const char *host, int port)
 }
 
 static int
-proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
+plsm_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
     int xerrno)
 {
-	struct proto_kiss *k = arg;
+	struct plsm_kiss *k = arg;
 	int r, i;
 	int ss, se;
 	uint8_t *ax25_buf;
@@ -178,7 +178,7 @@ proto_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
 }
 
 static int
-proto_kiss_write_cb(struct conn *c, void *arg, struct buf *b, int rettype,
+plsm_kiss_write_cb(struct conn *c, void *arg, struct buf *b, int rettype,
     int xerrno)
 {
 
@@ -188,7 +188,7 @@ proto_kiss_write_cb(struct conn *c, void *arg, struct buf *b, int rettype,
 }
 
 static int
-proto_kiss_connect_cb(struct conn *c, void *arg, int rettype, int xerrno)
+plsm_kiss_connect_cb(struct conn *c, void *arg, int rettype, int xerrno)
 {
 
 	fprintf(stderr, "%s: called\n", __func__);
@@ -196,7 +196,7 @@ proto_kiss_connect_cb(struct conn *c, void *arg, int rettype, int xerrno)
 }
 
 static int
-proto_kiss_close_cb(struct conn *c, void *arg, int xerrno)
+plsm_kiss_close_cb(struct conn *c, void *arg, int xerrno)
 {
 
 	fprintf(stderr, "%s: called\n", __func__);
@@ -204,7 +204,7 @@ proto_kiss_close_cb(struct conn *c, void *arg, int xerrno)
 }
 
 int
-proto_kiss_connect(struct proto_kiss *k)
+plsm_kiss_connect(struct plsm_kiss *k)
 {
 	struct sockaddr_storage lcl, peer;
 	struct sockaddr_in *ls, *ps;
@@ -250,10 +250,10 @@ proto_kiss_connect(struct proto_kiss *k)
 	 * interface lifecycle management.
 	 */
 	k->conn->cb.cbdata = k;
-	k->conn->cb.read_cb = proto_kiss_read_cb;
-	k->conn->cb.write_cb = proto_kiss_write_cb;
-	k->conn->cb.connect_cb = proto_kiss_connect_cb;
-	k->conn->cb.close_cb = proto_kiss_close_cb;
+	k->conn->cb.read_cb = plsm_kiss_read_cb;
+	k->conn->cb.write_cb = plsm_kiss_write_cb;
+	k->conn->cb.connect_cb = plsm_kiss_connect_cb;
+	k->conn->cb.close_cb = plsm_kiss_close_cb;
 
 	/*
 	 * Start the connect.  If it succeeds here then we
@@ -266,13 +266,13 @@ proto_kiss_connect(struct proto_kiss *k)
 	}
 
 	/* waiting for connect notification now */
-	k->state = PROTO_KISS_CONN_CONNECTING;
+	k->state = PLSM_KISS_CONN_CONNECTING;
 
 	return (0);
 }
 
 int
-proto_kiss_disconnect(struct proto_kiss *k)
+plsm_kiss_disconnect(struct plsm_kiss *k)
 {
 
 	if (k->conn == NULL) {
@@ -286,7 +286,7 @@ proto_kiss_disconnect(struct proto_kiss *k)
 	k->conn = NULL;
 
 	/* Idle state, need to be reconfigured */
-	k->state = PROTO_KISS_CONN_IDLE;
+	k->state = PLSM_KISS_CONN_IDLE;
 
 	return (0);
 }

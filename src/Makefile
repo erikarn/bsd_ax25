@@ -5,16 +5,15 @@ SRCS=   main.c
 SRCS+=  pkt.c
 
 # AX.25
-#SRCS+=  ax25_plsm.c
-#SRCS+=  ax25_lmsm.c
-#SRCS+=  ax25_dlsm.c
 SRCS+=  ax25.c
+
+# AX.25 physical layers
+SRCS+=	plsm_kiss.c
 
 # APRS
 SRCS+=  pkt_l3_aprs.c
 
-# Protocol clients
-SRCS+=	proto_kiss.c
+# Higher level protocol clients
 SRCS+=	proto_aprs_igate.c
 
 CFLAGS=         -I/usr/local/include -I../lib/libbuf -I../lib/libconn -I../lib/libaxutil -I../lib/libstr -I../lib/libkiss -Wall -Werror

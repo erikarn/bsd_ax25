@@ -10,7 +10,9 @@
 #include "buf.h"
 #include "conn.h"
 #include "ax25.h"
-#include "proto_kiss.h"
+
+#include "plsm_kiss.h"
+
 #include "pkt_l3_aprs.h"
 #include "proto_aprs_igate.h"
 
@@ -33,7 +35,7 @@ igate_read_cb(struct proto_aprs_igate *k, void *arg,
 
 #if 1
 static int
-kiss_read_cb(struct proto_kiss *p, void *arg,
+kiss_read_cb(struct plsm_kiss *p, void *arg,
     struct pkt_ax25 *pkt)
 {
 
@@ -47,7 +49,7 @@ kiss_read_cb(struct proto_kiss *p, void *arg,
 int
 main(int argc, const char *argv[])
 {
-	struct proto_kiss *p;
+	struct plsm_kiss *p;
 //	struct proto_aprs_igate *pg;
 	struct ebase eb;
 
@@ -57,11 +59,11 @@ main(int argc, const char *argv[])
 	pkt_ax25_log_open("ax25-pkt.log");
 
 #if 1
-	p = proto_kiss_create(&eb);
+	p = plsm_kiss_create(&eb);
 	p->owner_cb.arg = NULL;
 	p->owner_cb.read_cb = kiss_read_cb;
-	proto_kiss_set_host(p, "127.0.0.1", 8001);
-	proto_kiss_connect(p);
+	plsm_kiss_set_host(p, "127.0.0.1", 8001);
+	plsm_kiss_connect(p);
 #endif
 
 #if 0
