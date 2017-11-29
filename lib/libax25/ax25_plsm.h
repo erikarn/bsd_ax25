@@ -35,6 +35,8 @@ typedef int ph_busy_indication_t(struct ax25_plsm *);
 typedef int ph_quiet_indication_t(struct ax25_plsm *);
 
 typedef int ph_client_free_t(struct ax25_plsm *);
+typedef int ph_client_start_t(struct ax25_plsm *);
+typedef int ph_client_stop_t(struct ax25_plsm *);
 
 #define	AX25_PLSM_CLIENT_ARG(a)		((a)->client.arg)
 #define	AX25_PLSM_OWNER_ARG(a)		((a)->owner.arg)
@@ -59,6 +61,8 @@ struct ax25_plsm {
 
 		/* extra state stuff */
 		ph_client_free_t * ph_client_free_cb;
+		ph_client_start_t * ph_client_start_cb;
+		ph_client_stop_t * ph_client_stop_cb;
 	} client;
 
 	struct {
@@ -74,6 +78,8 @@ struct ax25_plsm {
 
 extern	struct ax25_plsm * ax25_plsm_create(struct ebase *eb);
 extern	void ax25_plsm_free(struct ax25_plsm *p);
+extern	int ax25_plsm_start(struct ax25_plsm *p);
+extern	int ax25_plsm_stop(struct ax25_plsm *p);
 
 extern	int ax25_plsm_seize_request(struct ax25_plsm *p);
 extern	int ax25_plsm_seize_confirm(struct ax25_plsm *p);

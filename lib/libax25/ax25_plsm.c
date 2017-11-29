@@ -87,3 +87,17 @@ ax25_plsm_quiet_indication(struct ax25_plsm *p)
 
 	return (p->owner.ph_quiet_indication_cb(p));
 }
+
+int
+ax25_plsm_start(struct ax25_plsm *p)
+{
+
+	return (p->client.ph_client_start_cb(p));
+}
+
+int
+ax25_plsm_stop(struct ax25_plsm *p)
+{
+
+	return (p->client.ph_client_stop_cb(p));
+}
