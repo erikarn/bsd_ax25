@@ -84,4 +84,7 @@ extern	int ax25_plsm_stop(struct ax25_plsm *p);
 extern	int ax25_plsm_seize_request(struct ax25_plsm *p);
 extern	int ax25_plsm_seize_confirm(struct ax25_plsm *p);
 
+extern	int ax25_plsm_data_indication(struct ax25_plsm *p,
+	    struct ax25_pkt *pkt);
+
 #endif	/* __AX25_PLSM_H__ */
