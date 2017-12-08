@@ -9,7 +9,9 @@
 #include "eb.h"
 #include "buf.h"
 #include "conn.h"
-#include "ax25.h"
+
+#include "ax25_pkt.h"
+#include "ax25_plsm.h"
 
 #include "plsm_kiss.h"
 
@@ -33,37 +35,21 @@ igate_read_cb(struct proto_aprs_igate *k, void *arg,
 }
 #endif
 
-#if 1
-static int
-kiss_read_cb(struct plsm_kiss *p, void *arg,
-    struct pkt_ax25 *pkt)
-{
-
-	printf("%s: called\n", __func__);
-	pkt_ax25_print(pkt);
-	pkt_ax25_free(pkt);
-	return (0);
-}
-#endif
-
 int
 main(int argc, const char *argv[])
 {
-	struct plsm_kiss *p;
+	struct ax25_plsm *p;
 //	struct proto_aprs_igate *pg;
 	struct ebase eb;
 
 	eb.ebase = event_base_new();
 	eb.edns = evdns_base_new(eb.ebase, 1);
 
-	pkt_ax25_log_open("ax25-pkt.log");
+	//pkt_ax25_log_open("ax25-pkt.log");
 
 #if 1
-	p = plsm_kiss_create(&eb);
-	p->owner_cb.arg = NULL;
-	p->owner_cb.read_cb = kiss_read_cb;
-	plsm_kiss_set_host(p, "127.0.0.1", 8001);
-	plsm_kiss_connect(p);
+	p = plsm_kiss_create(&eb, "127.0.0.1", 8001);
+	ax25_plsm_start(p);
 #endif
 
 #if 0

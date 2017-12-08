@@ -13,57 +13,20 @@
 #include "buf.h"
 #include "buf_list.h"
 #include "conn.h"
-#include "ax25.h"
+
+#include "ax25_pkt.h"
+#include "ax25_plsm.h"
+
 #include "kiss.h"
 #include "plsm_kiss.h"
 
 /*
- * This implements a connection to a KISS TNC -
- * eventually being an AX.25 protocol interface.
- *
- * For now it assumes a TCP connection but it should
- * be easy to extend to do serial, udp, i2c, etc.
- *
- * However, until the interface bits are up, this
- * will primarily just be a mostly-standalone thingy
- * to encap/decap KISS.
+ * Free local state.  Shouldn't be called directly.
  */
-
-struct plsm_kiss *
-plsm_kiss_create(struct ebase *eb)
-{
-	struct plsm_kiss *k;
-
-	k = calloc(1, sizeof(*k));
-	if (k == NULL) {
-		warn("%s: calloc", __func__);
-		goto err;
-	}
-
-	/* XXX TODO: may want to make this configurable */
-	k->rx_buf = buf_create(65536);
-	if (k->rx_buf == NULL) {
-		warn("%s: malloc, 1024 bytes", __func__);
-		goto err;
-	}
-
-	k->eb = eb;
-	return (k);
-
-err:
-	if (k->conn)
-		conn_free(k->conn);
-	if (k->host)
-		free(k->host);
-	if (k->rx_buf)
-		buf_free(k->rx_buf);
-	free(k);
-	return (NULL);
-}
-
-void
+static void
 plsm_kiss_free(struct plsm_kiss *k)
 {
+
 	if (k->conn)
 		conn_close(k->conn);
 	if (k->host)
@@ -73,13 +36,22 @@ plsm_kiss_free(struct plsm_kiss *k)
 	free(k);
 }
 
-int
-plsm_kiss_set_host(struct plsm_kiss *k, const char *host, int port)
+static int
+plsm_kiss_disconnect(struct plsm_kiss *k)
 {
-	if (k->host != NULL)
-		free(k->host);
-	k->host = strdup(host);
-	k->port = port;
+
+	if (k->conn == NULL) {
+		fprintf(stderr, "%s: called without being connected\n", __func__);
+		return (-1);
+	}
+
+	/* Close, free the connection; we're done */
+	conn_close(k->conn);
+	conn_free(k->conn);
+	k->conn = NULL;
+
+	/* Idle state, need to be reconfigured */
+	k->state = PLSM_KISS_CONN_IDLE;
 
 	return (0);
 }
@@ -150,23 +122,34 @@ plsm_kiss_read_cb(struct conn *c, void *arg, const uint8_t *buf, int len,
 		if (ss == -1 || se == -1)
 			break;
 
-		/* Parse - for now, do both kiss and ax25 decap for debugging! */
+		/* Parse KISS frame, send it up to the owner as a raw AX25 frame  */
 		ax25_buf = malloc(ax25_len);
 		if (ax25_buf != NULL) {
-			struct pkt_ax25 *pkt;
 
 			kiss_payload_parse(k->rx_buf->buf + ss, se - ss + 1,
 			    ax25_buf, &ax25_len);
 
-			/* Create an AX25 packet, pass it up to the owner */
-			pkt = ax25_pkt_parse(ax25_buf, ax25_len);
+			/* If we have data, copy it into the ax25 packet */
+			if (ax25_len != 0) {
+				struct ax25_pkt *pkt;
 
-			/* Pass it to the owner */
-			if (pkt != NULL && k->owner_cb.read_cb == NULL) {
-				pkt_ax25_free(pkt);
-			} else if (pkt != NULL) {
-				k->owner_cb.read_cb(k, k->owner_cb.arg, pkt);
+				pkt = ax25_pkt_create(ax25_len);
+
+				if (pkt != NULL) {
+					/* Populate */
+					(void) buf_copy(pkt->buf, ax25_buf, ax25_len);
+
+					/*
+					 * Send up, error means we need to handle
+					 * the buffer
+					 */
+					if (ax25_plsm_data_indication(k->plsm, pkt) != 0) {
+						ax25_pkt_free(pkt);
+					}
+				}
 			}
+			/* Free buffer */
+			free(ax25_buf);
 		}
 
 		/* Consume everything until second 0xc0 */
@@ -203,7 +186,7 @@ plsm_kiss_close_cb(struct conn *c, void *arg, int xerrno)
 	return (0);
 }
 
-int
+static int
 plsm_kiss_connect(struct plsm_kiss *k)
 {
 	struct sockaddr_storage lcl, peer;
@@ -271,22 +254,126 @@ plsm_kiss_connect(struct plsm_kiss *k)
 	return (0);
 }
 
-int
-plsm_kiss_disconnect(struct plsm_kiss *k)
+/* PLSM client method implementations */
+static int
+plsm_kiss_seize_request(struct ax25_plsm *p)
 {
 
-	if (k->conn == NULL) {
-		fprintf(stderr, "%s: called without being connected\n", __func__);
-		return (-1);
-	}
+	/* For now, confirm */
+	return (ax25_plsm_seize_confirm(p));
+}
 
-	/* Close, free the connection; we're done */
-	conn_close(k->conn);
-	conn_free(k->conn);
-	k->conn = NULL;
+static int
+plsm_kiss_data_request(struct ax25_plsm *p, struct ax25_pkt *pkt)
+{
 
-	/* Idle state, need to be reconfigured */
-	k->state = PLSM_KISS_CONN_IDLE;
+	fprintf(stderr, "%s: TODO\n", __func__);
+	ax25_pkt_free(pkt);
+	return (0);
+}
+
+static int
+plsm_kiss_release_request(struct ax25_plsm *p)
+{
 
 	return (0);
 }
+
+static int
+plsm_kiss_expedited_data_request(struct ax25_plsm *p, struct ax25_pkt *pkt)
+{
+
+	fprintf(stderr, "%s: TODO\n", __func__);
+	ax25_pkt_free(pkt);
+	return (0);
+}
+
+int
+plsm_kiss_client_free(struct ax25_plsm *p)
+{
+	struct plsm_kiss *k = AX25_PLSM_CLIENT_ARG(p);
+
+	plsm_kiss_free(k);
+	return (0);
+}
+
+int
+plsm_kiss_client_start(struct ax25_plsm *p)
+{
+	struct plsm_kiss *k = AX25_PLSM_CLIENT_ARG(p);
+
+	return (plsm_kiss_connect(k));
+}
+
+int
+plsm_kiss_client_stop(struct ax25_plsm *p)
+{
+	struct plsm_kiss *k = AX25_PLSM_CLIENT_ARG(p);
+
+	return (plsm_kiss_disconnect(k));
+}
+
+/*
+ * This implements a connection to a KISS TNC -
+ * eventually being an AX.25 protocol interface.
+ *
+ * For now it assumes a TCP connection but it should
+ * be easy to extend to do serial, udp, i2c, etc.
+ */
+
+struct ax25_plsm *
+plsm_kiss_create(struct ebase *eb, const char *host, int port)
+{
+	struct plsm_kiss *k;
+	struct ax25_plsm *p;
+	struct buf *rb;
+
+	rb = buf_create(65536);
+	if (rb == NULL) {
+		warn("%s: malloc, 1024 bytes", __func__);
+		return (NULL);
+	}
+
+	/* Step 1 - create a PLSM */
+	p = ax25_plsm_create(eb);
+	if (p == NULL) {
+		buf_free(rb);
+		return (NULL);
+	}
+
+	/* Step 2 - create our own implementation */
+	k = calloc(1, sizeof(*k));
+	if (k == NULL) {
+		warn("%s: calloc", __func__);
+		ax25_plsm_free(p);
+		buf_free(rb);
+		return (NULL);
+	}
+
+	k->eb = eb;
+	k->plsm = p;
+	k->rx_buf = rb;
+	k->host = strdup(host);
+	k->port = port;
+
+	/*
+	 * Step 3 - setup the client hooks; these are our
+	 * implementations of pieces.
+	 *
+	 * Once this is done, unwinding state will be done
+	 * through the plsm destroy path.
+	 */
+	p->client.arg = k;
+	p->client.ph_seize_request_cb = plsm_kiss_seize_request;
+	p->client.ph_data_request_cb = plsm_kiss_data_request;
+	p->client.ph_release_request_cb = plsm_kiss_release_request;
+	p->client.ph_expedited_data_request_cb = plsm_kiss_expedited_data_request;
+	p->client.ph_client_free_cb = plsm_kiss_client_free;
+	p->client.ph_client_start_cb = plsm_kiss_client_start;
+	p->client.ph_client_stop_cb = plsm_kiss_client_stop;
+
+	/* We're all ready! */
+
+	return (p);
+}
+
