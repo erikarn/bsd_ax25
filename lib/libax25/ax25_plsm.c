@@ -28,7 +28,8 @@ void
 ax25_plsm_free(struct ax25_plsm *p)
 {
 
-	p->client.ph_client_free_cb(p);
+	if (p->client.ph_client_free_cb != NULL)
+		p->client.ph_client_free_cb(p);
 	free(p);
 }
 
