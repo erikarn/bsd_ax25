@@ -119,6 +119,8 @@ ax25_lmsm_data_request(struct ax25_lmsm *l, struct ax25_dlsm *d,
     struct ax25_pkt *p)
 {
 
+	fprintf(stderr, "%s: called; l=%p, d=%p, pkt=%p\n", __func__, l, d, p);
+
 	ax25_pkt_free(p);
 	return (-1);
 }
@@ -138,6 +140,7 @@ ax25_lmsm_data_indication(struct ax25_lmsm *l, struct ax25_dlsm *d,
     struct ax25_pkt *p)
 {
 
+	fprintf(stderr, "%s: called; l=%p, d=%p, pkt=%p\n", __func__, l, d, p);
 	ax25_pkt_free(p);
 	return (-1);
 }

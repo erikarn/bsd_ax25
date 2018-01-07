@@ -41,6 +41,17 @@ struct ax25_lmsm {
 	struct {
 		struct ax25_plsm *pl;
 	} plsm;
+
+	/*
+	 * If no DLSM has been found (eg UI, unknown source)
+	 * then this DLSM receives the data frames in question.
+	 *
+	 * It will then take care of figuring out what to do -
+	 * eg, passing up UI frames to layer 3; handling
+	 * incoming requests and creating a DLSM instance
+	 * just for that peer, etc, etc.
+	 */
+	struct ax25_dlsm *dlsm_default;
 };
 
 extern	int ax25_lmsm_seize_request(struct ax25_lmsm *, struct ax25_dlsm *);
@@ -49,5 +60,13 @@ extern	int ax25_lmsm_data_request(struct ax25_lmsm *, struct ax25_dlsm *,
 	    struct ax25_pkt *);
 extern	int ax25_lmsm_data_indication(struct ax25_lmsm *, struct ax25_dlsm *,
 	    struct ax25_pkt *);
+
+/* Temporary non-standard methods - Adding/removing DLSM instances as appropriate */
+extern	int ax25_lmsm_add_dlsm(struct ax25_lmsm *, struct ax25_dlsm *);
+extern	int ax25_lmsm_remove_dlsm(struct ax25_lmsm *, struct ax25_dlsm *);
+
+/* And these add a default DLSM for handling UI and incoming connection requests */
+extern	int ax25_lmsm_add_default_dlsm(struct ax25_lmsm *, struct ax25_dlsm *);
+extern	int ax25_lmsm_remove_default_dlsm(struct ax25_lmsm *, struct ax25_dlsm *);
 
 #endif	/* __AX25_LMSM_H__ */
